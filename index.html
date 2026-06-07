@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精密性格診断テスト</title>
+    <style>
+        :root {
+            --primary-pink: #ff45b1;
+            --primary-hover: #e03299;
+            --secondary-color: #fff0f6;
+            --text-color: #333333;
+            --bg-color: #FFFFFF;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--bg-color);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(255, 69, 177, 0.15);
+            padding: 32px 24px;
+            text-align: center;
+            margin: auto;
+        }
+
+        /* --- スクリーン切り替え --- */
+        .screen { display: none; }
+        .screen.active { display: block; }
+
+        /* --- タイトル --- */
+        h1 {
+            color: var(--primary-pink);
+            font-size: clamp(20px, 5vw, 26px);
+            margin-top: 0;
+        }
+        h2 {
+            color: var(--primary-pink);
+            font-size: clamp(18px, 4.5vw, 22px);
+        }
+
+        /* --- 入力フォーム --- */
+        .input-group { margin: 16px 0; text-align: left; }
+        .input-group label { display: block; font-weight: bold; margin-bottom: 6px; font-size: 14px; }
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+        input:focus { outline: none; border-color: var(--primary-pink); }
+
+        /* --- 共通ボタン --- */
+        .btn {
+            background-color: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .btn:hover { background-color: var(--primary-hover); }
+        .btn:active { transform: scale(0.98); }
+
+        /* --- 選択肢ボタン --- */
+        .choice-btn {
+            background-color: white;
+            color: var(--text-color);
+            border: 2px solid var(--primary-pink);
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-size: 15px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .choice-btn:hover { background-color: var(--primary-pink); color: white; }
+        .choice-btn:active { transform: scale(0.98); }
+
+        /* --- 進捗バー --- */
+        .progress-wrap {
+            background: #eee;
+            border-radius: 10px;
+            height: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            background: var(--primary-pink);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        /* --- 質問バッジ --- */
+        #question-badge {
+            font-size: 13px;
+            color: var(--primary-pink);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        #question-text {
+            font-size: clamp(16px, 4vw, 18px);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* --- 結果画面 --- */
+        .result-type-label {
+            display: inline-block;
+            background: var(--primary-pink);
+            color: white;
+            border-radius: 20px;
+            padding: 4px 16px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .advice-box {
+            background-color: var(--secondary-color);
+            padding: 18px 20px;
+            border-radius: 12px;
+            text-align: left;
+            margin-top: 16px;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .advice-box ul {
+            margin: 10px 0 0;
+            padding-left: 20px;
+        }
+
+        .advice-box ul li { margin-bottom: 6px; }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #f0c0dc;
+            margin: 16px 0;
+        }
+
+        .emoji-large { font-size: 48px; margin: 8px 0 12px; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ① 開始画面 -->
+    <div id="screen-entry" class="screen active">
+        <h1>✨ 精密性格診断</h1>
+        <p style="color:#888; font-size:14px;">9つの質問であなたの強みを分析します。</p>
+        <div class="input-group">
+            <label for="userName">お名前</label>
+            <input type="text" id="userName" placeholder="例：田中 はな">
+        </div>
+        <div class="input-group">
+            <label for="userAge">ご年齢</label>
+            <input type="number" id="userAge" placeholder="例：28" min="1" max="120">
+        </div>
+        <button class="btn" onclick="startQuiz()">診断をスタート →</button>
+    </div>
+
+    <!-- ② 質問画面 -->
+    <div id="screen-quiz" class="screen">
+        <div class="progress-wrap">
+            <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+        </div>
+        <div id="question-badge"></div>
+        <p id="question-text"></p>
+        <div id="choices-container"></div>
+    </div>
+
+    <!-- ③ 結果画面 -->
+    <div id="screen-result" class="screen">
+        <span class="emoji-large" id="result-emoji"></span>
+        <div class="result-type-label" id="result-type-label"></div>
+        <h2 id="result-title"></h2>
+        <div class="advice-box" id="advice-text"></div>
+        <hr class="divider">
+        <button class="btn" onclick="location.reload()">🔄 最初からやり直す</button>
+    </div>
+
+</div>
+
+<script>
+    let currentIdx = 0;
+    let userName = '';
+
+    // スコアキー: social=人との関わり, empathy=共感力, action=行動力
+    let scores = { social: 0, empathy: 0, action: 0 };
+
+    const questions = [
+        {
+            text: "休日の予定が突然キャンセルになったら？",
+            choices: [
+                { text: "一人でゆっくり過ごす",        score: { social: 0, empathy: 0, action: 1 } },
+                { text: "すぐ友人を誘って出かける",     score: { social: 2, empathy: 0, action: 1 } },
+                { text: "溜まった家事を片付ける",       score: { social: 0, empathy: 0, action: 2 } }
+            ]
+        },
+        {
+            text: "友人が落ち込んでいたら？",
+            choices: [
+                { text: "じっくり話を聞く",             score: { social: 1, empathy: 2, action: 0 } },
+                { text: "気分転換に遊びに連れ出す",     score: { social: 2, empathy: 1, action: 1 } },
+                { text: "解決策をアドバイスする",       score: { social: 1, empathy: 1, action: 2 } }
+            ]
+        },
+        {
+            text: "新しい趣味、何から始める？",
+            choices: [
+                { text: "まず道具を買って始める",       score: { social: 0, empathy: 0, action: 2 } },
+                { text: "ネットで入念に調べる",         score: { social: 0, empathy: 0, action: 1 } },
+                { text: "経験者の友人に相談する",       score: { social: 2, empathy: 1, action: 0 } }
+            ]
+        },
+        {
+            text: "グループでのお店選びは？",
+            choices: [
+                { text: "みんなの希望をまとめる",       score: { social: 2, empathy: 2, action: 0 } },
+                { text: "自分のおすすめをハッキリ提案", score: { social: 1, empathy: 0, action: 2 } },
+                { text: "とくにこだわらず人に合わせる", score: { social: 1, empathy: 1, action: 0 } }
+            ]
+        },
+        {
+            text: "意見が対立した時どうなる？",
+            choices: [
+                { text: "相手の意見を尊重して合わせる", score: { social: 1, empathy: 2, action: 0 } },
+                { text: "論理的に自分の意見を説明する", score: { social: 0, empathy: 0, action: 2 } },
+                { text: "お互いが納得できる第3案を探る",score: { social: 2, empathy: 1, action: 1 } }
+            ]
+        },
+        {
+            text: "道に迷ったら？",
+            choices: [
+                { text: "地図アプリで自分で解決する",   score: { social: 0, empathy: 0, action: 2 } },
+                { text: "近くの人に気軽に聞く",         score: { social: 2, empathy: 1, action: 1 } },
+                { text: "迷うこと自体を楽しむ",         score: { social: 0, empathy: 1, action: 0 } }
+            ]
+        },
+        {
+            text: "大きなミスをした時どうする？",
+            choices: [
+                { text: "すぐに上司や相手に報告する",   score: { social: 1, empathy: 1, action: 2 } },
+                { text: "まず自分で対策を考えてから動く",score: { social: 0, empathy: 0, action: 2 } },
+                { text: "しばらく落ち込んでから立て直す",score: { social: 0, empathy: 1, action: 0 } }
+            ]
+        },
+        {
+            text: "LINEやSNSの返信ペースは？",
+            choices: [
+                { text: "見たらすぐ返す（即レス）",     score: { social: 2, empathy: 1, action: 2 } },
+                { text: "内容をよく考えてから返す",     score: { social: 1, empathy: 1, action: 0 } },
+                { text: "気が向いた時に自分のペースで", score: { social: 0, empathy: 0, action: 1 } }
+            ]
+        },
+        {
+            text: "今一番知りたいことは？",
+            choices: [
+                { text: "人に心を開いてもらうコツ",     score: { social: 2, empathy: 2, action: 0 } },
+                { text: "自分をもっとよく見せる方法",   score: { social: 1, empathy: 0, action: 1 } },
+                { text: "会話をもっと弾ませる方法",     score: { social: 2, empathy: 1, action: 1 } }
+            ]
+        }
+    ];
+
+    // 結果パターン
+    const resultTypes = [
+        {
+            condition: s => s.empathy >= 4 && s.social >= 4,
+            emoji: "🌸",
+            type: "共感の達人タイプ",
+            title: "あなたは「心をつなぐ人」",
+            advice: `人の気持ちを敏感に察知し、自然とみんなが頼りにする存在です。<br><br>
+                <strong>あなたの強み</strong>
+                <ul>
+                    <li>相手の感情を受け取る高い共感力</li>
+                    <li>チームの雰囲気を和やかにする力</li>
+                    <li>深い信頼関係を築ける誠実さ</li>
+                </ul>
+                <strong>アドバイス</strong><br>
+                感情移入しすぎて疲れることも。「相手を助けるためには、まず自分を守る」ことを意識しましょう。`
+        },
+        {
+            condition: s => s.action >= 4,
+            emoji: "⚡",
+            type: "行動力リーダータイプ",
+            title: "あなたは「道を切り開く人」",
+            advice: `考えるより先に動ける実行力が最大の武器。周囲を引っ張るリーダー気質があります。<br><br>
+                <strong>あなたの強み</strong>
+                <ul>
+                    <li>スピーディな判断と実行力</li>
+                    <li>目標に向かってブレない意志</li>
+                    <li>困難をチャンスと捉えるポジティブさ</li>
+                </ul>
+                <strong>アドバイス</strong><br>
+                突き進む力がある分、周りのペースに合わせる余裕を持つとチームでの成果が倍増します。`
+        },
+        {
+            condition: s => s.social >= 4,
+            emoji: "💬",
+            type: "コミュニケーター タイプ",
+            title: "あなたは「みんなをつなぐ人」",
+            advice: `どんな場でも自然と場の中心になれる、天性の社交性の持ち主です。<br><br>
+                <strong>あなたの強み</strong>
+                <ul>
+                    <li>初対面でもすぐに打ち解けられる</li>
+                    <li>人脈を広げ活かすのが得意</li>
+                    <li>グループをまとめるファシリテーター力</li>
+                </ul>
+                <strong>アドバイス</strong><br>
+                人との関わりを楽しむ一方で、一人の時間を使って内省する習慣が自己成長を加速させます。`
+        },
+        {
+            condition: () => true, // デフォルト
+            emoji: "🌿",
+            type: "バランス調整タイプ",
+            title: "あなたは「柔軟に対応できる人」",
+            advice: `特定の型にはまらず、状況に応じて自分を変えられる適応力が魅力です。<br><br>
+                <strong>あなたの強み</strong>
+                <ul>
+                    <li>様々な人・環境に溶け込める柔軟性</li>
+                    <li>偏りなく物事を見られる広い視野</li>
+                    <li>変化に動じない安定感</li>
+                </ul>
+                <strong>アドバイス</strong><br>
+                「何でもこなせる」からこそ、自分が特に情熱を注げる分野を一つ見つけると、さらに輝けます。`
+        }
+    ];
+
+    function showScreen(id) {
+        document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function startQuiz() {
+        userName = document.getElementById('userName').value.trim();
+        if (!userName) { alert("お名前を入力してください"); return; }
+        scores = { social: 0, empathy: 0, action: 0 };
+        currentIdx = 0;
+        showScreen('screen-quiz');
+        showQuestion();
+    }
+
+    function showQuestion() {
+        const q = questions[currentIdx];
+        const progress = Math.round((currentIdx / questions.length) * 100);
+        document.getElementById('progress-bar').style.width = progress + '%';
+        document.getElementById('question-badge').innerText = `質問 ${currentIdx + 1} / ${questions.length}`;
+        document.getElementById('question-text').innerText = q.text;
+
+        const cont = document.getElementById('choices-container');
+        cont.innerHTML = '';
+        q.choices.forEach(c => {
+            const btn = document.createElement('button');
+            btn.className = 'choice-btn';
+            btn.innerText = c.text;
+            btn.onclick = () => {
+                // スコア加算
+                for (const key in c.score) scores[key] += c.score[key];
+                currentIdx++;
+                if (currentIdx < questions.length) {
+                    showQuestion();
+                } else {
+                    showResult();
+                }
+            };
+            cont.appendChild(btn);
+        });
+    }
+
+    function showResult() {
+        // 進捗を100%に
+        document.getElementById('progress-bar').style.width = '100%';
+
+        // 結果タイプを判定
+        const result = resultTypes.find(r => r.condition(scores));
+
+        document.getElementById('result-emoji').innerText = result.emoji;
+        document.getElementById('result-type-label').innerText = result.type;
+        document.getElementById('result-title').innerText = userName + 'さんの診断結果';
+        document.getElementById('advice-text').innerHTML =
+            `<strong>${result.title}</strong><br><br>` + result.advice;
+
+        showScreen('screen-result');
+    }
+</script>
+</body>
+</html>
