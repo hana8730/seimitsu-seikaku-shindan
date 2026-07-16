@@ -566,6 +566,7 @@
 
         showScreen('screen-result');
         launchConfetti();
+        fbq('track', 'ViewContent', { content_name: '診断結果ページ' });
 
         // LPセクションを表示
         document.getElementById('lp-section').style.display = 'block';
