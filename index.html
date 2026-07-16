@@ -688,22 +688,41 @@
 
         let s = `<svg viewBox="0 0 360 340" width="100%" style="max-width:360px;display:block;margin:0 auto">`;
 
+        s += `<defs>
+            <radialGradient id="rg" cx="50%" cy="50%" r="50%">
+                <stop offset="0%"   stop-color="#ff9de2" stop-opacity="0.85"/>
+                <stop offset="100%" stop-color="#c084fc" stop-opacity="0.28"/>
+            </radialGradient>
+            <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="6" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="dot-glow" x="-150%" y="-150%" width="400%" height="400%">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+        </defs>`;
+
         [0.25, 0.5, 0.75, 1].forEach(r => {
             const pts = Array.from({length: N}, (_, i) => pt(i, r).join(',')).join(' ');
-            s += `<polygon points="${pts}" fill="${r===1?'none':'rgba(240,103,166,0.04)'}" stroke="#f0c0dc" stroke-width="${r===1?1.5:0.7}"/>`;
+            s += `<polygon points="${pts}" fill="${r===1?'none':'rgba(240,103,166,0.04)'}" stroke="#f0d0ea" stroke-width="${r===1?1.2:0.6}"/>`;
         });
 
         for (let i = 0; i < N; i++) {
             const [x, y] = pt(i, 1);
-            s += `<line x1="${CX}" y1="${CY}" x2="${x}" y2="${y}" stroke="#f0c0dc" stroke-width="0.8"/>`;
+            s += `<line x1="${CX}" y1="${CY}" x2="${x}" y2="${y}" stroke="#f0d0ea" stroke-width="0.6"/>`;
         }
 
         const dataPts = axes.map((a, i) => pt(i, Math.max(a.val, 0.06)).join(',')).join(' ');
-        s += `<polygon points="${dataPts}" fill="rgba(240,103,166,0.22)" stroke="#F067A6" stroke-width="2.2"/>`;
+        // グロー層（下）
+        s += `<polygon points="${dataPts}" fill="url(#rg)" stroke="#e040a0" stroke-width="3.5" filter="url(#glow)"/>`;
+        // クリーン層（上）
+        s += `<polygon points="${dataPts}" fill="url(#rg)" stroke="#F067A6" stroke-width="2"/>`;
 
         axes.forEach((a, i) => {
             const [x, y] = pt(i, Math.max(a.val, 0.06));
-            s += `<circle cx="${x}" cy="${y}" r="4.5" fill="#F067A6"/>`;
+            s += `<circle cx="${x}" cy="${y}" r="6" fill="#F067A6" filter="url(#dot-glow)"/>`;
+            s += `<circle cx="${x}" cy="${y}" r="4" fill="white" stroke="#F067A6" stroke-width="2"/>`;
         });
 
         const anchors = ['middle', 'start', 'start', 'end', 'end'];
