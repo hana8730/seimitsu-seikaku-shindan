@@ -284,6 +284,8 @@
         <span class="emoji-large" id="result-emoji"></span>
         <div class="result-type-label" id="result-type-label"></div>
         <h2 id="result-title"></h2>
+        <p style="font-size:13px;color:#aaa;margin:4px 0 8px;">あなたの婚活スコア</p>
+        <div id="radar-chart"></div>
         <div class="advice-box" id="advice-text"></div>
         <hr class="divider">
 
@@ -512,7 +514,63 @@
         document.getElementById('advice-text').innerHTML =
             `<strong>${result.title}</strong><br><br>` + result.advice;
 
+        document.getElementById('radar-chart').innerHTML = drawRadarChart(scores);
+
         showScreen('screen-result');
+    }
+
+    function drawRadarChart(sc) {
+        const CX = 140, CY = 148, R = 95, N = 5;
+        const MAX = 9;
+
+        const axes = [
+            { label: '社交性',   val: Math.min(sc.social / MAX, 1) },
+            { label: '積極性',   val: Math.min((sc.action + sc.social) / 2 / MAX, 1) },
+            { label: '行動力',   val: Math.min(sc.action / MAX, 1) },
+            { label: '共感力',   val: Math.min(sc.empathy / MAX, 1) },
+            { label: 'コミュ力', val: Math.min((sc.social + sc.empathy) / 2 / MAX, 1) },
+        ];
+
+        function pt(i, ratio) {
+            const a = (i * 2 * Math.PI / N) - Math.PI / 2;
+            return [CX + R * ratio * Math.cos(a), CY + R * ratio * Math.sin(a)];
+        }
+
+        let s = `<svg viewBox="0 0 280 295" width="100%" style="max-width:280px;display:block;margin:0 auto">`;
+
+        // グリッド（25%ごと）
+        [0.25, 0.5, 0.75, 1].forEach(r => {
+            const pts = Array.from({length: N}, (_, i) => pt(i, r).join(',')).join(' ');
+            s += `<polygon points="${pts}" fill="${r===1?'none':'rgba(240,103,166,0.04)'}" stroke="#f0c0dc" stroke-width="${r===1?1.5:0.7}"/>`;
+        });
+
+        // 軸線
+        for (let i = 0; i < N; i++) {
+            const [x, y] = pt(i, 1);
+            s += `<line x1="${CX}" y1="${CY}" x2="${x}" y2="${y}" stroke="#f0c0dc" stroke-width="0.8"/>`;
+        }
+
+        // データポリゴン
+        const dataPts = axes.map((a, i) => pt(i, Math.max(a.val, 0.06)).join(',')).join(' ');
+        s += `<polygon points="${dataPts}" fill="rgba(240,103,166,0.22)" stroke="#F067A6" stroke-width="2.2"/>`;
+
+        // ドット
+        axes.forEach((a, i) => {
+            const [x, y] = pt(i, Math.max(a.val, 0.06));
+            s += `<circle cx="${x}" cy="${y}" r="4.5" fill="#F067A6"/>`;
+        });
+
+        // ラベル＋%
+        const anchors = ['middle', 'start', 'start', 'end', 'end'];
+        axes.forEach((a, i) => {
+            const [x, y] = pt(i, 1.4);
+            const pct = Math.round(a.val * 100);
+            s += `<text x="${x}" y="${y - 7}" text-anchor="${anchors[i]}" font-size="11" fill="#666">${a.label}</text>`;
+            s += `<text x="${x}" y="${y + 8}" text-anchor="${anchors[i]}" font-size="13" font-weight="bold" fill="#F067A6">${pct}%</text>`;
+        });
+
+        s += `</svg>`;
+        return s;
     }
 </script>
 </body>
