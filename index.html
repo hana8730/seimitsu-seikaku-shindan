@@ -671,7 +671,7 @@
     }
 
     function drawRadarChart(sc) {
-        const CX = 180, CY = 160, R = 95, N = 5;
+        const CX = 180, CY = 190, R = 95, N = 5;
         const MAX = 9;
         const axes = [
             { label: '社交性',   val: Math.min(sc.social / MAX, 1) },
@@ -686,7 +686,7 @@
             return [CX + R * ratio * Math.cos(a), CY + R * ratio * Math.sin(a)];
         }
 
-        let s = `<svg viewBox="0 0 360 305" width="100%" style="max-width:360px;display:block;margin:0 auto">`;
+        let s = `<svg viewBox="0 0 360 340" width="100%" style="max-width:360px;display:block;margin:0 auto">`;
 
         [0.25, 0.5, 0.75, 1].forEach(r => {
             const pts = Array.from({length: N}, (_, i) => pt(i, r).join(',')).join(' ');
