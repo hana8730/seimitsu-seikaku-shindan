@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>婚活診断テスト</title>
+    <!-- Meta Pixel -->
+    <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','800557740590259');
+    fbq('track','PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=800557740590259&ev=PageView&noscript=1"/></noscript>
+    <!-- End Meta Pixel -->
     <style>
         :root {
             --primary-pink: #ff45b1;
@@ -342,7 +355,7 @@
 
     <!-- ⑥ 下部 LINE CTA -->
     <div class="lp-cta-bottom">
-        <a href="https://lin.ee/qYCi0W9" class="lp-line-btn">
+        <a href="https://lin.ee/qYCi0W9" class="lp-line-btn" onclick="fbq('track','Lead')" target="_blank">
             LINEで<br>教科書を受け取る
             <small>友だち追加は無料・勧誘メッセージは送りません</small>
         </a>
