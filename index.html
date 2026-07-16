@@ -671,7 +671,7 @@
     }
 
     function drawRadarChart(sc) {
-        const CX = 140, CY = 148, R = 95, N = 5;
+        const CX = 180, CY = 140, R = 95, N = 5;
         const MAX = 9;
         const axes = [
             { label: '社交性',   val: Math.min(sc.social / MAX, 1) },
@@ -686,7 +686,7 @@
             return [CX + R * ratio * Math.cos(a), CY + R * ratio * Math.sin(a)];
         }
 
-        let s = `<svg viewBox="0 0 280 295" width="100%" style="max-width:280px;display:block;margin:0 auto">`;
+        let s = `<svg viewBox="0 0 360 285" width="100%" style="max-width:360px;display:block;margin:0 auto">`;
 
         [0.25, 0.5, 0.75, 1].forEach(r => {
             const pts = Array.from({length: N}, (_, i) => pt(i, r).join(',')).join(' ');
@@ -708,7 +708,7 @@
 
         const anchors = ['middle', 'start', 'start', 'end', 'end'];
         axes.forEach((a, i) => {
-            const [x, y] = pt(i, 1.4);
+            const [x, y] = pt(i, 1.38);
             const pct = Math.round(a.val * 100);
             s += `<text x="${x}" y="${y - 7}" text-anchor="${anchors[i]}" font-size="11" fill="#666">${a.label}</text>`;
             s += `<text x="${x}" y="${y + 8}" text-anchor="${anchors[i]}" font-size="13" font-weight="bold" fill="#F067A6">${pct}%</text>`;
