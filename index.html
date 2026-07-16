@@ -243,23 +243,8 @@
 <!-- ===== 診断アプリ ===== -->
 <div class="container">
 
-    <!-- ① 開始画面 -->
-    <div id="screen-entry" class="screen active">
-        <h1>✨ 婚活診断</h1>
-        <p style="color:#888; font-size:14px;">9つの質問であなたの強みを分析します。</p>
-        <div class="input-group">
-            <label for="userName">お名前</label>
-            <input type="text" id="userName" placeholder="例：田中 はな">
-        </div>
-        <div class="input-group">
-            <label for="userAge">ご年齢</label>
-            <input type="number" id="userAge" placeholder="例：28" min="1" max="120">
-        </div>
-        <button class="btn" onclick="startQuiz()">診断をスタート →</button>
-    </div>
-
-    <!-- ② 質問画面 -->
-    <div id="screen-quiz" class="screen">
+    <!-- ① 質問画面 -->
+    <div id="screen-quiz" class="screen active">
         <div class="progress-wrap">
             <div class="progress-bar" id="progress-bar" style="width:0%"></div>
         </div>
@@ -268,7 +253,7 @@
         <div id="choices-container"></div>
     </div>
 
-    <!-- ③ 結果画面 -->
+    <!-- ② 結果画面 -->
     <div id="screen-result" class="screen">
         <span class="emoji-large" id="result-emoji"></span>
         <div class="result-type-label" id="result-type-label"></div>
@@ -366,7 +351,6 @@
 
 <script>
     let currentIdx = 0;
-    let userName = '';
     let scores = { social: 0, empathy: 0, action: 0 };
 
     const questions = [
@@ -512,17 +496,9 @@
         document.getElementById(id).classList.add('active');
     }
 
-    function startQuiz() {
-        userName = document.getElementById('userName').value.trim();
-        if (!userName) { alert("お名前を入力してください"); return; }
-        scores = { social: 0, empathy: 0, action: 0 };
-        currentIdx = 0;
-        // 前回のLP非表示に戻す
-        document.getElementById('lp-section').style.display = 'none';
-        document.getElementById('lp-sticky').style.display = 'none';
-        showScreen('screen-quiz');
+    window.addEventListener('DOMContentLoaded', function() {
         showQuestion();
-    }
+    });
 
     function showQuestion() {
         const q = questions[currentIdx];
@@ -555,7 +531,7 @@
         const result = resultTypes.find(r => r.condition(scores));
         document.getElementById('result-emoji').innerText = result.emoji;
         document.getElementById('result-type-label').innerText = result.type;
-        document.getElementById('result-title').innerText = userName + 'さんの診断結果';
+        document.getElementById('result-title').innerText = 'あなたの診断結果';
         document.getElementById('advice-text').innerHTML =
             `<strong>${result.title}</strong><br><br>` + result.advice;
         document.getElementById('radar-chart').innerHTML = drawRadarChart(scores);
