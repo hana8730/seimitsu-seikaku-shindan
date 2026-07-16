@@ -11,22 +11,24 @@
             --secondary-color: #fff0f6;
             --text-color: #333333;
             --bg-color: #FFFFFF;
+            --pink:#ef62a7; --pink-deep:#df3c8d; --pink-pale:#fff2fa; --ink:#252126; --muted:#746d73;
         }
 
         * { box-sizing: border-box; }
 
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Helvetica Neue', Arial, "Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
             background-color: var(--secondary-color);
             color: var(--text-color);
             margin: 0;
-            padding: 16px;
+            padding: 16px 16px 80px;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
         }
 
+        /* ===== 診断アプリ ===== */
         .container {
             background-color: var(--bg-color);
             width: 100%;
@@ -35,242 +37,197 @@
             box-shadow: 0 8px 24px rgba(255, 69, 177, 0.15);
             padding: 32px 24px;
             text-align: center;
-            margin: auto;
         }
 
-        /* --- スクリーン切り替え --- */
         .screen { display: none; }
         .screen.active { display: block; }
 
-        /* --- タイトル --- */
-        h1 {
-            color: var(--primary-pink);
-            font-size: clamp(20px, 5vw, 26px);
-            margin-top: 0;
-        }
-        h2 {
-            color: var(--primary-pink);
-            font-size: clamp(18px, 4.5vw, 22px);
-        }
+        h1 { color: var(--primary-pink); font-size: clamp(20px, 5vw, 26px); margin-top: 0; }
+        h2 { color: var(--primary-pink); font-size: clamp(18px, 4.5vw, 22px); }
 
-        /* --- 入力フォーム --- */
         .input-group { margin: 16px 0; text-align: left; }
         .input-group label { display: block; font-weight: bold; margin-bottom: 6px; font-size: 14px; }
         input {
-            width: 100%;
-            padding: 12px 14px;
-            border: 2px solid #eee;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: border-color 0.2s;
+            width: 100%; padding: 12px 14px; border: 2px solid #eee;
+            border-radius: 10px; font-size: 16px; transition: border-color 0.2s;
         }
         input:focus { outline: none; border-color: var(--primary-pink); }
 
-        /* --- 共通ボタン --- */
         .btn {
-            background-color: var(--primary-pink);
-            color: white;
-            border: none;
-            padding: 14px 24px;
-            font-size: 16px;
-            border-radius: 10px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-            margin-top: 10px;
+            background-color: var(--primary-pink); color: white; border: none;
+            padding: 14px 24px; font-size: 16px; border-radius: 10px; cursor: pointer;
+            width: 100%; font-weight: bold; margin-top: 10px;
             transition: background-color 0.2s, transform 0.1s;
         }
         .btn:hover { background-color: var(--primary-hover); }
         .btn:active { transform: scale(0.98); }
 
-        /* --- 選択肢ボタン --- */
         .choice-btn {
-            background-color: white;
-            color: var(--text-color);
-            border: 2px solid var(--primary-pink);
-            padding: 14px 16px;
-            margin-bottom: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            width: 100%;
-            text-align: left;
-            font-size: 15px;
+            background-color: white; color: var(--text-color);
+            border: 2px solid var(--primary-pink); padding: 14px 16px;
+            margin-bottom: 12px; border-radius: 10px; cursor: pointer;
+            width: 100%; text-align: left; font-size: 15px;
             transition: background-color 0.2s, color 0.2s;
         }
         .choice-btn:hover { background-color: var(--primary-pink); color: white; }
         .choice-btn:active { transform: scale(0.98); }
 
-        /* --- 進捗バー --- */
-        .progress-wrap {
-            background: #eee;
-            border-radius: 10px;
-            height: 8px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        .progress-bar {
-            background: var(--primary-pink);
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.4s ease;
-        }
+        .progress-wrap { background: #eee; border-radius: 10px; height: 8px; margin-bottom: 20px; overflow: hidden; }
+        .progress-bar { background: var(--primary-pink); height: 100%; border-radius: 10px; transition: width 0.4s ease; }
 
-        /* --- 質問バッジ --- */
-        #question-badge {
-            font-size: 13px;
-            color: var(--primary-pink);
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
+        #question-badge { font-size: 13px; color: var(--primary-pink); font-weight: bold; margin-bottom: 8px; }
+        #question-text { font-size: clamp(16px, 4vw, 18px); font-weight: bold; margin-bottom: 20px; }
 
-        #question-text {
-            font-size: clamp(16px, 4vw, 18px);
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        /* --- 結果画面 --- */
         .result-type-label {
-            display: inline-block;
-            background: var(--primary-pink);
-            color: white;
-            border-radius: 20px;
-            padding: 4px 16px;
-            font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 8px;
+            display: inline-block; background: var(--primary-pink); color: white;
+            border-radius: 20px; padding: 4px 16px; font-size: 13px; font-weight: bold; margin-bottom: 8px;
         }
-
         .advice-box {
-            background-color: var(--secondary-color);
-            padding: 18px 20px;
-            border-radius: 12px;
-            text-align: left;
-            margin-top: 16px;
-            line-height: 1.7;
-            font-size: 15px;
+            background-color: var(--secondary-color); padding: 18px 20px; border-radius: 12px;
+            text-align: left; margin-top: 16px; line-height: 1.7; font-size: 15px;
         }
-
-        .advice-box ul {
-            margin: 10px 0 0;
-            padding-left: 20px;
-        }
-
+        .advice-box ul { margin: 10px 0 0; padding-left: 20px; }
         .advice-box ul li { margin-bottom: 6px; }
-
-        .divider {
-            border: none;
-            border-top: 1px solid #f0c0dc;
-            margin: 16px 0;
-        }
-
+        .divider { border: none; border-top: 1px solid #f0c0dc; margin: 20px 0 0; }
         .emoji-large { font-size: 48px; margin: 8px 0 12px; display: block; }
 
-        /* --- LINE登録CTA --- */
-        .line-cta-box {
-            background: #FFF0F7;
-            border-radius: 16px;
-            padding: 20px 18px;
-            margin-top: 8px;
-            text-align: left;
-        }
-        .line-cta-hook {
-            font-size: 15px;
-            font-weight: 800;
-            color: #1e1e1e;
-            margin: 0 0 6px;
-            text-align: center;
-            line-height: 1.5;
-        }
-        .line-cta-hook em {
-            color: #F067A6;
-            font-style: normal;
-        }
-        .line-cta-sub {
+        /* スクロール誘導 */
+        .scroll-hint {
+            margin-top: 20px;
+            color: var(--pink-deep);
             font-size: 13px;
-            color: #F067A6;
             font-weight: 700;
-            text-align: center;
-            margin: 0 0 6px;
+            animation: bounce 1.4s infinite;
+            letter-spacing: .05em;
         }
-        .line-cta-lead {
-            font-size: 13px;
-            color: #888;
-            margin: 0 0 14px;
-            text-align: center;
+        @keyframes bounce {
+            0%,100% { transform: translateY(0); }
+            50%      { transform: translateY(5px); }
         }
-        .line-book-title {
-            font-weight: 800;
-            font-size: 15px;
-            color: #1e1e1e;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .line-book-title span {
-            background: #F067A6;
-            color: #fff;
-            font-size: 11px;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-weight: 700;
-        }
-        .line-book-list {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 16px;
-        }
-        .line-book-list li {
-            font-size: 13px;
-            color: #444;
-            padding: 5px 0 5px 20px;
-            position: relative;
-            border-bottom: 1px solid #f5d0e8;
-            line-height: 1.5;
-        }
-        .line-book-list li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #F067A6;
-            font-weight: 700;
-        }
-        .line-register-btn {
-            display: block;
-            background: #06C755;
-            color: #fff;
-            font-weight: 800;
-            text-align: center;
-            padding: 16px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 16px;
-            margin-bottom: 6px;
-        }
-        .line-register-btn small {
-            display: block;
-            font-size: 11px;
-            font-weight: 400;
-            margin-top: 4px;
-            opacity: 0.85;
-        }
-        .btn-restart {
-            background: none;
-            border: none;
-            color: #bbb;
-            font-size: 13px;
-            cursor: pointer;
-            margin-top: 16px;
-            display: block;
+
+        /* ===== 埋め込みLP ===== */
+        #lp-section {
             width: 100%;
+            max-width: 500px;
+            margin-top: 0;
+            background: #fff;
+            border-radius: 0 0 20px 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(255,69,177,0.12);
+        }
+
+        /* LP hero */
+        .lp-hero {
+            position: relative;
+            padding: 40px 22px 36px;
             text-align: center;
+            background: linear-gradient(155deg,#fff 0%,#fff9fd 53%,#ffeaf5 100%);
+        }
+        .lp-hero::before,.lp-hero::after { content:""; position:absolute; border-radius:50%; background:#f9c4df; opacity:.4; }
+        .lp-hero::before { width:140px; height:140px; right:-70px; top:-60px; }
+        .lp-hero::after  { width:90px;  height:90px;  left:-44px; bottom:-40px; }
+        .lp-eyebrow {
+            position:relative; display:inline-block; margin:0 0 16px; padding:5px 14px;
+            border-radius:999px; background:#fff; color:var(--pink-deep);
+            font-size:12px; font-weight:800; letter-spacing:.06em; box-shadow:0 4px 12px #e88bbb28;
+        }
+        .lp-h1 { position:relative; font-size:22px; line-height:1.55; font-weight:900; color:var(--ink); }
+        .lp-h1 em { color:var(--pink-deep); font-style:normal; }
+        .lp-gift {
+            position:relative; margin:24px auto 0; max-width:360px;
+            padding:20px 16px 18px; border:1px solid #f7c9e0; border-radius:17px;
+            background:#fff; box-shadow:0 10px 22px #de60951a;
+        }
+        .lp-gift-label {
+            display:inline-block; padding:4px 12px; border-radius:20px;
+            background:linear-gradient(100deg,#f171b1,#e84998); color:#fff; font-size:12px; font-weight:900;
+        }
+        .lp-gift h3 { margin:10px 0 8px; font-size:19px; line-height:1.45; font-weight:900; color:var(--ink); }
+        .lp-gift p  { color:var(--muted); font-size:13px; line-height:1.9; margin:0; }
+
+        /* LP section共通 */
+        .lp-sec { padding: 36px 22px; }
+        .lp-sec--pink { background: var(--pink-pale); }
+        .lp-sec-title { text-align:center; font-size:19px; line-height:1.65; font-weight:900; color:var(--ink); }
+        .lp-sec-title em { color:var(--pink-deep); font-style:normal; }
+        .lp-sec-intro { margin:11px auto 0; color:var(--muted); text-align:center; font-size:13px; line-height:1.85; }
+
+        /* LP CTA ボタン */
+        .lp-cta-wrap { padding: 24px 22px 18px; background: #fff; border-bottom: 1px solid #f7d8eb; }
+        .lp-line-btn {
+            display:block; background:#06C755; color:#fff; font-weight:900;
+            text-align:center; padding:18px 16px 14px; border-radius:14px;
+            text-decoration:none; font-size:20px; line-height:1.35;
+            box-shadow:0 8px 20px rgba(6,199,85,.28);
+        }
+        .lp-line-btn small { display:block; font-size:11px; font-weight:400; margin-top:6px; opacity:.85; }
+        .lp-cta-note { margin-top:8px; text-align:center; font-size:12px; color:var(--muted); }
+
+        /* 悩みリスト */
+        .lp-troubles { display:grid; gap:10px; margin:22px 0 0; padding:0; list-style:none; }
+        .lp-troubles li {
+            position:relative; padding:13px 13px 13px 44px;
+            border-radius:12px; background:#fff; font-size:14px; font-weight:700;
+            line-height:1.65; box-shadow:0 4px 12px #d94d8610;
+        }
+        .lp-troubles li::before {
+            content:"?"; position:absolute; left:13px; top:50%;
+            width:22px; height:22px; transform:translateY(-50%);
+            border-radius:50%; background:#f8b5d7; color:#fff;
+            font-family:Georgia,serif; font-size:15px; font-weight:700;
+            line-height:22px; text-align:center;
+        }
+
+        /* 教科書カード */
+        .lp-data-card {
+            margin-top:22px; padding:24px 17px 10px;
+            border:1px solid #f3c2db; border-radius:18px; background:#fff;
+            box-shadow:0 8px 18px #e1589213;
+        }
+        .lp-book-icon { font-size:26px; text-align:center; }
+        .lp-data-card h3 { margin:7px 0 0; text-align:center; font-size:19px; line-height:1.5; font-weight:900; color:var(--ink); }
+        .lp-data-card .lp-mini { margin:5px 0 16px; color:var(--pink-deep); text-align:center; font-size:12px; font-weight:800; }
+        .lp-contents { margin:0; padding:0; list-style:none; }
+        .lp-contents li {
+            display:flex; gap:10px; padding:14px 2px;
+            border-top:1px solid #f1d7e4; font-size:14px; font-weight:700; line-height:1.7;
+            color: var(--ink);
+        }
+        .lp-contents li::before { content:"✓"; flex:0 0 auto; color:var(--pink); font-size:21px; font-weight:900; line-height:1; }
+
+        /* 3つの視点 */
+        .lp-benefits { display:grid; gap:12px; margin-top:22px; }
+        .lp-benefit { padding:18px 15px; border-radius:14px; background:#fff; border:1px solid #f8d8e8; }
+        .lp-benefit-num { color:var(--pink); font-size:12px; font-weight:900; letter-spacing:.08em; }
+        .lp-benefit h3 { margin:4px 0 6px; font-size:16px; font-weight:900; color:var(--ink); }
+        .lp-benefit p { color:var(--muted); font-size:13px; line-height:1.85; margin:0; }
+        .lp-quote {
+            margin:22px 0 0; padding:20px 16px; border-radius:16px;
+            background:linear-gradient(135deg,#fff 0%,#fff5fb 100%); border:1px solid #f5d5e5; text-align:center;
+        }
+        .lp-quote p { font-size:16px; line-height:1.8; font-weight:900; margin:0; color:var(--ink); }
+        .lp-quote p strong { color:var(--pink-deep); }
+
+        /* 下部CTA */
+        .lp-cta-bottom { padding: 36px 22px 52px; }
+
+        /* スティッキーボタン */
+        #lp-sticky {
+            display: none;
+            position: fixed; bottom:0; left:50%; transform:translateX(-50%);
+            width:100%; max-width:500px; padding:10px 18px 16px;
+            background:#fff; box-shadow:0 -3px 18px rgba(0,0,0,.10); z-index:998;
+        }
+        #lp-sticky a {
+            display:block; background:#06C755; color:#fff; font-weight:900;
+            text-align:center; padding:14px; border-radius:12px;
+            text-decoration:none; font-size:16px;
         }
     </style>
 </head>
 <body>
 
+<!-- ===== 診断アプリ ===== -->
 <div class="container">
 
     <!-- ① 開始画面 -->
@@ -307,36 +264,109 @@
         <div id="radar-chart"></div>
         <div class="advice-box" id="advice-text"></div>
         <hr class="divider">
+        <p class="scroll-hint">↓ スクロールして続きを見る</p>
+    </div>
 
-        <!-- LINE登録CTA -->
-        <div class="line-cta-box">
-            <p class="line-cta-lead">婚活市場の現実もデータで確認しておきませんか？</p>
-            <div class="line-book-title">
-                📚 数字で見る婚活の教科書【最新版】
-                <span>無料プレゼント</span>
-            </div>
-            <ul class="line-book-list">
-                <li>令和の女性の8割が「夫婦別室」を希望する本当の理由</li>
+</div>
+
+<!-- ===== 埋め込みLP ===== -->
+<div id="lp-section" style="display:none;">
+
+    <!-- ① ヒーロー -->
+    <div class="lp-hero">
+        <p class="lp-eyebrow">婚活を、感覚だけで終わらせない。</p>
+        <h2 class="lp-h1">婚活市場で今、<br>何が起きているか<br><em>知っていますか？</em></h2>
+        <div class="lp-gift">
+            <span class="lp-gift-label">無料プレゼント</span>
+            <h3>📚 数字で見る<br>婚活の教科書【最新版】</h3>
+            <p>
+                データをもとに<br>
+                これからの婚活で<br>
+                大切な視点をお届けします
+            </p>
+        </div>
+    </div>
+
+    <!-- ② ヒーロー直下 LINE CTA -->
+    <div class="lp-cta-wrap">
+        <a href="https://lin.ee/qYCi0W9" class="lp-line-btn">
+            LINEで<br>教科書を受け取る
+            <small>友だち追加は無料・勧誘メッセージは送りません</small>
+        </a>
+    </div>
+
+    <!-- ③ 悩み -->
+    <div class="lp-sec lp-sec--pink">
+        <h2 class="lp-sec-title">こんな不安を、<br><em>ひとりで抱えていませんか？</em></h2>
+        <ul class="lp-troubles">
+            <li>「30代後半からの婚活」って、実際どうなの？</li>
+            <li>頑張っているのに、なぜ出会いにつながらないの？</li>
+            <li>相手に求められる条件や価値観を知りたい</li>
+            <li>情報が多すぎて、何を信じればいいかわからない</li>
+        </ul>
+    </div>
+
+    <!-- ④ 教科書の中身 -->
+    <div class="lp-sec">
+        <h2 class="lp-sec-title">婚活市場の現実も、<br>データで確認しておきませんか？</h2>
+        <p class="lp-sec-intro">思い込みではなく、いま起きていることを知る。<br>それが、あなたらしい選択への第一歩です。</p>
+        <div class="lp-data-card">
+            <div class="lp-book-icon">📚</div>
+            <h3>数字で見る婚活の教科書<br>【最新版】</h3>
+            <p class="lp-mini">婚活の「いま」を、やさしく整理</p>
+            <ul class="lp-contents">
+                <li>令和の女性の8割が「夫婦別室」を<br>希望する本当の理由</li>
                 <li>婚活市場での男女比が逆転した理由とは？</li>
-                <li>「30代後半はもう遅い」は本当か？データで証明</li>
+                <li>「30代後半はもう遅い」は本当か？ データで検証</li>
                 <li>理想の結婚相手に求められるのは年収より〇〇</li>
                 <li>成婚した人が意識した、たった一つのこと</li>
             </ul>
-            <a href="https://hana8730.github.io/konkatsu-data-lp/" class="line-register-btn">
-                LINEで<br>教科書を受け取る
-                <small>友だち追加は無料・勧誘メッセージは送りません</small>
-            </a>
         </div>
-
     </div>
 
+    <!-- ⑤ 3つの視点 -->
+    <div class="lp-sec lp-sec--pink">
+        <h2 class="lp-sec-title">この教科書で<br><em>手に入る3つの視点</em></h2>
+        <div class="lp-benefits">
+            <div class="lp-benefit">
+                <p class="lp-benefit-num">POINT 01</p>
+                <h3>不安を、事実で整理できる</h3>
+                <p>あいまいな噂に振り回されず、今の自分に<br>必要なことを見つめやすくなります。</p>
+            </div>
+            <div class="lp-benefit">
+                <p class="lp-benefit-num">POINT 02</p>
+                <h3>出会いの見方が変わる</h3>
+                <p>条件だけでは見えにくい、長く心地よい<br>関係をつくるためのヒントが得られます。</p>
+            </div>
+            <div class="lp-benefit">
+                <p class="lp-benefit-num">POINT 03</p>
+                <h3>次の一歩を選びやすくなる</h3>
+                <p>あなたのペースと価値観を大切にしながら、<br>これからの行動を考えられます。</p>
+            </div>
+        </div>
+        <div class="lp-quote">
+            <p>遠回りしない婚活を<br><strong>数字で確認してください</strong></p>
+        </div>
+    </div>
+
+    <!-- ⑥ 下部 LINE CTA -->
+    <div class="lp-cta-bottom">
+        <a href="https://lin.ee/qYCi0W9" class="lp-line-btn">
+            LINEで<br>教科書を受け取る
+            <small>友だち追加は無料・勧誘メッセージは送りません</small>
+        </a>
+    </div>
+
+</div>
+
+<!-- スティッキーボタン（結果画面表示後のみ） -->
+<div id="lp-sticky">
+    <a href="https://lin.ee/qYCi0W9">LINEで教科書を受け取る →</a>
 </div>
 
 <script>
     let currentIdx = 0;
     let userName = '';
-
-    // スコアキー: social=人との関わり, empathy=共感力, action=行動力
     let scores = { social: 0, empathy: 0, action: 0 };
 
     const questions = [
@@ -414,7 +444,6 @@
         }
     ];
 
-    // 結果パターン
     const resultTypes = [
         {
             condition: s => s.empathy >= 4 && s.social >= 4,
@@ -462,7 +491,7 @@
                 人との関わりを楽しむ一方で、一人の時間を使って内省する習慣が自己成長を加速させます。`
         },
         {
-            condition: () => true, // デフォルト
+            condition: () => true,
             emoji: "🌿",
             type: "バランス調整タイプ",
             title: "あなたは「柔軟に対応できる人」",
@@ -488,6 +517,9 @@
         if (!userName) { alert("お名前を入力してください"); return; }
         scores = { social: 0, empathy: 0, action: 0 };
         currentIdx = 0;
+        // 前回のLP非表示に戻す
+        document.getElementById('lp-section').style.display = 'none';
+        document.getElementById('lp-sticky').style.display = 'none';
         showScreen('screen-quiz');
         showQuestion();
     }
@@ -506,7 +538,6 @@
             btn.className = 'choice-btn';
             btn.innerText = c.text;
             btn.onclick = () => {
-                // スコア加算
                 for (const key in c.score) scores[key] += c.score[key];
                 currentIdx++;
                 if (currentIdx < questions.length) {
@@ -520,23 +551,32 @@
     }
 
     function showResult() {
-        // 進捗を100%に
         document.getElementById('progress-bar').style.width = '100%';
-
-        // 結果タイプを判定
         const result = resultTypes.find(r => r.condition(scores));
-
         document.getElementById('result-emoji').innerText = result.emoji;
         document.getElementById('result-type-label').innerText = result.type;
         document.getElementById('result-title').innerText = userName + 'さんの診断結果';
         document.getElementById('advice-text').innerHTML =
             `<strong>${result.title}</strong><br><br>` + result.advice;
-
         document.getElementById('radar-chart').innerHTML = drawRadarChart(scores);
 
         showScreen('screen-result');
         launchConfetti();
+
+        // LPセクションを表示
+        document.getElementById('lp-section').style.display = 'block';
     }
+
+    // スティッキーボタン（結果表示後のみ）
+    let lpVisible = false;
+    window.addEventListener('scroll', function () {
+        if (!lpVisible && document.getElementById('screen-result').classList.contains('active')) {
+            lpVisible = true;
+        }
+        if (lpVisible) {
+            document.getElementById('lp-sticky').style.display = window.scrollY > 400 ? 'block' : 'none';
+        }
+    });
 
     function launchConfetti() {
         const existing = document.getElementById('confetti-canvas');
@@ -558,7 +598,6 @@
         const colors = ['#F067A6','#ff9de2','#ffde59','#ff6b9d','#a8ff78',
                         '#59d9ff','#ffd700','#ff9500','#ff4e9f','#c084fc','#34d399'];
 
-        // バースト起点（画面下中央から複数点）
         const origins = [
             { x: W * 0.5,  y: H + 10 },
             { x: W * 0.25, y: H + 10 },
@@ -567,7 +606,7 @@
 
         const particles = Array.from({ length: 220 }, (_, idx) => {
             const o = origins[idx % origins.length];
-            const angle = (Math.random() * 140 + 20) * Math.PI / 180; // 上方向
+            const angle = (Math.random() * 140 + 20) * Math.PI / 180;
             const speed = Math.random() * 26 + 10;
             return {
                 x:    o.x + (Math.random() - 0.5) * 60,
@@ -579,7 +618,7 @@
                 color: colors[Math.floor(Math.random() * colors.length)],
                 rot:   Math.random() * Math.PI * 2,
                 rotV:  (Math.random() - 0.5) * 0.18,
-                type:  Math.floor(Math.random() * 3), // 0=花びら 1=丸 2=短冊
+                type:  Math.floor(Math.random() * 3),
                 wave:  Math.random() * Math.PI * 2,
                 waveA: Math.random() * 1.8 + 0.6,
                 waveS: Math.random() * 0.06 + 0.02,
@@ -596,9 +635,7 @@
             ctx.rotate(p.rot);
             ctx.globalAlpha = Math.max(0, p.alpha);
             ctx.fillStyle = p.color;
-
             if (p.type === 0) {
-                // 花びら（楕円2枚で十字）
                 ctx.beginPath();
                 ctx.ellipse(0, -p.size * 0.35, p.size * 0.28, p.size * 0.55, 0, 0, Math.PI * 2);
                 ctx.fill();
@@ -606,12 +643,10 @@
                 ctx.ellipse(0, p.size * 0.35, p.size * 0.28, p.size * 0.55, 0, 0, Math.PI * 2);
                 ctx.fill();
             } else if (p.type === 1) {
-                // 丸
                 ctx.beginPath();
                 ctx.arc(0, 0, p.size * 0.42, 0, Math.PI * 2);
                 ctx.fill();
             } else {
-                // 短冊
                 ctx.fillRect(-p.size * 0.18, -p.size * 0.55, p.size * 0.36, p.size * 1.1);
             }
             ctx.restore();
@@ -620,7 +655,6 @@
         function tick() {
             ctx.clearRect(0, 0, W, H);
             let active = 0;
-
             particles.forEach(p => {
                 p.wave += p.waveS;
                 p.vx   += Math.sin(p.wave) * p.waveA * 0.08;
@@ -628,16 +662,12 @@
                 p.x    += p.vx;
                 p.y    += p.vy;
                 p.rot  += p.rotV;
-
-                // 画面下80%以降でフェードアウト
                 if (p.y > H * 0.8) p.alpha -= 0.018;
-
                 if (p.y < H + 40 && p.alpha > 0) {
                     active++;
                     drawParticle(p);
                 }
             });
-
             frame++;
             if (active > 0 && frame < 420) {
                 animId = requestAnimationFrame(tick);
@@ -652,7 +682,6 @@
     function drawRadarChart(sc) {
         const CX = 140, CY = 148, R = 95, N = 5;
         const MAX = 9;
-
         const axes = [
             { label: '社交性',   val: Math.min(sc.social / MAX, 1) },
             { label: '積極性',   val: Math.min((sc.action + sc.social) / 2 / MAX, 1) },
@@ -668,29 +697,24 @@
 
         let s = `<svg viewBox="0 0 280 295" width="100%" style="max-width:280px;display:block;margin:0 auto">`;
 
-        // グリッド（25%ごと）
         [0.25, 0.5, 0.75, 1].forEach(r => {
             const pts = Array.from({length: N}, (_, i) => pt(i, r).join(',')).join(' ');
             s += `<polygon points="${pts}" fill="${r===1?'none':'rgba(240,103,166,0.04)'}" stroke="#f0c0dc" stroke-width="${r===1?1.5:0.7}"/>`;
         });
 
-        // 軸線
         for (let i = 0; i < N; i++) {
             const [x, y] = pt(i, 1);
             s += `<line x1="${CX}" y1="${CY}" x2="${x}" y2="${y}" stroke="#f0c0dc" stroke-width="0.8"/>`;
         }
 
-        // データポリゴン
         const dataPts = axes.map((a, i) => pt(i, Math.max(a.val, 0.06)).join(',')).join(' ');
         s += `<polygon points="${dataPts}" fill="rgba(240,103,166,0.22)" stroke="#F067A6" stroke-width="2.2"/>`;
 
-        // ドット
         axes.forEach((a, i) => {
             const [x, y] = pt(i, Math.max(a.val, 0.06));
             s += `<circle cx="${x}" cy="${y}" r="4.5" fill="#F067A6"/>`;
         });
 
-        // ラベル＋%
         const anchors = ['middle', 'start', 'start', 'end', 'end'];
         axes.forEach((a, i) => {
             const [x, y] = pt(i, 1.4);
