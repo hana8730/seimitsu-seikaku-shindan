@@ -165,6 +165,89 @@
         }
 
         .emoji-large { font-size: 48px; margin: 8px 0 12px; display: block; }
+
+        /* --- LINE登録CTA --- */
+        .line-cta-box {
+            background: #FFF0F7;
+            border-radius: 16px;
+            padding: 20px 18px;
+            margin-top: 8px;
+            text-align: left;
+        }
+        .line-cta-lead {
+            font-size: 14px;
+            color: #888;
+            margin: 0 0 12px;
+            text-align: center;
+        }
+        .line-book-title {
+            font-weight: 800;
+            font-size: 15px;
+            color: #1e1e1e;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .line-book-title span {
+            background: #F067A6;
+            color: #fff;
+            font-size: 11px;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+        .line-book-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px;
+        }
+        .line-book-list li {
+            font-size: 13px;
+            color: #444;
+            padding: 5px 0 5px 20px;
+            position: relative;
+            border-bottom: 1px solid #f5d0e8;
+            line-height: 1.5;
+        }
+        .line-book-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #F067A6;
+            font-weight: 700;
+        }
+        .line-register-btn {
+            display: block;
+            background: #06C755;
+            color: #fff;
+            font-weight: 800;
+            text-align: center;
+            padding: 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+        .line-register-btn small {
+            display: block;
+            font-size: 11px;
+            font-weight: 400;
+            margin-top: 4px;
+            opacity: 0.85;
+        }
+        .btn-restart {
+            background: none;
+            border: none;
+            color: #bbb;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 16px;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -203,7 +286,28 @@
         <h2 id="result-title"></h2>
         <div class="advice-box" id="advice-text"></div>
         <hr class="divider">
-        <a class="btn" href="https://timerex.net/s/h8730521_ab27/7c68097a" target="_blank" style="display:inline-block;text-decoration:none;">📅 詳しい話をする</a>
+
+        <!-- LINE登録CTA -->
+        <div class="line-cta-box">
+            <p class="line-cta-lead">婚活市場の現実もデータで確認しておきませんか？</p>
+            <div class="line-book-title">
+                📚 数字で見る婚活の教科書【最新版】
+                <span>無料プレゼント</span>
+            </div>
+            <ul class="line-book-list">
+                <li>婚活市場での男女比が逆転した理由とは？</li>
+                <li>「30代後半はもう遅い」は本当か？データで証明</li>
+                <li>成婚した人が意識した、たった一つのこと</li>
+                <li>理想の結婚相手に求められるのは年収より〇〇</li>
+                <li>令和の女性の8割が「夫婦別室」を希望する本当の理由</li>
+            </ul>
+            <a href="https://lin.ee/qYCi0W9" class="line-register-btn">
+                LINEで無料受け取る →
+                <small>友だち追加は無料・勧誘メッセージは送りません</small>
+            </a>
+        </div>
+
+        <button class="btn-restart" onclick="location.reload()">🔄 最初からやり直す</button>
     </div>
 
 </div>
@@ -413,4 +517,3 @@
 </script>
 </body>
 </html>
-
