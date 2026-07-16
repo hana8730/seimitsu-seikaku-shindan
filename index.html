@@ -309,7 +309,6 @@
             </a>
         </div>
 
-        <button class="btn-restart" onclick="location.reload()">🔄 最初からやり直す</button>
     </div>
 
 </div>
@@ -517,6 +516,62 @@
         document.getElementById('radar-chart').innerHTML = drawRadarChart(scores);
 
         showScreen('screen-result');
+        launchConfetti();
+    }
+
+    function launchConfetti() {
+        const colors = ['#F067A6','#ff9de2','#ffde59','#59d9ff','#a8ff78','#ff6b6b','#ffd700'];
+        const container = document.body;
+        const total = 80;
+
+        for (let i = 0; i < total; i++) {
+            const el = document.createElement('div');
+            const size = Math.random() * 8 + 5;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const startX = window.innerWidth / 2;
+            const startY = window.innerHeight * 0.35;
+            const angle = (Math.random() * 360) * Math.PI / 180;
+            const speed = Math.random() * 220 + 80;
+            const tx = Math.cos(angle) * speed;
+            const ty = Math.sin(angle) * speed - 120;
+            const rotate = Math.random() * 720 - 360;
+            const delay = Math.random() * 0.15;
+            const duration = Math.random() * 0.6 + 0.8;
+
+            Object.assign(el.style, {
+                position: 'fixed',
+                left: startX + 'px',
+                top: startY + 'px',
+                width: size + 'px',
+                height: size * (Math.random() > 0.5 ? 1 : 2.4) + 'px',
+                background: color,
+                borderRadius: Math.random() > 0.5 ? '50%' : '2px',
+                pointerEvents: 'none',
+                zIndex: 9999,
+                opacity: 1,
+                transform: 'translate(-50%,-50%)',
+                animation: `confetti-fall ${duration}s ease-out ${delay}s forwards`,
+                '--tx': tx + 'px',
+                '--ty': ty + 'px',
+                '--rot': rotate + 'deg',
+            });
+
+            container.appendChild(el);
+            setTimeout(() => el.remove(), (duration + delay + 0.5) * 1000);
+        }
+
+        // キーフレームを動的に注入（1回だけ）
+        if (!document.getElementById('confetti-style')) {
+            const style = document.createElement('style');
+            style.id = 'confetti-style';
+            style.textContent = `
+                @keyframes confetti-fall {
+                    0%   { transform: translate(-50%,-50%) rotate(0deg); opacity: 1; }
+                    100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty) + 300px)) rotate(var(--rot)); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
     }
 
     function drawRadarChart(sc) {
