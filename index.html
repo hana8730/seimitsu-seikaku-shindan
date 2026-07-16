@@ -322,7 +322,7 @@
                 <li>理想の結婚相手に求められるのは年収より〇〇</li>
                 <li>成婚した人が意識した、たった一つのこと</li>
             </ul>
-            <a href="https://lin.ee/qYCi0W9" class="line-register-btn">
+            <a href="https://hana8730.github.io/konkatsu-data-lp/" class="line-register-btn">
                 LINEで<br>教科書を受け取る
                 <small>友だち追加は無料・勧誘メッセージは送りません</small>
             </a>
@@ -539,58 +539,114 @@
     }
 
     function launchConfetti() {
-        const colors = ['#F067A6','#ff9de2','#ffde59','#59d9ff','#a8ff78','#ff6b6b','#ffd700'];
-        const container = document.body;
-        const total = 80;
+        const existing = document.getElementById('confetti-canvas');
+        if (existing) existing.remove();
 
-        for (let i = 0; i < total; i++) {
-            const el = document.createElement('div');
-            const size = Math.random() * 8 + 5;
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            const startX = window.innerWidth / 2;
-            const startY = window.innerHeight * 0.35;
-            const angle = (Math.random() * 360) * Math.PI / 180;
-            const speed = Math.random() * 220 + 80;
-            const tx = Math.cos(angle) * speed;
-            const ty = Math.sin(angle) * speed - 120;
-            const rotate = Math.random() * 720 - 360;
-            const delay = Math.random() * 0.15;
-            const duration = Math.random() * 0.6 + 0.8;
+        const canvas = document.createElement('canvas');
+        canvas.id = 'confetti-canvas';
+        Object.assign(canvas.style, {
+            position: 'fixed', top: '0', left: '0',
+            width: '100%', height: '100%',
+            pointerEvents: 'none', zIndex: '9999'
+        });
+        document.body.appendChild(canvas);
 
-            Object.assign(el.style, {
-                position: 'fixed',
-                left: startX + 'px',
-                top: startY + 'px',
-                width: size + 'px',
-                height: size * (Math.random() > 0.5 ? 1 : 2.4) + 'px',
-                background: color,
-                borderRadius: Math.random() > 0.5 ? '50%' : '2px',
-                pointerEvents: 'none',
-                zIndex: 9999,
-                opacity: 1,
-                transform: 'translate(-50%,-50%)',
-                animation: `confetti-fall ${duration}s ease-out ${delay}s forwards`,
-                '--tx': tx + 'px',
-                '--ty': ty + 'px',
-                '--rot': rotate + 'deg',
+        const W = canvas.width = window.innerWidth;
+        const H = canvas.height = window.innerHeight;
+        const ctx = canvas.getContext('2d');
+
+        const colors = ['#F067A6','#ff9de2','#ffde59','#ff6b9d','#a8ff78',
+                        '#59d9ff','#ffd700','#ff9500','#ff4e9f','#c084fc','#34d399'];
+
+        // バースト起点（画面下中央から複数点）
+        const origins = [
+            { x: W * 0.5,  y: H + 10 },
+            { x: W * 0.25, y: H + 10 },
+            { x: W * 0.75, y: H + 10 },
+        ];
+
+        const particles = Array.from({ length: 220 }, (_, idx) => {
+            const o = origins[idx % origins.length];
+            const angle = (Math.random() * 140 + 20) * Math.PI / 180; // 上方向
+            const speed = Math.random() * 26 + 10;
+            return {
+                x:    o.x + (Math.random() - 0.5) * 60,
+                y:    o.y,
+                vx:   Math.cos(Math.PI - angle) * speed,
+                vy:  -Math.sin(angle) * speed,
+                gravity: 0.45 + Math.random() * 0.25,
+                size:  Math.random() * 14 + 8,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rot:   Math.random() * Math.PI * 2,
+                rotV:  (Math.random() - 0.5) * 0.18,
+                type:  Math.floor(Math.random() * 3), // 0=花びら 1=丸 2=短冊
+                wave:  Math.random() * Math.PI * 2,
+                waveA: Math.random() * 1.8 + 0.6,
+                waveS: Math.random() * 0.06 + 0.02,
+                alpha: 1,
+            };
+        });
+
+        let frame = 0;
+        let animId;
+
+        function drawParticle(p) {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rot);
+            ctx.globalAlpha = Math.max(0, p.alpha);
+            ctx.fillStyle = p.color;
+
+            if (p.type === 0) {
+                // 花びら（楕円2枚で十字）
+                ctx.beginPath();
+                ctx.ellipse(0, -p.size * 0.35, p.size * 0.28, p.size * 0.55, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.ellipse(0, p.size * 0.35, p.size * 0.28, p.size * 0.55, 0, 0, Math.PI * 2);
+                ctx.fill();
+            } else if (p.type === 1) {
+                // 丸
+                ctx.beginPath();
+                ctx.arc(0, 0, p.size * 0.42, 0, Math.PI * 2);
+                ctx.fill();
+            } else {
+                // 短冊
+                ctx.fillRect(-p.size * 0.18, -p.size * 0.55, p.size * 0.36, p.size * 1.1);
+            }
+            ctx.restore();
+        }
+
+        function tick() {
+            ctx.clearRect(0, 0, W, H);
+            let active = 0;
+
+            particles.forEach(p => {
+                p.wave += p.waveS;
+                p.vx   += Math.sin(p.wave) * p.waveA * 0.08;
+                p.vy   += p.gravity;
+                p.x    += p.vx;
+                p.y    += p.vy;
+                p.rot  += p.rotV;
+
+                // 画面下80%以降でフェードアウト
+                if (p.y > H * 0.8) p.alpha -= 0.018;
+
+                if (p.y < H + 40 && p.alpha > 0) {
+                    active++;
+                    drawParticle(p);
+                }
             });
 
-            container.appendChild(el);
-            setTimeout(() => el.remove(), (duration + delay + 0.5) * 1000);
+            frame++;
+            if (active > 0 && frame < 420) {
+                animId = requestAnimationFrame(tick);
+            } else {
+                canvas.remove();
+            }
         }
 
-        // キーフレームを動的に注入（1回だけ）
-        if (!document.getElementById('confetti-style')) {
-            const style = document.createElement('style');
-            style.id = 'confetti-style';
-            style.textContent = `
-                @keyframes confetti-fall {
-                    0%   { transform: translate(-50%,-50%) rotate(0deg); opacity: 1; }
-                    100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty) + 300px)) rotate(var(--rot)); opacity: 0; }
-                }
-            `;
-            document.head.appendChild(style);
-        }
+        tick();
     }
 
     function drawRadarChart(sc) {
