@@ -118,6 +118,34 @@
             50%      { transform: translateY(5px); }
         }
 
+        /* 婚活カルテプレビュー */
+        .karte-preview {
+            background: linear-gradient(135deg, #fff5fb, #fff);
+            border: 1.5px solid #f3c2db;
+            border-radius: 14px;
+            padding: 16px;
+            margin-top: 14px;
+            text-align: left;
+        }
+        .karte-head {
+            display: flex; align-items: flex-start;
+            padding-bottom: 11px; border-bottom: 1px solid #f0d0ea; margin-bottom: 11px;
+        }
+        .karte-score-label { font-size: 11px; color: #aaa; display: block; margin-bottom: 1px; }
+        .karte-score-num { font-size: 38px; font-weight: 900; color: var(--primary-pink); line-height: 1; }
+        .karte-score-unit { font-size: 14px; font-weight: 700; color: var(--primary-pink); }
+        .karte-type { margin-left: auto; text-align: right; padding-top: 2px; }
+        .karte-type small { font-size: 11px; color: #aaa; display: block; }
+        .karte-type strong { font-size: 13px; color: var(--primary-pink); }
+        .karte-sec { margin-bottom: 9px; }
+        .karte-sec-title { font-size: 11px; font-weight: 800; letter-spacing: .1em; color: var(--primary-pink); margin: 0 0 4px; }
+        .karte-items { list-style: none; padding: 0; margin: 0; }
+        .karte-items li { font-size: 13px; padding: 4px 0 4px 18px; position: relative; color: #333; line-height: 1.5; border-bottom: 1px dashed #f5e0ee; }
+        .karte-items li:last-child { border-bottom: none; }
+        .karte-items.str li::before { content: "✓"; position: absolute; left: 0; color: var(--primary-pink); font-weight: 700; font-size: 12px; }
+        .karte-items.imp li::before { content: "△"; position: absolute; left: 0; color: #f0a050; font-size: 12px; }
+        .karte-lock { margin-top: 11px; text-align: center; padding: 9px 10px; background: #fff; border: 1.5px dashed #f3c2db; border-radius: 10px; font-size: 12px; color: #999; }
+
         /* ===== 埋め込みLP ===== */
         #lp-section {
             width: 100%;
@@ -272,11 +300,11 @@
 
     <!-- ① ヒーロー -->
     <div class="lp-hero">
-        <h2 class="lp-h1">婚活市場で今、<br>何が起きているのか<br><em>知っていますか？</em></h2>
+        <h2 class="lp-h1">診断結果をもとに<br><em>あなた専用の</em><br>婚活カルテを作りました</h2>
         <div class="lp-gift">
-            <span class="lp-gift-label">無料プレゼント</span>
-            <h3>📚 数字で見る婚活の教科書<br>【最新版】</h3>
-            <p>データをもとにこれからの婚活で<br>大切な視点をお届けします</p>
+            <span class="lp-gift-label">LINE登録で無料プレゼント</span>
+            <h3>💍 あなた専用 婚活カルテ<br>【完全版】</h3>
+            <p>相性タイプ・プロフィール改善・<br>成婚ロードマップをまとめてお届け</p>
         </div>
     </div>
 
@@ -284,60 +312,60 @@
     <div class="lp-sec lp-sec--pink">
         <h2 class="lp-sec-title">こんな不安を<br><em>抱えていませんか？</em></h2>
         <ul class="lp-troubles">
-            <li>「30代後半からの婚活」って、<br>実際どうなの？</li>
+            <li>診断の結果は出たけど、<br>次に何をすればいいかわからない</li>
             <li>頑張っているのに、なぜ出会いに<br>つながらないの？</li>
-            <li>相手に求められる条件や価値観を知りたい</li>
-            <li>情報が多すぎて、何を信じればいいかわからない</li>
+            <li>自分に合う婚活スタイルって何？<br>アプリ？相談所？</li>
+            <li>プロフィールや第一印象を<br>どう変えればいいかわからない</li>
         </ul>
     </div>
 
-    <!-- ④ 教科書の中身 -->
+    <!-- ④ カルテの中身 -->
     <div class="lp-sec">
-        <h2 class="lp-sec-title">婚活の裏側を今すぐ確認してください</h2>
-        <p class="lp-sec-intro">思い込みではなく<br>いま起きていることを知る<br>それがあなたらしい第一歩です</p>
+        <h2 class="lp-sec-title">完全版カルテで<br>わかること</h2>
+        <p class="lp-sec-intro">診断タイプをもとに<br>あなただけに必要な情報を<br>1冊にまとめました</p>
         <div class="lp-data-card">
-            <div class="lp-book-icon">📚</div>
-            <h3>数字で見る婚活の教科書<br>【最新版】</h3>
-            <p class="lp-mini">婚活の「いま」をやさしく整理</p>
+            <div class="lp-book-icon">💍</div>
+            <h3>あなた専用 婚活カルテ<br>【完全版】</h3>
+            <p class="lp-mini">あなたのタイプに合わせてお届け</p>
             <ul class="lp-contents">
-                <li>令和の女性の8割が夫婦別室を<br>希望する本当の理由</li>
-                <li>婚活市場での男女比が逆転した理由とは？</li>
-                <li>「30代後半はもう遅い」は<br>本当か？データで検証</li>
-                <li>理想の結婚相手に求められるのは<br>年収より〇〇</li>
-                <li>成婚した人が意識した<br>たった一つのこと</li>
+                <li>あなたに合う相性の見つけ方</li>
+                <li>プロフィール写真・印象アップの<br>３つのポイント</li>
+                <li>マッチングアプリ vs 結婚相談所<br>どちらが向いているか</li>
+                <li>タイプ別・婚活でやりがちな<br>NGパターンと対策</li>
+                <li>半年で成婚する為の<br>3ステップロードマップ</li>
             </ul>
         </div>
     </div>
 
     <!-- ⑤ 3つの視点 -->
     <div class="lp-sec lp-sec--pink">
-        <h2 class="lp-sec-title">この教科書で<br><em>手に入る3つの視点</em></h2>
+        <h2 class="lp-sec-title">カルテを受け取ると<br><em>こんな変化が起きます</em></h2>
         <div class="lp-benefits">
             <div class="lp-benefit">
                 <p class="lp-benefit-num">POINT 01</p>
-                <h3>不安を事実で整理する</h3>
-                <p>あいまいな噂に振り回されず<br>今の自分に必要なことが<br>明確になります</p>
+                <h3>「次の一手」が明確になる</h3>
+                <p>診断結果をもとに<br>今のあなたがやるべきことが<br>はっきりわかります</p>
             </div>
             <div class="lp-benefit">
                 <p class="lp-benefit-num">POINT 02</p>
-                <h3>出会いの見方が変わる</h3>
-                <p>条件だけでは見えにくい<br>長く心地よい関係を<br>つくるためのヒントが得られます。</p>
+                <h3>無駄な遠回りがなくなる</h3>
+                <p>タイプに合った婚活スタイルを<br>選ぶだけで、成果が<br>出るスピードが変わります</p>
             </div>
             <div class="lp-benefit">
                 <p class="lp-benefit-num">POINT 03</p>
-                <h3>あなたは間違っていない！</h3>
-                <p>あなたのペースと価値観を<br>大切にしながらこれからの<br>行動を考えられます。</p>
+                <h3>自信を持って動き出せる</h3>
+                <p>「自分に合う人」の傾向がわかり<br>出会いを選ぶ基準が<br>クリアになります</p>
             </div>
         </div>
         <div class="lp-quote">
-            <p>遠回りしない婚活を<br><strong>数字で確認してください</strong></p>
+            <p>診断を受けた今が<br><strong>動き出す一番のタイミングです</strong></p>
         </div>
     </div>
 
     <!-- ⑥ 下部 LINE CTA -->
     <div class="lp-cta-bottom">
         <a href="https://lin.ee/qYCi0W9" class="lp-line-btn" onclick="fbq('track','Lead')" target="_blank">
-            LINEで<br>教科書を受け取る
+            LINEで<br>完全版カルテを受け取る
             <small>友だち追加は無料・勧誘メッセージは送りません</small>
         </a>
     </div>
@@ -346,7 +374,7 @@
 
 <!-- スティッキーボタン（結果画面表示後のみ） -->
 <div id="lp-sticky">
-    <a href="https://lin.ee/qYCi0W9">LINEで教科書を受け取る →</a>
+    <a href="https://lin.ee/qYCi0W9">完全版カルテをLINEで受け取る →</a>
 </div>
 
 <script>
