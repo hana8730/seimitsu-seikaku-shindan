@@ -146,6 +146,22 @@
         .karte-items.imp li::before { content: "△"; position: absolute; left: 0; color: #f0a050; font-size: 12px; }
         .karte-lock { margin-top: 11px; text-align: center; padding: 9px 10px; background: #fff; border: 1.5px dashed #f3c2db; border-radius: 10px; font-size: 12px; color: #999; }
 
+        /* 落とし穴リスト */
+        .lp-pitfalls { list-style:none; padding:0; margin:12px 0 0; display:grid; gap:7px; }
+        .lp-pitfalls li { padding:10px 14px; border-radius:10px; background:#fff; font-size:15px; font-weight:700; line-height:1.55; box-shadow:0 3px 10px #d94d8610; }
+        .lp-result-note { margin-top:16px; padding:14px 16px; border-radius:12px; background:rgba(239,98,167,0.10); font-size:15px; font-weight:700; line-height:1.7; text-align:center; }
+        .lp-points-list { list-style:none; padding:0; margin:12px 0 0; display:grid; gap:7px; }
+        .lp-points-list li { padding:10px 10px 10px 32px; border-radius:10px; background:#fff; font-size:15px; font-weight:700; box-shadow:0 3px 10px #d94d8610; position:relative; }
+        .lp-points-list li::before { content:"✓"; position:absolute; left:10px; color:var(--pink); font-weight:900; }
+        .lp-case { margin-top:14px; padding:18px 16px; border-radius:16px; background:#fff; box-shadow:0 6px 14px #e1589213; }
+        .lp-case-stat { text-align:center; margin:14px 0; }
+        .lp-case-num { font-size:52px; font-weight:900; color:var(--pink-deep); line-height:1; letter-spacing:-0.04em; }
+        .lp-case-label { font-size:14px; color:var(--muted); margin:4px 0 0; }
+        .lp-karte-items { list-style:none; padding:0; margin:12px 0 0; }
+        .lp-karte-items li { display:flex; gap:8px; align-items:flex-start; padding:10px 0; border-bottom:1px dashed #f5e0ee; font-size:15px; font-weight:700; line-height:1.55; }
+        .lp-karte-items li::before { content:"✓"; flex:0 0 auto; color:var(--pink); font-size:16px; font-weight:900; margin-top:1px; }
+        .lp-karte-items li:last-child { border-bottom:none; }
+
         /* ===== 埋め込みLP ===== */
         #lp-section {
             width: 100%;
@@ -298,70 +314,79 @@
 <!-- ===== 埋め込みLP ===== -->
 <div id="lp-section" style="display:none;">
 
-    <!-- ① ヒーロー -->
-    <div class="lp-hero">
-        <h2 class="lp-h1"><em>あなただけの婚活カルテを</em><br>無料でご用意しました。</h2>
-        <div class="lp-gift">
-            <span class="lp-gift-label">LINE登録で無料プレゼント</span>
-            <h3>💍 あなた専用 婚活カルテ<br>【完全版】</h3>
-            <p>相性タイプ・プロフィール改善・<br>成婚ロードマップをまとめてお届け</p>
-        </div>
-    </div>
-
-    <!-- ヒーロー直下CTA -->
-    <div class="lp-cta-wrap">
-        <a href="https://lin.ee/qYCi0W9" class="lp-line-btn" onclick="fbq('track','Lead')" target="_blank">
-            あなた専用の婚活カルテを<br>無料で受け取る
-            <small>友だち追加は30秒・完全無料</small>
-        </a>
-        <p class="lp-cta-note">🔒 個人情報は取得しません</p>
-    </div>
-
-    <!-- ③ 悩み -->
+    <!-- ② 落とし穴 -->
     <div class="lp-sec lp-sec--pink">
-        <h2 class="lp-sec-title">こんな不安を<br><em>抱えていませんか？</em></h2>
-        <ul class="lp-troubles">
-            <li>診断の結果は出たけど、<br>次に何をすればいいかわからない</li>
-            <li>頑張っているのに、なぜ出会いに<br>つながらないの？</li>
-            <li>自分に合う婚活スタイルって何？<br>アプリ？相談所？</li>
-            <li>プロフィールや第一印象を<br>どう変えればいいかわからない</li>
-        </ul>
-        <p style="text-align:center;margin-top:20px;font-size:16px;font-weight:900;color:var(--ink);line-height:1.7;">1つでも当てはまったら<br><em style="font-style:normal;color:var(--pink-deep);">このカルテがお役に立てます</em></p>
-    </div>
-
-    <!-- ④ カルテの中身 + POINT統合 -->
-    <div class="lp-sec">
-        <h2 class="lp-sec-title">このカルテで<br>分かること</h2>
-        <div class="lp-benefits">
-            <div class="lp-benefit">
-                <h3>あなたに合う相性の見つけ方</h3>
-                <p>この人といつかは…これを繰り返していると、気づけば周りの友達は子供を授かり、子供の話をしている自分がいるかもしれません</p>
-            </div>
-            <div class="lp-benefit">
-                <h3>プロフィール写真・印象アップの3つのポイント</h3>
-                <p>41歳女性が写真を変えただけで1週間で11件の申込みがあった。リアルなビフォーアフターをお見せします</p>
-            </div>
-            <div class="lp-benefit">
-                <h3>マッチングアプリ vs 結婚相談所 どちらが向いているか</h3>
-                <p>自分に合わない方法を選ぶと、知らないだけで数十万〜100万円損をしちゃいます</p>
-            </div>
-            <div class="lp-benefit">
-                <h3>タイプ別・婚活でやりがちなNGパターンと対策</h3>
-                <p>うまくいかない原因が明確になり、過去の繰り返しに終止符を打てます</p>
-            </div>
-            <div class="lp-benefit">
-                <h3>半年で成婚する3ステップロードマップ</h3>
-                <p>自己流ではなく最短半年で成婚できる仕組みを手に入れられます</p>
-            </div>
+        <h2 class="lp-sec-title">このタイプが<br><em>婚活で陥りやすい落とし穴</em></h2>
+        <p class="lp-sec-intro">一方で、このタイプの方にはこんな傾向があります。</p>
+        <ul class="lp-pitfalls" id="lp-pitfalls"></ul>
+        <div class="lp-result-note">
+            その結果、<br>
+            <strong>本来の魅力が相手に伝わらず、<br>婚活が長引いてしまうことがあります。</strong>
         </div>
     </div>
 
-    <!-- ⑥ 下部 LINE CTA -->
+    <!-- ③ 性格だけでは変わらない -->
+    <div class="lp-sec">
+        <h2 class="lp-sec-title">でも、<em>大丈夫です。</em></h2>
+        <p class="lp-sec-intro">婚活は性格だけで決まるものではありません。<br>同じタイプでも、</p>
+        <ul class="lp-points-list">
+            <li>プロフィール写真</li>
+            <li>プロフィールの伝え方</li>
+            <li>相手選び</li>
+            <li>婚活方法</li>
+        </ul>
+        <p style="text-align:center;margin-top:14px;font-size:16px;font-weight:700;line-height:1.7;">を少し見直すだけで、<br>結果が変わることがあります。</p>
+    </div>
+
+    <!-- ④ 41歳成功事例 -->
+    <div class="lp-sec lp-sec--pink">
+        <h2 class="lp-sec-title"><em>41歳女性</em>の成功事例</h2>
+        <div class="lp-case">
+            <p style="font-size:15px;font-weight:700;line-height:1.7;">ごく普通の会社員だった41歳の女性は、婚活が思うように進まず悩んでいました。<br><br>そこで、</p>
+            <ul class="lp-karte-items">
+                <li>プロフィール写真</li>
+                <li>プロフィールの内容</li>
+                <li>相性の考え方</li>
+                <li>婚活方法</li>
+            </ul>
+            <p style="font-size:15px;font-weight:700;margin:14px 0 4px;">を見直した結果…</p>
+            <div class="lp-case-stat">
+                <div class="lp-case-num">11人</div>
+                <p class="lp-case-label">1週間でお見合い申込み</p>
+            </div>
+            <div class="lp-case-stat">
+                <div class="lp-case-num">8ヶ月</div>
+                <p class="lp-case-label">後にご成婚</p>
+            </div>
+            <p style="font-size:14px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.7;">個別相談では、実際のビフォー・アフター写真と<br>どのようなアドバイスを行ったかもお伝えしています。</p>
+        </div>
+    </div>
+
+    <!-- ⑤ カルテが必要 -->
+    <div class="lp-sec">
+        <h2 class="lp-sec-title">だから、<em>あなた専用の</em><br>婚活カルテが必要</h2>
+        <p class="lp-sec-intro">診断で分かるのは、あなたの性格や傾向です。<br><br>でも、<strong>「あなたに今、本当に必要な婚活の進め方」</strong>までは分かりません。<br><br>そこで、診断結果をもとにご用意しました。</p>
+        <div class="lp-data-card">
+            <p class="lp-book-icon">💍</p>
+            <h3>あなただけの婚活カルテ<br>【完全版】</h3>
+            <p class="lp-mini">LINEで無料プレゼント</p>
+            <ul class="lp-karte-items">
+                <li>あなたに合う婚活方法</li>
+                <li>相性の良い相手の特徴</li>
+                <li>プロフィール改善のポイント</li>
+                <li>婚活でやりがちなNGパターン</li>
+                <li>最短半年で成婚を目指すロードマップ</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ⑥ CTA -->
     <div class="lp-cta-bottom">
-<a href="https://lin.ee/qYCi0W9" class="lp-line-btn" onclick="fbq('track','Lead')" target="_blank">
-            あなた専用の婚活カルテを<br>無料で受け取る
+        <a href="https://lin.ee/qYCi0W9" class="lp-line-btn" onclick="fbq('track','Lead')" target="_blank">
+            LINEで無料で受け取る
             <small>友だち追加は30秒・完全無料</small>
         </a>
+        <p class="lp-cta-note">🔒 無理な営業・勧誘はありません</p>
     </div>
 
 </div>
@@ -424,6 +449,12 @@
             emoji: "🌸",
             type: "共感の達人タイプ",
             title: "あなたは「心をつなぐ人」",
+            pitfalls: [
+                "相手に合わせすぎてしまう",
+                "「嫌われたくない」が先に立ってしまう",
+                "自分の気持ちを後回しにしてしまう",
+                "相手選びより「選ばれること」を優先してしまう"
+            ],
             advice: `人の気持ちを敏感に察知し、自然とみんなが頼りにする存在です。<br><br>
                 <strong>あなたの強み</strong>
                 <ul>
@@ -439,6 +470,12 @@
             emoji: "⚡",
             type: "行動力リーダータイプ",
             title: "あなたは「道を切り開く人」",
+            pitfalls: [
+                "関係が進む前に相手を急かしてしまうことがある",
+                "弱みを見せられず距離が縮まりにくい",
+                "「選ぶ側」の意識が強くなりすぎてしまう",
+                "自分のペースを相手に押し付けてしまうことがある"
+            ],
             advice: `考えるより先に動ける実行力が最大の武器。周囲を引っ張るリーダー気質があります。<br><br>
                 <strong>あなたの強み</strong>
                 <ul>
@@ -454,6 +491,12 @@
             emoji: "💬",
             type: "コミュニケーター タイプ",
             title: "あなたは「みんなをつなぐ人」",
+            pitfalls: [
+                "フレンドリーすぎて恋愛対象として見られにくい",
+                "表面的なつながりで止まってしまうことがある",
+                "話しすぎて相手の話を聞けていないことがある",
+                "広く浅くなりがちで、特定の相手と深まりにくい"
+            ],
             advice: `どんな場でも自然と場の中心になれる、天性の社交性の持ち主です。<br><br>
                 <strong>あなたの強み</strong>
                 <ul>
@@ -469,6 +512,12 @@
             emoji: "🌿",
             type: "バランス調整タイプ",
             title: "あなたは「柔軟に対応できる人」",
+            pitfalls: [
+                "自分の意思が伝わらず「どんな人?」と思われがち",
+                "何にでも合わせるため「特別感」が薄くなりやすい",
+                "自分の条件や希望を後回しにしてしまう",
+                "消去法で相手を選びがちになる"
+            ],
             advice: `特定の型にはまらず、状況に応じて自分を変えられる適応力が魅力です。<br><br>
                 <strong>あなたの強み</strong>
                 <ul>
@@ -529,6 +578,12 @@
         showScreen('screen-result');
         launchConfetti();
         fbq('track', 'ViewContent', { content_name: '診断結果ページ' });
+
+        // 落とし穴を動的挿入
+        const pitfallsEl = document.getElementById('lp-pitfalls');
+        if (pitfallsEl && result.pitfalls) {
+            pitfallsEl.innerHTML = result.pitfalls.map(p => `<li>${p}</li>`).join('');
+        }
 
         // LPセクションを表示
         document.getElementById('lp-section').style.display = 'block';
