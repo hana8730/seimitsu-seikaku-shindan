@@ -302,6 +302,11 @@
         .kw-note-s { text-align:center; font-size:12px; font-weight:700; color:#6b8fa3; margin-bottom:8px; }
         .btn-line-keyword { border-radius:999px; }
         .btn-line-keyword .kw-main { font-size:16px; }
+        .type-intro-text { font-size:15px; font-weight:800; color:#1a2e3b; text-align:center; padding:16px 16px 0; line-height:1.7; }
+        .type-pitfall-text { font-size:14px; font-weight:900; color:#1a2e3b; margin-bottom:10px; line-height:1.7; }
+        .gift-star { background:linear-gradient(135deg,#fff8e8,#fffdf5) !important; border:1.5px solid #f9c74f !important; }
+        .ck-star, .ck-gift { background:transparent !important; font-size:16px !important; }
+        .cta-lead-text { text-align:center; font-size:14px; font-weight:800; color:#1a2e3b; margin-bottom:8px; }
 
         /* スティッキーボタン */
         #lp-sticky {
@@ -354,28 +359,32 @@
         <path d="M0,14 C60,28 130,0 195,14 C260,28 330,0 390,14 L390,0 L0,0 Z" fill="#e8f7ff"/>
     </svg>
 
-    <!-- タイプ名 + 問題提起 -->
+    <!-- タイプワンライナー -->
     <div class="type-highlight">
-        <div class="problem-box-s">
-            <p class="problem-label-s">しかし…</p>
-            <p class="type-highlight-name" id="type-highlight-name">◯◯タイプ</p>
-            <p class="type-highlight-problem">この診断だけでは、<br>あなたが婚活で結果が出ない<br><em style="font-style:normal;color:#f27e83;font-weight:900;">本当の理由</em>までは分かりません。</p>
-        </div>
+        <p class="type-intro-text" id="type-intro-text">◯◯タイプです。</p>
+    </div>
+
+    <!-- 実は... -->
+    <div class="problem-box-s">
+        <p class="problem-label-s">実は…</p>
+        <p class="type-pitfall-text" id="type-pitfall-text">このタイプには、婚活でつまずきやすい傾向があります。</p>
+        <p class="type-highlight-problem">この診断だけでは、<br>あなたが婚活で結果が出ない<br><em style="font-style:normal;color:#f27e83;font-weight:900;">本当の理由</em>までは分かりません。</p>
     </div>
 
     <!-- 送ると届くもの -->
     <div class="new-gift">
-        <p class="gift-head-s">LINEで受け取れる内容</p>
+        <p class="gift-head-s">LINEで分かること</p>
         <ul class="new-gift-list">
-            <li><span class="ck">✓</span>41歳女性が1週間で11人から申込みを受けた改善ポイント</li>
             <li><span class="ck">✓</span>あなたが婚活でつまずきやすい原因</li>
             <li><span class="ck">✓</span>あなたに合う相手の特徴</li>
-            <li><span class="ck">✓</span>あなた専用 婚活カルテ（PDF）</li>
+            <li class="gift-star"><span class="ck ck-star">⭐</span>41歳のごく普通の会社員が、1週間で11人からお見合い申込みを受けた改善ポイント</li>
+            <li><span class="ck ck-gift">🎁</span>あなた専用 婚活カルテ（PDF）</li>
         </ul>
     </div>
 
     <!-- CTA -->
     <div class="new-cta">
+        <p class="cta-lead-text">続きはLINEで無料で受け取れます。</p>
         <p class="kw-note-s">追加後に「<span id="line-keyword" style="color:#3bb8e8;font-weight:900;">◯◯</span>」と送ってください</p>
         <a href="https://lin.ee/qYCi0W9" class="btn-line-keyword" onclick="fbq('track','Lead'); fbq('trackCustom','LINE_Click_Shindan');" target="_blank">
             <span class="kw-main">LINEで診断の続きを受け取る</span>
@@ -443,6 +452,8 @@
             condition: s => s.empathy >= 4 && s.social >= 4,
             emoji: "🌸",
             type: "共感の達人タイプ",
+            intro: "相手に安心感を与えられる、とても魅力的なタイプです。",
+            pitfall: "このタイプには、婚活で「いい人止まり」になりやすい傾向があります。",
             title: "あなたは「心をつなぐ人」",
             pitfalls: [
                 "相手に合わせすぎてしまう",
@@ -464,6 +475,8 @@
             condition: s => s.action >= 4,
             emoji: "⚡",
             type: "行動力リーダータイプ",
+            intro: "積極的に婚活を進められる、行動力が最大の武器のタイプです。",
+            pitfall: "このタイプには、前のめりになりすぎて相手が引いてしまいやすい傾向があります。",
             title: "あなたは「道を切り開く人」",
             pitfalls: [
                 "関係が進む前に相手を急かしてしまうことがある",
@@ -485,6 +498,8 @@
             condition: s => s.social >= 4,
             emoji: "💬",
             type: "コミュニケーター タイプ",
+            intro: "初対面でもすぐ打ち解けられる、社交性が最大の魅力のタイプです。",
+            pitfall: "このタイプには、出会いはあるのに「特別な存在」として選ばれにくい傾向があります。",
             title: "あなたは「みんなをつなぐ人」",
             pitfalls: [
                 "フレンドリーすぎて恋愛対象として見られにくい",
@@ -506,6 +521,8 @@
             condition: () => true,
             emoji: "🌿",
             type: "バランス調整タイプ",
+            intro: "どんな相手とも関係を築ける、柔軟性が強みのタイプです。",
+            pitfall: "このタイプには、合わせすぎて「どんな人か分からない」と思われやすい傾向があります。",
             title: "あなたは「柔軟に対応できる人」",
             pitfalls: [
                 "自分の意思が伝わらず「どんな人?」と思われがち",
@@ -587,8 +604,8 @@
 
         document.getElementById('line-keyword').textContent = keyword;
         document.getElementById('sticky-keyword').textContent = keyword;
-        const thn = document.getElementById('type-highlight-name');
-        if (thn) thn.textContent = result.type;
+        document.getElementById('type-intro-text').textContent = result.intro;
+        document.getElementById('type-pitfall-text').textContent = result.pitfall;
 
         // LPセクションを表示
         document.getElementById('lp-section').style.display = 'block';
