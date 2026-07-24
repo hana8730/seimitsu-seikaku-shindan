@@ -285,6 +285,24 @@
         .btn-line-keyword .kw-sub { font-size:11px; font-weight:400; margin-top:3px; opacity:.85; }
         .cta-note-new { margin-top:10px; text-align:center; font-size:11px; color:#aaa; }
 
+        /* ===== 夏デザイン上書き ===== */
+        #screen-result { background: linear-gradient(170deg,#e8f7ff 0%,#fff 60%); }
+        .result-type-label { background: linear-gradient(135deg,#3bb8e8,#4ecdc4); border-radius:20px; }
+        .wave-sep { width:100%; display:block; margin-top:-1px; }
+        #lp-section { box-shadow:0 8px 24px rgba(59,184,232,.12); }
+        .type-highlight { padding:20px 20px 16px; text-align:center; background:#fff; }
+        .problem-box-s { padding:18px 16px; border-radius:18px; background:linear-gradient(160deg,#fff8f0,#fff); border:1.5px solid #fde8c8; }
+        .problem-label-s { font-size:11px; font-weight:900; color:#f27e83; letter-spacing:.08em; margin-bottom:8px; }
+        .type-highlight-name { font-size:21px; font-weight:900; color:#1a2e3b; margin-bottom:8px; }
+        .type-highlight-problem { font-size:14px; font-weight:700; line-height:1.85; color:#555; }
+        .gift-head-s { font-size:13px; font-weight:900; color:#3bb8e8; margin-bottom:12px; text-align:center; letter-spacing:.05em; }
+        .new-gift { padding:16px 20px 0; background:#fff; }
+        .new-gift-list li { background:#e8f7ff; }
+        .new-gift-list li .ck { background:linear-gradient(135deg,#4ecdc4,#3bb8e8); }
+        .kw-note-s { text-align:center; font-size:12px; font-weight:700; color:#6b8fa3; margin-bottom:8px; }
+        .btn-line-keyword { border-radius:999px; }
+        .btn-line-keyword .kw-main { font-size:16px; }
+
         /* スティッキーボタン */
         #lp-sticky {
             display: none;
@@ -331,28 +349,37 @@
 <!-- ===== 埋め込みLP ===== -->
 <div id="lp-section" style="display:none;">
 
+    <!-- 波形区切り -->
+    <svg class="wave-sep" viewBox="0 0 390 28" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,14 C60,28 130,0 195,14 C260,28 330,0 390,14 L390,28 L0,28 Z" fill="#fff"/>
+        <path d="M0,14 C60,28 130,0 195,14 C260,28 330,0 390,14 L390,0 L0,0 Z" fill="#e8f7ff"/>
+    </svg>
+
     <!-- タイプ名 + 問題提起 -->
     <div class="type-highlight">
-        <p class="type-highlight-label">あなたの診断結果</p>
-        <p class="type-highlight-name" id="type-highlight-name">◯◯タイプ</p>
-        <p class="type-highlight-problem">この診断だけでは、<br>あなたが婚活でつまずきやすい<br>原因までは分かりません。</p>
+        <div class="problem-box-s">
+            <p class="problem-label-s">ただし…</p>
+            <p class="type-highlight-name" id="type-highlight-name">◯◯タイプ</p>
+            <p class="type-highlight-problem">この診断だけでは、<br>あなたが婚活で結果が出ない<br><em style="font-style:normal;color:#f27e83;font-weight:900;">本当の理由</em>までは分かりません。</p>
+        </div>
     </div>
 
     <!-- 送ると届くもの -->
     <div class="new-gift">
-        <p class="gift-send-lead">LINEで <span class="kw">「<span id="line-keyword">◯◯</span>」</span> と送っていただくと</p>
+        <p class="gift-head-s">LINEで受け取れる内容</p>
         <ul class="new-gift-list">
-            <li><span class="ck">✓</span><span id="gift-type-name">◯◯</span>タイプの詳しい解説</li>
+            <li><span class="ck">✓</span>41歳女性が1週間で11人から申込みを受けた改善ポイント</li>
+            <li><span class="ck">✓</span>あなたが婚活でつまずきやすい原因</li>
             <li><span class="ck">✓</span>あなたに合う相手の特徴</li>
-            <li><span class="ck">✓</span>41歳女性が11人から申込みを受けた実際の改善ポイント</li>
-            <li><span class="ck">✓</span>婚活カルテ（PDF）無料プレゼント</li>
+            <li><span class="ck">✓</span>あなた専用 婚活カルテ（PDF）</li>
         </ul>
     </div>
 
-    <!-- CTA（キーワード大きく） -->
+    <!-- CTA -->
     <div class="new-cta">
+        <p class="kw-note-s">追加後に「<span id="line-keyword" style="color:#3bb8e8;font-weight:900;">◯◯</span>」と送ってください</p>
         <a href="https://lin.ee/qYCi0W9" class="btn-line-keyword" onclick="fbq('track','Lead'); fbq('trackCustom','LINE_Click_Shindan');" target="_blank">
-            <span class="kw-main">LINEで「<span id="btn-keyword">◯◯</span>」と送る</span>
+            <span class="kw-main">LINEで診断の続きを受け取る</span>
             <span class="kw-sub">友だち追加は30秒・完全無料</span>
         </a>
         <p class="cta-note-new">🔒 無理な勧誘はありません</p>
@@ -700,8 +727,8 @@
 
         s += `<defs>
             <radialGradient id="rg" cx="50%" cy="50%" r="50%">
-                <stop offset="0%"   stop-color="#ff9de2" stop-opacity="0.85"/>
-                <stop offset="100%" stop-color="#c084fc" stop-opacity="0.28"/>
+                <stop offset="0%"   stop-color="#3bb8e8" stop-opacity="0.75"/>
+                <stop offset="100%" stop-color="#4ecdc4" stop-opacity="0.22"/>
             </radialGradient>
             <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
                 <feGaussianBlur stdDeviation="6" result="blur"/>
@@ -715,32 +742,32 @@
 
         [0.25, 0.5, 0.75, 1].forEach(r => {
             const pts = Array.from({length: N}, (_, i) => pt(i, r).join(',')).join(' ');
-            s += `<polygon points="${pts}" fill="${r===1?'none':'rgba(240,103,166,0.04)'}" stroke="#f0d0ea" stroke-width="${r===1?1.2:0.6}"/>`;
+            s += `<polygon points="${pts}" fill="${r===1?'none':'rgba(59,184,232,0.04)'}" stroke="#deeef8" stroke-width="${r===1?1.2:0.6}"/>`;
         });
 
         for (let i = 0; i < N; i++) {
             const [x, y] = pt(i, 1);
-            s += `<line x1="${CX}" y1="${CY}" x2="${x}" y2="${y}" stroke="#f0d0ea" stroke-width="0.6"/>`;
+            s += `<line x1="${CX}" y1="${CY}" x2="${x}" y2="${y}" stroke="#deeef8" stroke-width="0.6"/>`;
         }
 
         const dataPts = axes.map((a, i) => pt(i, Math.max(a.val, 0.06)).join(',')).join(' ');
         // グロー層（下）
-        s += `<polygon points="${dataPts}" fill="url(#rg)" stroke="#e040a0" stroke-width="3.5" filter="url(#glow)"/>`;
+        s += `<polygon points="${dataPts}" fill="url(#rg)" stroke="#3bb8e8" stroke-width="3.5" filter="url(#glow)"/>`;
         // クリーン層（上）
-        s += `<polygon points="${dataPts}" fill="url(#rg)" stroke="#F067A6" stroke-width="2"/>`;
+        s += `<polygon points="${dataPts}" fill="url(#rg)" stroke="#3bb8e8" stroke-width="2"/>`;
 
         axes.forEach((a, i) => {
             const [x, y] = pt(i, Math.max(a.val, 0.06));
-            s += `<circle cx="${x}" cy="${y}" r="6" fill="#F067A6" filter="url(#dot-glow)"/>`;
-            s += `<circle cx="${x}" cy="${y}" r="4" fill="white" stroke="#F067A6" stroke-width="2"/>`;
+            s += `<circle cx="${x}" cy="${y}" r="6" fill="#3bb8e8" filter="url(#dot-glow)"/>`;
+            s += `<circle cx="${x}" cy="${y}" r="4" fill="white" stroke="#3bb8e8" stroke-width="2"/>`;
         });
 
         const anchors = ['middle', 'start', 'start', 'end', 'end'];
         axes.forEach((a, i) => {
             const [x, y] = pt(i, 1.38);
             const pct = Math.round(a.val * 100);
-            s += `<text x="${x}" y="${y - 7}" text-anchor="${anchors[i]}" font-size="11" fill="#666">${a.label}</text>`;
-            s += `<text x="${x}" y="${y + 8}" text-anchor="${anchors[i]}" font-size="13" font-weight="bold" fill="#F067A6">${pct}%</text>`;
+            s += `<text x="${x}" y="${y - 7}" text-anchor="${anchors[i]}" font-size="11" fill="#6b8fa3">${a.label}</text>`;
+            s += `<text x="${x}" y="${y + 8}" text-anchor="${anchors[i]}" font-size="13" font-weight="bold" fill="#3bb8e8">${pct}%</text>`;
         });
 
         s += `</svg>`;
