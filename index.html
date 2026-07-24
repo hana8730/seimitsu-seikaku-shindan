@@ -584,8 +584,6 @@
         document.getElementById('result-emoji').innerText = result.emoji;
         document.getElementById('result-type-label').innerText = result.type + 'でした';
         document.getElementById('result-title').innerText = 'あなたの診断結果';
-        document.getElementById('advice-text').innerHTML =
-            `<strong>${result.title}</strong><br><br>` + result.advice;
         document.getElementById('radar-chart').innerHTML = drawRadarChart(scores);
 
         showScreen('screen-result');
