@@ -1,0 +1,265 @@
+<title>婚活カルテ｜共感の達人タイプ</title>
+<style>
+  :root {
+    --bg:#FDF6F0; --brown:#8B5E3C; --gold:#C9975A;
+    --mint:#98ddd2; --mint-pale:#edfff8; --mint-deep:#1f685e;
+    --coral:#f27e83; --ink:#353238; --muted:#8b7b6e;
+    --white:#fff; --shadow:0 8px 28px rgba(139,94,60,.10);
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  body { background:#e8ddd4; font-family:"Hiragino Sans","Yu Gothic",sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; }
+  .page { max-width:600px; margin:0 auto; background:var(--bg); }
+
+  /* ===== カバー ===== */
+  .cover { position:relative; padding:52px 36px 44px; background:linear-gradient(145deg,#3a2818 0%,#6b3f1e 55%,#8B5E3C 100%); color:#fff; overflow:hidden; text-align:center; }
+  .cover::before { content:""; position:absolute; width:320px; height:320px; border-radius:50%; border:60px solid rgba(201,151,90,.15); top:-100px; right:-100px; }
+  .cover::after { content:""; position:absolute; width:200px; height:200px; border-radius:50%; border:40px solid rgba(152,221,210,.10); bottom:-60px; left:-60px; }
+  .cover-eyebrow { position:relative; display:inline-block; padding:4px 14px; border-radius:999px; border:1px solid rgba(201,151,90,.5); color:var(--gold); font-size:11px; font-weight:900; letter-spacing:.12em; margin-bottom:18px; }
+  .cover-title { position:relative; font-size:28px; font-weight:900; line-height:1.4; margin-bottom:14px; }
+  .cover-title em { color:var(--mint); font-style:normal; }
+  .cover-type-box { position:relative; display:inline-block; padding:12px 28px; border-radius:14px; background:rgba(152,221,210,.18); border:1.5px solid rgba(152,221,210,.4); }
+  .cover-type-label { font-size:11px; font-weight:700; color:rgba(255,255,255,.6); letter-spacing:.1em; margin-bottom:4px; }
+  .cover-type-name { font-size:22px; font-weight:900; color:var(--mint); }
+  .cover-note { position:relative; margin-top:18px; font-size:10px; color:rgba(255,255,255,.5); }
+
+  /* ===== セクション共通 ===== */
+  .sec { padding:32px; border-bottom:1px solid #ede3da; }
+  .sec-eyebrow { display:inline-flex; align-items:center; gap:8px; margin-bottom:14px; }
+  .sec-eyebrow-num { width:22px; height:22px; border-radius:50%; background:var(--brown); color:#fff; font-size:10px; font-weight:900; display:grid; place-items:center; flex:0 0 auto; }
+  .sec-eyebrow-text { font-size:11px; font-weight:900; color:var(--brown); letter-spacing:.1em; }
+  .sec-title { font-size:20px; font-weight:900; line-height:1.45; margin-bottom:14px; }
+  .sec-title em { color:var(--mint-deep); font-style:normal; }
+
+  /* ===== タイプ + 橋渡し ===== */
+  .intro-sec { padding:32px; border-bottom:1px solid #ede3da; }
+  .intro-type { font-size:15px; font-weight:700; color:var(--muted); margin-bottom:6px; }
+  .intro-type-name { font-size:24px; font-weight:900; color:var(--mint-deep); margin-bottom:20px; }
+  .type-desc-box { padding:16px 18px; border-radius:16px; background:var(--mint-pale); border-left:4px solid var(--mint); margin-bottom:20px; }
+  .type-desc-box p { font-size:14px; font-weight:700; line-height:1.9; color:#3a4a48; }
+  .bridge-box { padding:18px; border-radius:16px; background:linear-gradient(135deg,#fff7f5,#FDF6F0); border:1.5px solid #f0ddd0; }
+  .bridge-box p { font-size:14px; font-weight:700; line-height:2; color:#5a4a40; }
+  .bridge-box em { font-style:normal; font-weight:900; color:var(--mint-deep); }
+  .bridge-arrow { text-align:center; padding:12px 0; font-size:22px; color:var(--gold); }
+
+  /* ===== ビフォーアフター ===== */
+  .ba-sec { padding:28px 24px; border-bottom:1px solid #ede3da; }
+  .ba-eyebrow { text-align:center; font-size:11px; font-weight:900; color:var(--brown); letter-spacing:.12em; margin-bottom:20px; }
+  .ba-grid { display:grid; grid-template-columns:1fr; gap:12px; }
+  .ba-card { border-radius:18px; overflow:hidden; position:relative; }
+  .ba-badge { position:absolute; top:10px; left:10px; padding:4px 10px; border-radius:999px; font-size:10px; font-weight:900; letter-spacing:.1em; z-index:1; }
+  .before-badge { background:#ddd; color:#666; }
+  .after-badge { background:var(--mint-deep); color:#fff; }
+  .before-card { background:#f5f0ea; }
+  .before-photo { width:50%; aspect-ratio:4/3; object-fit:cover; object-position:center 15%; display:block; margin:0 auto; }
+  .photo-caption { padding:10px 14px; font-size:11px; font-weight:700; line-height:1.6; color:var(--muted); text-align:center; }
+  .after-card { background:#f0fdf8; }
+  .after-photo { width:50%; aspect-ratio:4/3; object-fit:cover; object-position:center 15%; display:block; margin:0 auto; }
+  .ba-stats { display:flex; gap:8px; margin-top:12px; }
+  .ba-stat { flex:1; text-align:center; padding:12px 8px; border-radius:14px; background:linear-gradient(135deg,#1f685e,#2a8a7e); }
+  .ba-stat-num { font-size:30px; font-weight:900; color:#fff; line-height:1; letter-spacing:-.04em; }
+  .ba-stat-unit { font-size:13px; font-weight:900; color:var(--mint); }
+  .ba-stat-label { font-size:10px; font-weight:700; color:rgba(255,255,255,.7); margin-top:3px; }
+
+  /* ===== 彼女が変えたこと ===== */
+  .changed-sec { padding:28px 32px; border-bottom:1px solid #ede3da; background:linear-gradient(160deg,#fff7f3,#FDF6F0); }
+  .changed-question { font-size:18px; font-weight:900; line-height:1.6; margin-bottom:18px; text-align:center; }
+  .changed-question em { color:var(--mint-deep); font-style:normal; }
+  .changed-list { display:grid; gap:10px; margin-bottom:18px; }
+  .changed-item { display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:14px; background:var(--white); box-shadow:var(--shadow); font-size:14px; font-weight:900; }
+  .changed-check { width:24px; height:24px; border-radius:50%; background:var(--mint-deep); color:#fff; display:grid; place-items:center; font-size:12px; flex:0 0 auto; }
+  .shichu-note { padding:14px 16px; border-radius:14px; background:linear-gradient(135deg,#3a2818,#6b3f1e); color:#fff; }
+  .shichu-note p { font-size:13px; font-weight:700; line-height:1.85; }
+  .shichu-note em { color:var(--gold); font-style:normal; font-weight:900; }
+
+  /* ===== 強み ===== */
+  .strength-list { display:grid; gap:10px; margin-top:14px; }
+  .strength-item { display:flex; align-items:flex-start; gap:12px; padding:14px 16px; border-radius:14px; background:var(--white); box-shadow:var(--shadow); }
+  .strength-icon { font-size:22px; flex:0 0 auto; }
+  .strength-text { font-size:13px; font-weight:800; line-height:1.6; }
+  .strength-text small { display:block; font-size:11px; font-weight:600; color:var(--muted); margin-top:2px; }
+
+  /* ===== 注意点 ===== */
+  .pitfall-list { display:grid; gap:10px; margin-top:14px; }
+  .pitfall-item { padding:14px 16px; border-radius:14px; background:#fff8f5; border-left:3px solid var(--coral); }
+  .pitfall-label { font-size:12px; font-weight:900; color:var(--coral); margin-bottom:4px; }
+  .pitfall-text { font-size:13px; font-weight:700; line-height:1.65; color:#5a3530; }
+
+  /* ===== 改善3ステップ ===== */
+  .step-list { display:grid; gap:12px; margin-top:14px; }
+  .step-item { display:flex; gap:14px; align-items:flex-start; }
+  .step-num { flex:0 0 36px; width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--mint),var(--mint-deep)); color:#fff; font-size:16px; font-weight:900; display:grid; place-items:center; }
+  .step-body { padding-top:4px; }
+  .step-title { font-size:14px; font-weight:900; margin-bottom:4px; }
+  .step-desc { font-size:12px; font-weight:700; line-height:1.7; color:var(--muted); }
+
+  /* ===== CTA ===== */
+  .cta-sec { padding:32px 28px 48px; text-align:center; background:linear-gradient(160deg,#3a2818,#6b3f1e); }
+  .cta-lead { font-size:13px; font-weight:700; line-height:1.9; color:rgba(255,255,255,.8); margin-bottom:18px; text-align:left; }
+  .cta-lead strong { color:var(--gold); font-weight:900; }
+  .cta-divider { border:none; border-top:1px solid rgba(255,255,255,.15); margin:18px 0; }
+  .cta-limit-box { display:inline-flex; align-items:center; gap:10px; padding:10px 18px; border-radius:12px; background:rgba(201,151,90,.2); border:1.5px solid var(--gold); margin-bottom:18px; }
+  .cta-limit-text { font-size:15px; font-weight:900; color:var(--gold); }
+  .cta-limit-remain { font-size:13px; font-weight:900; color:#fff; padding:3px 10px; border-radius:999px; background:var(--coral); }
+  .cta-btn { display:flex; align-items:center; justify-content:center; width:100%; padding:18px 16px; border-radius:999px; background:#06C755; color:#fff; font-size:16px; font-weight:900; box-shadow:0 8px 0 #039f41,0 14px 24px rgba(6,199,85,.3); line-height:1.4; text-decoration:none; }
+  .cta-note { margin-top:10px; font-size:10px; color:rgba(255,255,255,.45); }
+</style>
+
+<div class="page">
+
+  <!-- カバー -->
+  <div class="cover">
+    <p class="cover-eyebrow">KONKATSU KARUTE</p>
+    <h1 class="cover-title">あなた専用<br><em>婚活カルテ</em></h1>
+    <div class="cover-type-box">
+      <p class="cover-type-label">YOUR TYPE</p>
+      <p class="cover-type-name">共感の達人タイプ</p>
+    </div>
+    <p class="cover-note">© mariage.isis HANA</p>
+  </div>
+
+  <!-- ① タイプ + 橋渡し -->
+  <div class="intro-sec">
+    <p class="intro-type">あなたは</p>
+    <p class="intro-type-name">共感の達人タイプです。</p>
+    <div class="type-desc-box">
+      <p>相手の気持ちに自然と寄り添える、優しさと共感力が際立つタイプです。人の話をじっくり聞き、感情を理解する力が高く、一緒にいると安心感を与えられます。</p>
+    </div>
+    <div class="bridge-box">
+      <p>もし、あなたも<em>「いい人止まり」</em>で悩んでいるなら、<br>ある41歳の女性と同じ壁にぶつかっているかもしれません。</p>
+      <br>
+      <p>実は……<br>あなたと<em>同じタイプだった41歳の女性</em>がいました。</p>
+    </div>
+  </div>
+
+  <!-- ② ビフォーアフター -->
+  <div class="ba-sec">
+    <p class="ba-eyebrow">BEFORE / AFTER</p>
+    <div class="ba-grid">
+      <div class="ba-card before-card">
+        <span class="ba-badge before-badge">BEFORE</span>
+        <img class="before-photo" src="https://hana8730.github.io/konkatsu-monitor-lp/assets/before-41.png" alt="41歳ビフォー">
+        <p class="photo-caption">マッチングアプリで「いい人」止まり…</p>
+      </div>
+      <div class="ba-card after-card">
+        <span class="ba-badge after-badge">AFTER</span>
+        <img class="after-photo" src="https://hana8730.github.io/konkatsu-monitor-lp/assets/after-41.png" alt="41歳アフター">
+        <p class="photo-caption">空気感が一変</p>
+      </div>
+    </div>
+    <div class="ba-stats">
+      <div class="ba-stat">
+        <p class="ba-stat-num">11<span class="ba-stat-unit">人</span></p>
+        <p class="ba-stat-label">1週間でお申し込み</p>
+      </div>
+      <div class="ba-stat">
+        <p class="ba-stat-num">8<span class="ba-stat-unit">ヶ月</span></p>
+        <p class="ba-stat-label">後にご成婚</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 彼女が変えたこと -->
+  <div class="changed-sec">
+    <p class="changed-question">では、<em>何を変えたのでしょう？</em><br>その答えをこれからお伝えします。</p>
+    <div class="changed-list">
+      <div class="changed-item"><span class="changed-check">✓</span>写真</div>
+      <div class="changed-item"><span class="changed-check">✓</span>プロフィール</div>
+      <div class="changed-item"><span class="changed-check">✓</span>婚活の進め方</div>
+    </div>
+    <div class="shichu-note">
+      <p>そして、その<em>彼女にフィットした空気感を見つけるために、私は四柱推命を使っています。</em><br><br>年齢でも容姿でもなく、その人だけの空気感を整えること——それが結果につながります。</p>
+    </div>
+  </div>
+
+  <!-- ③ 強み -->
+  <div class="sec">
+    <div class="sec-eyebrow"><span class="sec-eyebrow-num">1</span><span class="sec-eyebrow-text">STRENGTH</span></div>
+    <h2 class="sec-title">あなたの婚活での<em>強み</em></h2>
+    <div class="strength-list">
+      <div class="strength-item">
+        <span class="strength-icon">🌸</span>
+        <div class="strength-text">「また会いたい」と思わせる安心感<small>話を聞いてもらえる、と感じさせる自然な空気感があります</small></div>
+      </div>
+      <div class="strength-item">
+        <span class="strength-icon">💬</span>
+        <div class="strength-text">会話が途切れない聴く力<small>相手がよく話してくれるため、お見合いの場で好印象を与えやすい</small></div>
+      </div>
+      <div class="strength-item">
+        <span class="strength-icon">✨</span>
+        <div class="strength-text">関係を深めるのが得意<small>少ない回数のデートで距離を縮められる傾向があります</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 注意点 -->
+  <div class="sec">
+    <div class="sec-eyebrow"><span class="sec-eyebrow-num">2</span><span class="sec-eyebrow-text">CAUTION</span></div>
+    <h2 class="sec-title">あなたのつまずきやすい<em>ポイント</em></h2>
+    <div class="pitfall-list">
+      <div class="pitfall-item">
+        <p class="pitfall-label">注意点①</p>
+        <p class="pitfall-text">自分の気持ちを後回しにしがちで、「好きではない相手」でも断れずに関係が続いてしまう</p>
+      </div>
+      <div class="pitfall-item">
+        <p class="pitfall-label">注意点②</p>
+        <p class="pitfall-text">相手に合わせすぎて、自分の魅力・個性が見えにくくなる</p>
+      </div>
+      <div class="pitfall-item">
+        <p class="pitfall-label">注意点③</p>
+        <p class="pitfall-text">「いい人」止まりになりやすく、恋愛対象として見られにくいケースがある</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 3つの改善 -->
+  <div class="sec">
+    <div class="sec-eyebrow"><span class="sec-eyebrow-num">3</span><span class="sec-eyebrow-text">ACTION STEPS</span></div>
+    <h2 class="sec-title">今すぐできる<em>3つの改善</em></h2>
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <p class="step-title">「自分の好み」を先に決める</p>
+          <p class="step-desc">相手に合わせる前に、自分が大切にしたい条件を3つだけ書き出す。これだけで「いい人」から「選ぶ人」になれます。</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <p class="step-title">プロフィールで「意見」を1つ入れる</p>
+          <p class="step-desc">「和食が好きです」「山登りにはまっています」こんな書き方だと相手からスルーされます。異性目線の書き方は、Zoomでお伝えします。</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <p class="step-title">断ることを「練習」する</p>
+          <p class="step-desc">あるひとつのフレーズを使うだけで、相手を傷つけずに断れるようになります。このフレーズはZoomでお渡しします。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-sec">
+    <p class="cta-lead">ここまで読んでいただき、ありがとうございます。</p>
+    <p class="cta-lead">
+      このカルテで、あなたの「婚活タイプ」は分かりました。<br><br>
+      でも、本当に知りたいのは、<br>
+      <strong>「あなたなら、どうすれば結婚に近づけるのか。」</strong>
+    </p>
+    <p class="cta-lead">
+      その答えは、一人ひとり違います。<br><br>
+      Zoomでは、生年月日や今の状況も踏まえて、<br>
+      <strong>あなただけの婚活プランを一緒に整理します。</strong>
+    </p>
+    <hr class="cta-divider">
+    <div class="cta-limit-box">
+      <span class="cta-limit-text">7月限定 5名様</span>
+      <span class="cta-limit-remain">残り2名</span>
+    </div>
+    <a class="cta-btn" href="https://timerex.net/s/h8730521_ab27/7c68097a" target="_blank">無料Zoomであなた専用の婚活プランを受け取る</a>
+    <p class="cta-note">完全無料・無理な勧誘はありません</p>
+  </div>
+
+</div>
