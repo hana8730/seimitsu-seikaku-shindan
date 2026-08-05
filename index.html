@@ -600,8 +600,10 @@
         const keyword = keywordMap[result.type] || '診断';
         const shortType = result.type.replace('タイプ', '').replace(' ', '');
 
-        document.getElementById('line-keyword').textContent = keyword;
-        document.getElementById('sticky-keyword').textContent = keyword;
+        const lineKw = document.getElementById('line-keyword');
+        const stickyKw = document.getElementById('sticky-keyword');
+        if (lineKw) lineKw.textContent = keyword;
+        if (stickyKw) stickyKw.textContent = keyword;
         document.getElementById('type-intro-text').textContent = result.intro;
         document.getElementById('type-pitfall-text').textContent = result.pitfall;
 
