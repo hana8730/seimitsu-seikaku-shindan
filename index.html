@@ -353,44 +353,78 @@
 <!-- ===== 埋め込みLP ===== -->
 <div id="lp-section" style="display:none;">
 
-    <!-- 波形区切り -->
-    <svg class="wave-sep" viewBox="0 0 390 28" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,14 C60,28 130,0 195,14 C260,28 330,0 390,14 L390,28 L0,28 Z" fill="#fff"/>
-        <path d="M0,14 C60,28 130,0 195,14 C260,28 330,0 390,14 L390,0 L0,0 Z" fill="#e8f7ff"/>
-    </svg>
+    <!-- JS用（非表示）-->
+    <span id="type-intro-text" style="display:none;"></span>
+    <span id="type-pitfall-text" style="display:none;"></span>
 
-    <!-- タイプワンライナー -->
-    <div class="type-highlight">
-        <p class="type-intro-text" id="type-intro-text">◯◯タイプです。</p>
+    <!-- HERO -->
+    <div style="background:linear-gradient(170deg,#faafa4 0%,#eb776e 100%);padding:28px 22px 24px;text-align:center;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-50px;right:-50px;width:185px;height:185px;border-radius:50%;background:rgba(255,255,255,.14);pointer-events:none;"></div>
+        <div style="position:absolute;bottom:-30px;left:-44px;width:137px;height:137px;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none;"></div>
+        <div style="display:inline-block;background:#fff6e9;color:#9c4d4b;font-size:12px;font-weight:700;padding:5px 16px;border-radius:999px;margin-bottom:14px;letter-spacing:.04em;">今だけLINE登録者30名限定で</div>
+        <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:6px;">婚活市場の</div>
+        <div style="font-size:28px;font-weight:900;color:#17344f;line-height:1.2;margin-bottom:4px;"><span style="font-size:34px;color:#eb776e;">最新データ</span>を<br>差し上げます</div>
+        <div style="width:80%;height:2px;background:rgba(255,255,255,.4);margin:14px auto 10px;"></div>
+        <div style="font-size:19px;font-weight:900;color:#17344f;">3つの無料プレゼント</div>
     </div>
 
-    <!-- 実は... -->
-    <div class="problem-box-s">
-        <p class="problem-label-s">実は…</p>
-        <p class="type-pitfall-text" id="type-pitfall-text">このタイプには、婚活でつまずきやすい傾向があります。</p>
-        <p class="type-highlight-problem">この診断だけでは、<br>あなたが婚活で結果が出ない<br><em style="font-style:normal;color:#f27e83;font-weight:900;">本当の理由</em>までは分かりません。</p>
+    <!-- CARDS -->
+    <div style="background:#fffaf6;padding:16px 16px 8px;">
+
+        <!-- Card 1 -->
+        <div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 9px 20px rgba(154,81,77,.16);margin-bottom:14px;display:flex;">
+            <div style="width:10px;background:#f18a80;flex-shrink:0;border-radius:0;"></div>
+            <div style="padding:14px 14px 14px 12px;flex:1;">
+                <div style="color:#ee776e;font-size:13px;font-weight:900;margin-bottom:8px;">🎁 ①　10分動画</div>
+                <div style="color:#625d5b;font-size:12px;line-height:1.7;margin-bottom:10px;">☆容姿や年齢より重要な事<br>☆年齢別の婚活の傾向<br>☆婚活市場での変化</div>
+                <div style="color:#17344f;font-size:15px;font-weight:900;line-height:1.55;">2026年のデータを公開し<br>婚活市場のリアルを１０分の動画で解説</div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 9px 20px rgba(154,81,77,.16);margin-bottom:14px;display:flex;">
+            <div style="width:10px;background:#f2ad54;flex-shrink:0;"></div>
+            <div style="padding:14px 14px 14px 12px;flex:1;">
+                <div style="color:#d58c2c;font-size:13px;font-weight:900;margin-bottom:6px;">🎁 ②　婚活カルテ（PDF）<span style="font-size:11px;font-weight:600;color:#888;margin-left:6px;">成婚者の共通点チェックリスト付き</span></div>
+                <div style="color:#17344f;font-size:17px;font-weight:900;">8ヶ月で成婚した人の共通点</div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 9px 20px rgba(154,81,77,.16);margin-bottom:14px;display:flex;">
+            <div style="width:10px;background:#e97793;flex-shrink:0;"></div>
+            <div style="padding:14px 14px 14px 12px;flex:1;">
+                <div style="color:#d25876;font-size:12px;font-weight:900;margin-bottom:8px;">24時間以内に返信！あなた専用 婚活データ診断</div>
+                <div style="color:#17344f;font-size:17px;font-weight:900;margin-bottom:6px;">年齢・婚活歴・今のお悩みを送るだけ</div>
+                <div style="color:#625d5b;font-size:12px;line-height:1.65;">1万人以上の成婚データをもとにあなたの改善ポイントをLINEで返信</div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- 送ると届くもの -->
-    <div class="new-gift">
-        <p class="gift-head-s">あなた専用の婚活アドバイスをお届けします</p>
-        <ul class="new-gift-list">
-            <li class="gift-star"><span class="ck">✓</span>41歳のごく普通の会社員が、1週間で11人からお見合い申込みを受けた改善ポイント</li>
-            <li><span class="ck">✓</span>あなたの婚活タイプ（詳細分析）</li>
-            <li><span class="ck">✓</span>生年月日から見たあなたの強みと気を付けるポイント</li>
-            <li><span class="ck ck-gift">🎁</span>あなた専用 婚活カルテ（PDF）プレゼント</li>
-        </ul>
+    <!-- こんな方に -->
+    <div style="background:#fbe3db;padding:22px 16px;">
+        <div style="text-align:center;margin-bottom:14px;">
+            <div style="font-size:11px;color:#999;margin-bottom:4px;">まずは現状を知ることが、遠回りしない婚活の第一歩です</div>
+            <div style="font-size:18px;font-weight:900;color:#17344f;">こんな方におすすめです</div>
+            <div style="width:60px;height:3px;background:#ef8d82;margin:8px auto 0;border-radius:2px;"></div>
+        </div>
+        <div style="display:grid;gap:9px;">
+            <div style="background:#fff8f4;border-radius:12px;padding:12px 14px;font-size:13px;font-weight:700;color:#343c47;">✓　婚活を頑張っているのに結果が出ない</div>
+            <div style="background:#fff8f4;border-radius:12px;padding:12px 14px;font-size:13px;font-weight:700;color:#343c47;">✓　何を変えればいいか分からない</div>
+            <div style="background:#fff8f4;border-radius:12px;padding:12px 14px;font-size:13px;font-weight:700;color:#343c47;">✓　自分の婚活方法が合っているか知りたい</div>
+            <div style="background:#fff8f4;border-radius:12px;padding:12px 14px;font-size:13px;font-weight:700;color:#343c47;">✓　できれば半年〜1年以内に結婚したい</div>
+        </div>
     </div>
 
     <!-- CTA -->
-    <div class="new-cta">
-        <p class="cta-lead-text">LINEでお届けします。完全無料です。</p>
-        <p class="kw-note-s">追加後に<strong style="color:#3bb8e8;font-weight:900;">生年月日（例：1990年3月15日）</strong>を送ってください</p>
-        <a href="https://lin.ee/qYCi0W9" class="btn-line-keyword" onclick="fbq('track','Lead'); fbq('trackCustom','LINE_Click_Shindan');" target="_blank">
-            <span class="kw-main">LINEで個別アドバイスを受け取る</span>
-            <span class="kw-sub">友だち追加は30秒・完全無料</span>
+    <div style="background:linear-gradient(90deg,#17344f,#264f70);padding:24px 20px 28px;text-align:center;">
+        <div style="color:#ffe598;font-size:13px;font-weight:800;margin-bottom:14px;">非公開データの為先着30名限定</div>
+        <a href="https://lin.ee/qYCi0W9" onclick="fbq('track','Lead'); fbq('trackCustom','LINE_Click_LP');" target="_blank"
+           style="display:block;background:#55bd68;color:#fff;font-size:20px;font-weight:900;padding:18px;border-radius:999px;text-decoration:none;margin-bottom:10px;box-shadow:0 5px 0 #3a9b4e,0 8px 20px rgba(85,189,104,.3);">
+            LINEで無料受け取る
         </a>
-        <p class="cta-note-new">🔒 無理な勧誘はありません</p>
+        <div style="color:#d6e0e6;font-size:11px;">30秒でご登録できます！</div>
     </div>
 
 </div>
