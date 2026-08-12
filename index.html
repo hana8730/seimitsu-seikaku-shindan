@@ -308,6 +308,39 @@
         .ck-star, .ck-gift { background:transparent !important; font-size:16px !important; }
         .cta-lead-text { text-align:center; font-size:14px; font-weight:800; color:#1a2e3b; margin-bottom:8px; }
 
+        /* 薬玉演出（レーダーチャート登場） */
+        .kusudama-half {
+            position: absolute; top: 50%; left: 50%; width: 220px; height: 220px;
+            margin: -110px 0 0 -110px; pointer-events: none;
+        }
+        .kusudama-left {
+            clip-path: polygon(50% 4%, 6% 22%, 14% 50%, 4% 78%, 50% 96%, 38% 50%);
+            background: linear-gradient(135deg,#ff9de2,#ff45b1 60%,#df3c8d);
+            transform-origin: 65% 50%;
+            animation: kusudama-open-left .85s cubic-bezier(.34,1.56,.64,1) forwards;
+        }
+        .kusudama-right {
+            clip-path: polygon(50% 4%, 94% 22%, 86% 50%, 96% 78%, 50% 96%, 62% 50%);
+            background: linear-gradient(225deg,#ffe08a,#ffb347 60%,#ff8a3d);
+            transform-origin: 35% 50%;
+            animation: kusudama-open-right .85s cubic-bezier(.34,1.56,.64,1) forwards;
+        }
+        @keyframes kusudama-open-left {
+            0%   { transform: rotate(0deg) translate(0,0) scale(1); opacity: 1; }
+            100% { transform: rotate(-110deg) translate(-90px,-60px) scale(.8); opacity: 0; }
+        }
+        @keyframes kusudama-open-right {
+            0%   { transform: rotate(0deg) translate(0,0) scale(1); opacity: 1; }
+            100% { transform: rotate(110deg) translate(90px,-60px) scale(.8); opacity: 0; }
+        }
+        #radar-chart svg {
+            animation: radar-pop .55s .45s cubic-bezier(.34,1.56,.64,1) both;
+        }
+        @keyframes radar-pop {
+            0%   { transform: scale(.3); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
         /* スティッキーボタン */
         #lp-sticky {
             display: none;
@@ -327,8 +360,17 @@
 <!-- ===== 診断アプリ ===== -->
 <div class="container">
 
+    <div style="text-align:center;margin-bottom:14px;">
+        <span style="display:inline-block;background:#fff0f6;color:var(--pink-deep);font-size:11px;font-weight:900;padding:4px 14px;border-radius:999px;letter-spacing:.02em;">IBJ加盟店｜3人に1人が半年で成婚</span>
+    </div>
+
     <!-- ① 質問画面 -->
     <div id="screen-quiz" class="screen active">
+        <img id="q1-hero-img" src="assets/q1-couple.png" alt="婚活診断" style="width:50%;margin:0 auto 16px;display:block;border-radius:14px;">
+        <video id="q2-hero-video" src="assets/q2-video.mp4" autoplay loop muted playsinline style="width:50%;margin:0 auto 16px;display:none;border-radius:14px;"></video>
+        <img id="q3-hero-img" src="assets/q3-woman.png" alt="婚活診断" style="width:50%;margin:0 auto 16px;display:none;border-radius:14px;">
+        <video id="q4-hero-video" src="assets/q4-woman.mp4" autoplay loop muted playsinline style="width:50%;margin:0 auto 16px;display:none;border-radius:14px;"></video>
+        <img id="q5-hero-img" src="assets/q5.png" alt="婚活診断" style="width:50%;margin:0 auto 16px;display:none;border-radius:14px;">
         <div class="progress-wrap">
             <div class="progress-bar" id="progress-bar" style="width:0%"></div>
         </div>
@@ -343,9 +385,24 @@
         <div class="result-type-label" id="result-type-label"></div>
         <h2 id="result-title"></h2>
         <p style="font-size:13px;color:#aaa;margin:4px 0 8px;">あなたの婚活スコア</p>
-        <div id="radar-chart"></div>
+        <div id="radar-chart-wrap" style="position:relative;min-height:60px;">
+            <div id="radar-chart"></div>
+            <div class="kusudama-half kusudama-left"></div>
+            <div class="kusudama-half kusudama-right"></div>
+        </div>
         <hr class="divider">
-        <p class="scroll-hint">↓ スクロールして続きを見る</p>
+
+        <div style="padding:0 20px;margin:14px 0 18px;text-align:center;">
+            <p style="font-size:14px;font-weight:900;color:#eb776e;margin-bottom:4px;">あなたのタイプに合わせた戦略を今すぐチェック</p>
+            <p style="font-size:13px;color:#625d5b;margin-bottom:10px;line-height:1.6;">気になった方は、今すぐこちらから受け取れます</p>
+            <a href="https://lin.ee/qYCi0W9" onclick="fbq('track','Lead'); fbq('trackCustom','LINE_Click_Result');" target="_blank"
+               style="display:block;background:#55bd68;color:#fff;font-size:17px;font-weight:900;padding:15px;border-radius:999px;text-decoration:none;box-shadow:0 5px 0 #3a9b4e,0 8px 20px rgba(85,189,104,.3);">
+                LINEで無料の動画を受け取る
+            </a>
+            <p style="margin-top:8px;font-size:12px;color:#aaa;">※ 30秒で登録完了・いつでもブロックできます</p>
+        </div>
+
+        <p class="scroll-hint">↓ もっと詳しく見る</p>
     </div>
 
 </div>
@@ -359,15 +416,29 @@
     <!-- タイプ結果ブリッジ -->
     <div style="background:#fff;padding:20px 24px;text-align:center;border-bottom:1px solid #f5e0ee;">
         <p id="type-intro-text" style="font-size:15px;font-weight:700;color:#333;margin:0 0 8px;line-height:1.6;white-space:pre-line;"></p>
-        <p style="font-size:14px;font-weight:800;color:#eb776e;margin:0;">更に詳しいお知らせがあります</p>
+        <p style="font-size:14px;font-weight:800;color:#eb776e;margin:0 0 44px;">更に詳しいお知らせがあります</p>
     </div>
 
     <!-- HERO -->
     <div style="background:linear-gradient(170deg,#faafa4 0%,#eb776e 100%);padding:28px 22px 24px;text-align:center;position:relative;overflow:hidden;">
         <div style="position:absolute;top:-50px;right:-50px;width:185px;height:185px;border-radius:50%;background:rgba(255,255,255,.14);pointer-events:none;"></div>
         <div style="position:absolute;bottom:-30px;left:-44px;width:137px;height:137px;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none;"></div>
-        <div style="display:inline-block;background:#fff6e9;color:#9c4d4b;font-size:12px;font-weight:700;padding:5px 16px;border-radius:999px;margin-bottom:14px;letter-spacing:.04em;">LINE登録30名に限り</div>
-        <div style="font-size:28px;font-weight:900;color:#17344f;line-height:1.3;"><span style="font-size:34px;color:#fff;">2026年</span>の最新情報を<br>あなたにプレゼント</div>
+        <div style="font-size:28px;font-weight:900;color:#17344f;line-height:1.3;margin-bottom:10px;">IBJだからこそできる<br>3人に1人は結婚できる仕組みを公開</div>
+        <div id="lp-hero-title" style="font-size:28px;font-weight:900;color:#17344f;line-height:1.3;"><span style="font-size:34px;color:#fff;">2026年</span>の最新情報を<br>あなたにプレゼント</div>
+    </div>
+
+    <!-- 実績スタッツ -->
+    <div style="background:linear-gradient(135deg,#fff5f0,#fffaf6);padding:18px 16px 16px;border-top:2px solid #f3c2a8;border-bottom:2px solid #f3c2a8;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div style="background:#fff;border-radius:14px;padding:18px 8px;text-align:center;box-shadow:0 6px 14px rgba(154,81,77,.12);">
+                <div style="font-size:38px;font-weight:900;color:#eb5f8a;line-height:1;">1万人<span style="font-size:16px;">+</span></div>
+                <div style="font-size:10.5px;color:#8a7a75;margin-top:8px;line-height:1.5;">IBJの1万人のデータがあるから、あなたに合う戦略がわかる</div>
+            </div>
+            <div style="background:#fff;border-radius:14px;padding:18px 8px;text-align:center;box-shadow:0 6px 14px rgba(154,81,77,.12);">
+                <div style="font-size:38px;font-weight:900;color:#d9954a;line-height:1;">500組<span style="font-size:16px;">+</span></div>
+                <div style="font-size:10.5px;color:#8a7a75;margin-top:8px;line-height:1.5;">新婚夫婦を500組以上見てきたから、本音で話せる相談ができる</div>
+            </div>
+        </div>
     </div>
 
     <!-- CARDS -->
@@ -379,10 +450,31 @@
             <div style="padding:14px 14px 14px 12px;flex:1;">
                 <div style="color:#ee776e;font-size:13px;font-weight:900;margin-bottom:8px;">🎁 15分のプレゼント動画の内容</div>
                 <div style="color:#625d5b;font-size:12px;line-height:1.7;margin-bottom:10px;">☆容姿や年齢より重要な〇〇とは<br>☆年齢別の婚活の傾向と対策<br>☆女性が優位な婚活の戦略<br>☆４１歳が８ヶ月で成婚した秘密<br>☆相性を見つける方法とは？</div>
-                <div style="color:#17344f;font-size:15px;font-weight:900;line-height:1.55;">2026年のデータを公開し<br>婚活市場のリアルを１５分の動画で解説</div>
+                <div id="lp-gift-title" style="color:#17344f;font-size:15px;font-weight:900;line-height:1.55;">2026年のデータを公開し<br>婚活市場のリアルを１５分の動画で解説</div>
             </div>
         </div>
 
+    </div>
+
+    <!-- 体験談 -->
+    <div style="background:#fffaf6;padding:8px 16px 20px;">
+        <div style="text-align:center;font-size:15px;font-weight:900;color:#17344f;margin-bottom:12px;">最新データできっかけを掴んだ体験談</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px rgba(154,81,77,.12);">
+                <img src="assets/testimonial2.png" alt="東京都在住40代" style="width:100%;display:block;">
+                <div style="padding:10px 10px 12px;">
+                    <div style="font-size:11px;font-weight:900;color:#17344f;text-align:center;margin-bottom:6px;">東京都在住40代</div>
+                    <div style="font-size:11px;color:#7a6a5a;line-height:1.7;text-align:center;">年齢的に難しいと思っていましたが、<br>データを知ることで安心でき、<br>更に犬が好きな方との<br>ご縁が見つかり自然と<br>成婚に結びつきました</div>
+                </div>
+            </div>
+            <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px rgba(154,81,77,.12);">
+                <img src="assets/testimonial1.png" alt="埼玉県在住30代" style="width:100%;display:block;">
+                <div style="padding:10px 10px 12px;">
+                    <div style="font-size:11px;font-weight:900;color:#17344f;text-align:center;margin-bottom:6px;">埼玉県在住30代</div>
+                    <div style="font-size:11px;color:#7a6a5a;line-height:1.7;text-align:center;">どの世代も三人に一人は<br>結婚できることを知り、<br>デートに戦略が必要なことを<br>理解してからは<br>スムーズに進むことができ、<br>理想のプロポーズも<br>お願いできました</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- こんな方に -->
@@ -402,12 +494,13 @@
 
     <!-- CTA -->
     <div style="background:linear-gradient(90deg,#17344f,#264f70);padding:24px 20px 28px;text-align:center;">
-        <div style="color:#ffe598;font-size:13px;font-weight:800;margin-bottom:14px;">非公開データの為先着30名限定</div>
+        <div style="color:#ffe598;font-size:13px;font-weight:800;margin-bottom:14px;">三人に一人は成婚できる独自の秘密を公開</div>
         <a href="https://lin.ee/qYCi0W9" onclick="fbq('track','Lead'); fbq('trackCustom','LINE_Click_LP');" target="_blank"
            style="display:block;background:#55bd68;color:#fff;font-size:20px;font-weight:900;padding:18px;border-radius:999px;text-decoration:none;margin-bottom:10px;box-shadow:0 5px 0 #3a9b4e,0 8px 20px rgba(85,189,104,.3);">
             LINEで無料受け取る
         </a>
         <div style="color:#d6e0e6;font-size:11px;">30秒でご登録できます！</div>
+        <video src="assets/wedding.mp4" autoplay loop muted playsinline style="width:17.5%;margin:14px auto 0;display:block;border-radius:14px;"></video>
     </div>
 
 </div>
@@ -575,6 +668,15 @@
         document.getElementById('progress-bar').style.width = progress + '%';
         document.getElementById('question-badge').innerText = `質問 ${currentIdx + 1} / ${questions.length}`;
         document.getElementById('question-text').innerText = q.text;
+        document.getElementById('q1-hero-img').style.display = currentIdx === 0 ? 'block' : 'none';
+        const q2Video = document.getElementById('q2-hero-video');
+        q2Video.style.display = currentIdx === 1 ? 'block' : 'none';
+        if (currentIdx === 1) { q2Video.currentTime = 0; q2Video.play(); } else { q2Video.pause(); }
+        document.getElementById('q3-hero-img').style.display = currentIdx === 2 ? 'block' : 'none';
+        const q4Video = document.getElementById('q4-hero-video');
+        q4Video.style.display = currentIdx === 3 ? 'block' : 'none';
+        if (currentIdx === 3) { q4Video.currentTime = 0; q4Video.play(); } else { q4Video.pause(); }
+        document.getElementById('q5-hero-img').style.display = currentIdx === 4 ? 'block' : 'none';
 
         const cont = document.getElementById('choices-container');
         cont.innerHTML = '';
@@ -623,6 +725,15 @@
         if (stickyKw) stickyKw.textContent = keyword;
         document.getElementById('type-intro-text').textContent = result.intro;
         document.getElementById('type-pitfall-text').textContent = result.pitfall;
+        document.getElementById('lp-hero-title').innerHTML = `成婚率を上げる<span style="font-size:34px;color:#fff;">2026年</span><br>最新データをプレゼント`;
+
+        const giftTitleMap = {
+            '共感の達人タイプ':      '共感の達人のあなたが「いい人止まり」を抜け出し<br>41歳が8ヶ月でご成婚した空気感の作り方',
+            '行動力リーダータイプ':   '行動リーダーのあなたが<br>1ヶ月で18人から申し込まれる空気感の作り方',
+            'コミュニケーター タイプ': 'コミュニケーターのあなたが<br>「特別な存在」に選ばれる空気感の作り方',
+            'バランス調整タイプ':     'バランス型のあなたが<br>自分らしさを活かして選ばれる空気感の作り方'
+        };
+        document.getElementById('lp-gift-title').innerHTML = giftTitleMap[result.type] || '2026年のデータを公開し<br>婚活市場のリアルを１５分の動画で解説';
 
         // LPセクションを表示
         document.getElementById('lp-section').style.display = 'block';
