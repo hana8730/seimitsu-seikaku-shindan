@@ -360,10 +360,6 @@
 <!-- ===== 診断アプリ ===== -->
 <div class="container">
 
-    <div style="text-align:center;margin-bottom:14px;">
-        <span style="display:inline-block;background:#fff0f6;color:var(--pink-deep);font-size:11px;font-weight:900;padding:4px 14px;border-radius:999px;letter-spacing:.02em;">IBJ加盟店｜3人に1人が半年で成婚</span>
-    </div>
-
     <!-- ① 質問画面 -->
     <div id="screen-quiz" class="screen active">
         <img id="q1-hero-img" src="assets/q1-couple.png" alt="婚活診断" style="width:50%;margin:0 auto 16px;display:block;border-radius:14px;">
@@ -449,8 +445,7 @@
             <div style="width:10px;background:#f18a80;flex-shrink:0;border-radius:0;"></div>
             <div style="padding:14px 14px 14px 12px;flex:1;">
                 <div style="color:#ee776e;font-size:13px;font-weight:900;margin-bottom:8px;">🎁 15分のプレゼント動画の内容</div>
-                <div style="color:#625d5b;font-size:12px;line-height:1.7;margin-bottom:10px;">☆容姿や年齢より重要な〇〇とは<br>☆年齢別の婚活の傾向と対策<br>☆女性が優位な婚活の戦略<br>☆４１歳が８ヶ月で成婚した秘密<br>☆相性を見つける方法とは？</div>
-                <div id="lp-gift-title" style="color:#17344f;font-size:15px;font-weight:900;line-height:1.55;">2026年のデータを公開し<br>婚活市場のリアルを１５分の動画で解説</div>
+                <div style="color:#625d5b;font-size:12px;line-height:1.7;">☆容姿や年齢より重要な〇〇とは<br>☆年齢別の婚活の傾向と対策<br>☆女性が優位な婚活の戦略<br>☆４１歳が８ヶ月で成婚した秘密<br>☆相性を見つける方法とは？</div>
             </div>
         </div>
 
@@ -726,14 +721,6 @@
         document.getElementById('type-intro-text').textContent = result.intro;
         document.getElementById('type-pitfall-text').textContent = result.pitfall;
         document.getElementById('lp-hero-title').innerHTML = `成婚率を上げる<span style="font-size:34px;color:#fff;">2026年</span><br>最新データをプレゼント`;
-
-        const giftTitleMap = {
-            '共感の達人タイプ':      '共感の達人のあなたへ<br>「いい人止まり」を抜け出す空気感の作り方',
-            '行動力リーダータイプ':   '行動リーダーのあなたへ<br>もっと多くの申し込みを引き寄せる空気感の作り方',
-            'コミュニケーター タイプ': 'コミュニケーターのあなたへ<br>「特別な存在」に選ばれる空気感の作り方',
-            'バランス調整タイプ':     'バランス型のあなたへ<br>自分らしさを活かして選ばれる空気感の作り方'
-        };
-        document.getElementById('lp-gift-title').innerHTML = giftTitleMap[result.type] || '2026年のデータを公開し<br>婚活市場のリアルを１５分の動画で解説';
 
         // LPセクションを表示
         document.getElementById('lp-section').style.display = 'block';
