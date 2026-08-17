@@ -389,6 +389,11 @@
         <hr class="divider">
 
         <div style="padding:0 20px;margin:14px 0 18px;text-align:center;">
+            <p id="cta-praise" style="font-size:15px;font-weight:900;color:#1a2e3b;margin-bottom:10px;line-height:1.7;"></p>
+            <div id="cta-anxiety" style="background:#fff4f4;border-left:3px solid #eb776e;border-radius:0 10px 10px 0;padding:10px 14px;margin-bottom:12px;text-align:left;">
+                <p style="font-size:11px;font-weight:900;color:#eb776e;margin-bottom:4px;">でも、こんな不安を感じていませんか？</p>
+                <p id="cta-anxiety-text" style="font-size:13px;font-weight:800;color:#333;line-height:1.6;margin:0;"></p>
+            </div>
             <p style="font-size:16px;font-weight:900;color:#1a2e3b;margin-bottom:6px;line-height:1.6;">その不安、実は思い込みかもしれません。</p>
             <p style="font-size:13px;color:#625d5b;margin-bottom:6px;line-height:1.6;">15分の動画でその正体をお見せします。</p>
             <p style="font-size:11px;color:#9a9a9a;margin-bottom:10px;">LINEに友達追加するだけ。営業電話・DMは一切しません。</p>
@@ -410,10 +415,9 @@
     <!-- JS用（非表示）-->
     <span id="type-pitfall-text" style="display:none;"></span>
 
-    <!-- タイプ結果ブリッジ -->
+    <!-- 橋 -->
     <div style="background:#fff;padding:20px 24px;text-align:center;border-bottom:1px solid #f5e0ee;">
-        <p id="type-intro-text" style="font-size:15px;font-weight:700;color:#333;margin:0 0 8px;line-height:1.6;white-space:pre-line;"></p>
-        <p style="font-size:14px;font-weight:800;color:#eb776e;margin:0 0 44px;">更に詳しいお知らせがあります</p>
+        <p style="font-size:14px;color:#625d5b;line-height:1.85;margin:0;">なぜ「思い込み」と言えるのか。<br>IBJに集まった<strong style="color:#1a2e3b;">1万人のデータ</strong>が、その答えを持っています。<br>年齢も、今まで上手くいかなかった経験も、関係ありません。</p>
     </div>
 
     <!-- HERO -->
@@ -446,7 +450,7 @@
             <div style="width:10px;background:#f18a80;flex-shrink:0;border-radius:0;"></div>
             <div style="padding:14px 14px 14px 12px;flex:1;">
                 <div style="color:#ee776e;font-size:13px;font-weight:900;margin-bottom:8px;">🎁 15分のプレゼント動画の内容</div>
-                <div style="color:#625d5b;font-size:12px;line-height:1.7;">☆容姿や年齢より重要な〇〇とは<br>☆年齢別の婚活の傾向と対策<br>☆女性が優位な婚活の戦略<br>☆４１歳が８ヶ月で成婚した秘密<br>☆相性を見つける方法とは？</div>
+                <div style="color:#625d5b;font-size:12px;line-height:1.85;">✓「いい人止まり」から「この人だ」と選ばれる理由<br>✓ 年齢を武器にする婚活の戦略<br>✓ 41歳が8ヶ月で成婚できた3つのこと<br>✓ 女性が優位な時代の動き方<br>✓ 自分と相性のいい相手の見つけ方</div>
             </div>
         </div>
 
@@ -490,7 +494,7 @@
 
     <!-- CTA -->
     <div style="background:linear-gradient(90deg,#17344f,#264f70);padding:24px 20px 28px;text-align:center;">
-        <div style="color:#ffe598;font-size:13px;font-weight:800;margin-bottom:14px;">三人に一人は成婚できる独自の秘密を公開</div>
+        <div style="color:#ffe598;font-size:13px;font-weight:800;margin-bottom:14px;">不安を思い込みだと知った今が、スタートです。</div>
         <a href="https://lin.ee/qYCi0W9" onclick="fbq('track','Lead'); fbq('trackCustom','LINE_Click_LP');" target="_blank"
            style="display:block;background:#55bd68;color:#fff;font-size:20px;font-weight:900;padding:18px;border-radius:999px;text-decoration:none;margin-bottom:10px;box-shadow:0 5px 0 #3a9b4e,0 8px 20px rgba(85,189,104,.3);">
             あなた専用の婚活アドバイスをもらう
@@ -559,6 +563,8 @@
             emoji: "🌸",
             type: "共感の達人タイプ",
             intro: "相手に安心感を与えられる、とても魅力的なタイプです。\n\n\n共感の達人であるあなたへ\n社交性や行動力などの５つのポイントを\n最新データの中で詳しく語っています",
+            praise: "相手に安心感を与えられる、とても魅力的なタイプです。",
+            anxietyQ: "「いい人止まりになっているかも…」",
             pitfall: "このタイプには、婚活で「いい人止まり」になりやすい傾向があります。",
             title: "あなたは「心をつなぐ人」",
             pitfalls: [
@@ -582,6 +588,8 @@
             emoji: "⚡",
             type: "行動力リーダータイプ",
             intro: "積極的に婚活を進められる、行動力が最大の武器のタイプです。\n\n\n行動力リーダーであるあなたへ\n共感力やコミュニケーションなどの５つのポイントを\n最新データの中で詳しく語っています",
+            praise: "積極的に婚活を進められる、行動力が最大の武器のタイプです。",
+            anxietyQ: "「前のめりすぎて、相手が引いているかも…」",
             pitfall: "このタイプには、前のめりになりすぎて相手が引いてしまいやすい傾向があります。",
             title: "あなたは「道を切り開く人」",
             pitfalls: [
@@ -605,6 +613,8 @@
             emoji: "💬",
             type: "コミュニケーター タイプ",
             intro: "初対面でもすぐ打ち解けられる、社交性が最大の魅力のタイプです。\n\n\nコミュニケーターであるあなたへ\n共感力や行動力などの５つのポイントを\n最新データの中で詳しく語っています",
+            praise: "初対面でもすぐ打ち解けられる、社交性が最大の魅力のタイプです。",
+            anxietyQ: "「出会いはあるのに、特別な存在として選ばれていないかも…」",
             pitfall: "このタイプには、出会いはあるのに「特別な存在」として選ばれにくい傾向があります。",
             title: "あなたは「みんなをつなぐ人」",
             pitfalls: [
@@ -628,6 +638,8 @@
             emoji: "🌿",
             type: "バランス調整タイプ",
             intro: "どんな相手とも関係を築ける、柔軟性が強みのタイプです。\n\n\nバランス調整タイプのあなたへ\n社交性や行動力などの５つのポイントを\n最新データの中で詳しく語っています",
+            praise: "どんな相手とも関係を築ける、柔軟性が強みのタイプです。",
+            anxietyQ: "「合わせすぎて、自分がどんな人か伝わっていないかも…」",
             pitfall: "このタイプには、合わせすぎて「どんな人か分からない」と思われやすい傾向があります。",
             title: "あなたは「柔軟に対応できる人」",
             pitfalls: [
@@ -719,7 +731,8 @@
         const stickyKw = document.getElementById('sticky-keyword');
         if (lineKw) lineKw.textContent = keyword;
         if (stickyKw) stickyKw.textContent = keyword;
-        document.getElementById('type-intro-text').textContent = result.intro;
+        document.getElementById('cta-praise').textContent = result.praise;
+        document.getElementById('cta-anxiety-text').textContent = result.anxietyQ;
         document.getElementById('type-pitfall-text').textContent = result.pitfall;
         document.getElementById('lp-hero-title').innerHTML = `<span style="font-size:30px;color:#fff;">2026年</span>IBJの最新データを<br>プレゼント`;
 
