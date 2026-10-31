@@ -29,6 +29,8 @@ body{font-family:'Helvetica Neue',Arial,"Hiragino Kaku Gothic ProN","Hiragino Sa
 h1{color:var(--pink-deep);font-size:clamp(22px,6vw,28px);line-height:1.4;margin:.2em 0 .4em}
 h2{color:var(--pink-deep);font-size:clamp(19px,5vw,23px);line-height:1.45;margin:.2em 0 .5em}
 .lead{font-size:15px;line-height:1.8;color:#444}
+#r-praise{white-space:pre-line;text-align:left;line-height:1.9}
+#r-insight{white-space:pre-line}
 .small{font-size:12px;color:var(--muted);line-height:1.7}
 .btn{display:block;width:100%;background:var(--pink);color:#fff;border:none;padding:15px 20px;font-size:17px;border-radius:12px;cursor:pointer;font-weight:800;margin-top:14px}
 .btn:active{transform:scale(.98)}
@@ -41,8 +43,8 @@ h2{color:var(--pink-deep);font-size:clamp(19px,5vw,23px);line-height:1.45;margin
 .type-label{display:inline-block;background:var(--pink);color:#fff;border-radius:20px;padding:5px 18px;font-size:14px;font-weight:800;margin-bottom:6px}
 .type-name{font-size:clamp(24px,6.5vw,30px);font-weight:900;color:var(--ink);margin:4px 0}
 .emoji{font-size:46px;display:block;margin:6px 0 2px}
-.insight{background:var(--pink-pale);border-radius:12px;padding:14px 16px;text-align:left;font-size:14px;line-height:1.8;margin-top:14px}
-.sec{margin-top:26px;text-align:left}
+.insight{background:var(--pink-pale);border-radius:12px;padding:16px 18px;text-align:left;font-size:15px;line-height:1.9;margin-top:16px}
+.sec{margin-top:38px;text-align:left}
 .sec-title{text-align:center;font-size:20px;font-weight:900;color:var(--ink);line-height:1.5;margin-bottom:10px}
 .check-list{list-style:none;padding:0;margin:10px 0}
 .check-list li{font-size:15px;font-weight:700;line-height:1.6;padding:9px 10px 9px 34px;position:relative;background:#fff;border-bottom:1px dashed #f5e0ee}
@@ -52,14 +54,14 @@ h2{color:var(--pink-deep);font-size:clamp(19px,5vw,23px);line-height:1.45;margin
 .keyword-box{margin:14px 0;text-align:center;background:#fff;border:2px dashed var(--pink);border-radius:14px;padding:14px}
 .keyword-box .kw{font-size:30px;font-weight:900;color:var(--pink-deep);letter-spacing:.15em}
 .keyword-box .kw-label{font-size:12px;color:var(--muted)}
-.safe-list{list-style:none;padding:0;margin:12px 0;font-size:13.5px;line-height:1.6;color:#444;text-align:left}
-.safe-list li{padding:5px 0 5px 24px;position:relative}
+.safe-list{list-style:none;padding:0;margin:14px 0;font-size:14.5px;line-height:1.7;color:#444;text-align:left}
+.safe-list li{padding:6px 0 6px 24px;position:relative}
 .safe-list li::before{content:"✓";position:absolute;left:2px;color:var(--green-dark);font-weight:900}
 .line-btn{display:block;background:var(--green);color:#fff;font-size:19px;font-weight:900;padding:17px;border-radius:999px;text-decoration:none;text-align:center;box-shadow:0 5px 0 var(--green-dark);margin-top:8px}
 .line-btn:active{transform:translateY(2px);box-shadow:0 3px 0 var(--green-dark)}
 .strengths{list-style:none;padding:0;margin:8px 0}
-.strengths li{font-size:14.5px;line-height:1.6;padding:7px 0 7px 24px;position:relative;border-bottom:1px dashed #f5e0ee}
-.strengths li::before{content:"✓";position:absolute;left:2px;color:var(--pink-deep);font-weight:900}
+.strengths li{font-size:15.5px;line-height:1.7;padding:12px 14px 12px 36px;position:relative;background:var(--pink-pale);border-radius:10px;margin-bottom:10px}
+.strengths li::before{content:"✓";position:absolute;left:12px;color:var(--pink-deep);font-weight:900}
 details.faq{border-bottom:1px solid var(--line);padding:10px 2px;text-align:left}
 details.faq summary{font-weight:800;font-size:14.5px;cursor:pointer;line-height:1.6}
 details.faq p{font-size:14px;line-height:1.8;color:#444;margin:8px 0 4px}
@@ -79,9 +81,9 @@ footer{max-width:500px;width:100%;text-align:center;margin-top:22px}
 <div class="card screen active" id="screen-intro">
   <div class="emoji">🌸</div>
   <h1>婚活タイプ診断</h1>
-  <p class="lead">5つの質問に答えるだけで、あなたの婚活タイプと、つまずきやすいポイントが分かります。</p>
-  <p class="lead">結果に合わせて、タイプ別の詳しい解説「婚活カルテ」を用意しています。</p>
-  <p class="small">所要時間 約1分／無料／結果は登録なしで見られます<br>運営：mariage.isis（IBJ正式加盟店）</p>
+  <p class="lead">5つの質問に答えるだけで、<br>あなたの婚活タイプと、<br>つまずきやすいポイントが分かります。</p>
+  <p class="lead">結果に合わせて、<br>タイプ別の詳しい解説「婚活カルテ」を<br>用意しています。</p>
+  <p class="small">所要時間 約1分／無料／結果は登録なしで見られます</p>
   <button class="btn" id="start-btn">診断をはじめる</button>
 </div>
 
@@ -97,7 +99,7 @@ footer{max-width:500px;width:100%;text-align:center;margin-top:22px}
 <div class="card screen" id="screen-result">
   <div class="small">診断ができました</div>
   <span class="emoji" id="r-emoji"></span>
-  <div class="type-label" id="r-type"></div>
+  <div class="type-name" id="r-type"></div>
   <p class="lead" id="r-praise" style="font-weight:700"></p>
   <div id="r-radar"></div>
 
@@ -112,26 +114,8 @@ footer{max-width:500px;width:100%;text-align:center;margin-top:22px}
   </div>
 
   <div class="sec">
-    <div class="sec-title">あなた専用の「婚活カルテ」が<br>できています</div>
-    <p class="lead">スコアだけでは分からない、あなたのタイプの詳しい解説です。カルテの中身はこちらです。</p>
-    <ul class="check-list">
-      <li>あなたの婚活での強み（3つ）</li>
-      <li>つまずきやすいポイント（3つ）</li>
-      <li>今すぐできる3つの改善</li>
-      <li>タイプに関係なく共通する「土台」チェック（写真・プロフィール・進め方）</li>
-    </ul>
-    <p class="small">カルテはLINEでお渡しします。受け取りは1分で終わります。</p>
-  </div>
-
-  <div class="sec">
-    <div class="sec-title">受け取り方</div>
-    <div class="steps">
-      <ol>
-        <li>下のボタンからLINEを追加する</li>
-        <li>LINEで、あなたのキーワードをそのまま送る</li>
-        <li>あなたのタイプのカルテがすぐ届きます</li>
-      </ol>
-    </div>
+    <div class="sec-title">カルテの受け取り方</div>
+    <p class="lead" style="text-align:center;font-weight:700">LINEを追加 → キーワードを送る → カルテが届きます</p>
     <div class="keyword-box">
       <div class="kw-label">あなたのキーワード</div>
       <div class="kw" id="r-keyword"></div>
@@ -139,7 +123,7 @@ footer{max-width:500px;width:100%;text-align:center;margin-top:22px}
     <ul class="safe-list">
       <li>追加しても、相談や入会の申込にはなりません</li>
       <li>営業の電話や個別メッセージは送りません</li>
-      <li>あなたのLINE友だちに、追加したことは知られません</li>
+      <li>あなたのLINE友だちに、<br>追加したことは知られません</li>
       <li>本名や住所などの入力は不要です</li>
       <li>合わなければ、ブロックすれば全て終わります</li>
     </ul>
@@ -148,9 +132,21 @@ footer{max-width:500px;width:100%;text-align:center;margin-top:22px}
   </div>
 
   <div class="sec">
+    <div class="sec-title">あなた専用の「婚活カルテ」が<br>できています</div>
+    <p class="lead">スコアだけでは分からない、<br>あなたのタイプの詳しい解説です。</p>
+    <p class="lead">カルテの中身はこちらです。</p>
+    <ul class="check-list">
+      <li>あなたの婚活での強み（3つ）</li>
+      <li>つまずきやすいポイント（3つ）</li>
+      <li>今すぐできる3つの改善</li>
+      <li>タイプに関係なく共通する<br>「土台」チェック（写真・プロフィール・進め方）</li>
+    </ul>
+  </div>
+
+  <div class="sec">
     <div class="sec-title">カルテを受け取った方への<br>追加プレゼント</div>
     <p class="lead"><strong>41歳の女性が8ヶ月で成婚できた理由（動画・約15分）</strong></p>
-    <p class="lead">タイプに関係なく共通する「土台」の話です。写真・プロフィール・婚活の進め方。この土台が整っていないと、タイプの強みも活きません。彼女が変えたのは、その土台でした。</p>
+    <p class="lead">タイプに関係なく共通する<br>「土台」の話です。<br>写真・プロフィール・婚活の進め方。<br>この土台が整っていないと、<br>タイプの強みも活きません。<br>彼女が変えたのは、その土台でした。</p>
     <ul class="check-list">
       <li>「いい人止まり」から選ばれるようになる理由</li>
       <li>年齢を武器にする婚活の進め方</li>
@@ -165,21 +161,30 @@ footer{max-width:500px;width:100%;text-align:center;margin-top:22px}
       <!-- 顔写真を入れる場合はここに img を置く -->
       <div class="name">HANA（mariage.isis）</div>
       婚活伴走プランナー／IBJ正式加盟店<br>
-      国際結婚18年目。四柱推命の気質診断と、上海で美容室を経営し新婚夫婦500組以上を見てきた経験から、見た目や年齢ではなく「その人だけの空気感」を整える婚活を伝えています。<br>
-      私自身、母子家庭で育ち「私には無理」と思っていた側の人間です。だから、うまくいかない理由を性格のせいにしたくないと思っています。
+      国際結婚18年目。<br>
+      四柱推命の気質診断と、<br>
+      上海で美容室を経営し、<br>
+      新婚夫婦500組以上を見てきた経験から、<br>
+      見た目や年齢ではなく<br>
+      「その人だけの空気感」を整える婚活を<br>
+      伝えています。<br>
+      私自身、母子家庭で育ち、<br>
+      「私には無理」と思っていた側の人間です。<br>
+      だから、うまくいかない理由を<br>
+      性格のせいにしたくないと思っています。
     </div>
   </div>
 
   <div class="sec">
     <div class="sec-title">よくある不安</div>
     <details class="faq"><summary>本当に無料ですか？ 後から料金はかかりますか？</summary>
-      <p>カルテと動画は無料です。受け取ったことで相談や入会の申込になることもありません。</p></details>
+      <p>カルテと動画は無料です。<br>受け取ったことで、<br>相談や入会の申込になることもありません。</p></details>
     <details class="faq"><summary>LINEを追加したら、しつこく営業されませんか？</summary>
-      <p>営業の電話や個別の勧誘メッセージは送りません。配信が合わなければ、ブロックすれば全て終了します。</p></details>
+      <p>営業の電話や<br>個別の勧誘メッセージは送りません。<br>配信が合わなければ、<br>ブロックすれば全て終了します。</p></details>
     <details class="faq"><summary>知り合いにバレませんか？</summary>
-      <p>公式アカウントを追加しても、あなたのLINE友だちに通知されることはありません。本名を入力する必要もありません。</p></details>
+      <p>公式アカウントを追加しても、<br>あなたのLINE友だちに<br>通知されることはありません。<br>本名を入力する必要もありません。</p></details>
     <details class="faq"><summary>カルテはすぐ届きますか？</summary>
-      <p>キーワードを送っていただければ、自動ですぐ届きます。</p></details>
+      <p>キーワードを送っていただければ、<br>自動ですぐ届きます。</p></details>
   </div>
 
   <div class="sec" style="text-align:center">
@@ -241,26 +246,26 @@ const QUESTIONS = [
 const TYPES = {
   kyokan: {
     name: "共感の達人タイプ", emoji: "🌸", keyword: "共感",
-    praise: "相手の気持ちに自然と寄り添える、優しさと共感力が際立つタイプです。話をじっくり聞き、相手の感情を理解する力が高いため、一緒にいるだけで安心感を与えられます。お見合いやデートの場でも「また会いたい」と思われやすい、婚活においてとても魅力的な資質です。",
-    insight: "優しさのあまり自分の気持ちを後回しにして、好きではない相手も断れずに続けてしまうことがあります。",
+    praise: "相手の気持ちに自然と寄り添える、\n優しさと共感力が際立つタイプです。\n話をじっくり聞き、\n相手の感情を理解する力が高いため、\n一緒にいるだけで安心感を与えられます。\nお見合いやデートの場でも\n「また会いたい」と思われやすい、\n婚活においてとても魅力的な資質です。",
+    insight: "優しさのあまり\n自分の気持ちを後回しにして、\n好きではない相手も断れずに\n続けてしまうことがあります。",
     strengths: ["相手が安心できる空気感を作れる", "深い信頼関係を築ける誠実さ", "「また会いたい」と思わせる温かさ"]
   },
   kodo: {
     name: "行動力リーダータイプ", emoji: "⚡", keyword: "行動",
-    praise: "決断力と行動力が際立つタイプです。気になる相手がいればすぐに動き、婚活そのものにも前向きに取り組めるため、出会いの数そのものを増やせます。迷いや足踏みで機会を逃しにくい、婚活において非常に強い武器になる資質です。",
-    insight: "頑張るほど前のめりになって、相手のペースを置いてきてしまうことがあります。",
+    praise: "決断力と行動力が際立つタイプです。\n気になる相手がいればすぐに動き、\n婚活そのものにも前向きに取り組めるため、\n出会いの数そのものを増やせます。\n迷いや足踏みで機会を逃しにくい、\n婚活において非常に強い武器になる資質です。",
+    insight: "頑張るほど前のめりになって、\n相手のペースを置いてきてしまうことがあります。",
     strengths: ["出会いをどんどん作れる積極性", "デートのプランを仕切れる頼もしさ", "婚活を前向きに続けられるメンタル"]
   },
   commu: {
     name: "コミュニケータータイプ", emoji: "💬", keyword: "コミュ",
-    praise: "誰とでも自然に打ち解けられる、高い社交性が持ち味のタイプです。初対面でも場を明るくし、会話を途切れさせない力があるため、お見合いの第一印象で好印象を持たれやすい傾向があります。出会いの母数を自然に増やせる、婚活で大きなアドバンテージになる資質です。",
-    insight: "誰にでも感じがいい分、「あなただけが特別」が相手に伝わりにくいことがあります。",
+    praise: "誰とでも自然に打ち解けられる、\n高い社交性が持ち味のタイプです。\n初対面でも場を明るくし、\n会話を途切れさせない力があるため、\nお見合いの第一印象で\n好印象を持たれやすい傾向があります。\n出会いの母数を自然に増やせる、\n婚活で大きなアドバンテージになる資質です。",
+    insight: "誰にでも感じがいい分、\n「あなただけが特別」が\n相手に伝わりにくいことがあります。",
     strengths: ["初対面でもすぐに打ち解けられる", "場の雰囲気を明るくできる", "幅広い出会いを自然に作れる"]
   },
   balance: {
     name: "バランス調整タイプ", emoji: "🌿", keyword: "バランス",
-    praise: "物事を冷静に見極めながら、どんな相手とも関係を築ける柔軟性が強みのタイプです。感情に流されず相手をしっかり見られるため、安定感があり、一緒にいて安心できると思われやすい傾向があります。極端に偏らないからこそ、幅広いタイプの相手と相性を合わせやすい資質です。",
-    insight: "慎重に様子を見るうちに、いいタイミングを逃してしまうことがあります。",
+    praise: "物事を冷静に見極めながら、\nどんな相手とも関係を築ける\n柔軟性が強みのタイプです。\n感情に流されず\n相手をしっかり見られるため、\n安定感があり、\n一緒にいて安心できると思われやすい傾向があります。\n極端に偏らないからこそ、\n幅広いタイプの相手と相性を合わせやすい資質です。",
+    insight: "慎重に様子を見るうちに、\nいいタイミングを逃してしまうことがあります。",
     strengths: ["幅広いタイプの相手と関係を築ける", "冷静な判断力で相手を見極められる", "安定感があり一緒にいて安心できる"]
   }
 };
@@ -367,15 +372,15 @@ function drawRadar(values) {
   };
   let s = '<svg viewBox="0 0 360 330" width="100%" style="max-width:340px;display:block;margin:6px auto">';
   [0.25, 0.5, 0.75, 1].forEach(r => {
-    s += '<polygon points="' + values.map((_, i) => pt(i, r).join(",")).join(" ") + '" fill="' + (r === 1 ? "none" : "rgba(59,184,232,0.04)") + '" stroke="#deeef8"/>';
+    s += '<polygon points="' + values.map((_, i) => pt(i, r).join(",")).join(" ") + '" fill="' + (r === 1 ? "none" : "rgba(239,98,167,0.05)") + '" stroke="#f6d9ec"/>';
   });
-  for (let i = 0; i < N; i++) { const [x, y] = pt(i, 1); s += '<line x1="' + CX + '" y1="' + CY + '" x2="' + x + '" y2="' + y + '" stroke="#deeef8"/>'; }
-  s += '<polygon points="' + values.map((d, i) => pt(i, Math.max(d.v, 6) / 100).join(",")).join(" ") + '" fill="rgba(59,184,232,0.25)" stroke="#3bb8e8" stroke-width="2"/>';
+  for (let i = 0; i < N; i++) { const [x, y] = pt(i, 1); s += '<line x1="' + CX + '" y1="' + CY + '" x2="' + x + '" y2="' + y + '" stroke="#f6d9ec"/>'; }
+  s += '<polygon points="' + values.map((d, i) => pt(i, Math.max(d.v, 6) / 100).join(",")).join(" ") + '" fill="rgba(239,98,167,0.22)" stroke="#ef62a7" stroke-width="2"/>';
   const anchors = ["middle", "start", "start", "end", "end"];
   values.forEach((d, i) => {
     const [x, y] = pt(i, 1.32);
-    s += '<text x="' + x + '" y="' + (y - 6) + '" text-anchor="' + anchors[i] + '" font-size="11" fill="#6b8fa3">' + d.label + "</text>";
-    s += '<text x="' + x + '" y="' + (y + 9) + '" text-anchor="' + anchors[i] + '" font-size="13" font-weight="bold" fill="#3bb8e8">' + d.v + "%</text>";
+    s += '<text x="' + x + '" y="' + (y - 6) + '" text-anchor="' + anchors[i] + '" font-size="13" fill="#746d73">' + d.label + "</text>";
+    s += '<text x="' + x + '" y="' + (y + 11) + '" text-anchor="' + anchors[i] + '" font-size="15" font-weight="bold" fill="#df3c8d">' + d.v + "%</text>";
   });
   return s + "</svg>";
 }
@@ -386,8 +391,8 @@ function showResult() {
   const t = TYPES[typeKey];
   document.getElementById("r-emoji").textContent = t.emoji;
   document.getElementById("r-type").textContent = "あなたは「" + t.name + "」でした";
-  document.getElementById("r-praise").textContent = t.praise;
-  document.getElementById("r-insight").textContent = t.insight;
+  document.getElementById("r-praise").textContent = t.praise.replace(/。/g, "。\n").trim();
+  document.getElementById("r-insight").textContent = t.insight.replace(/。/g, "。\n").trim();
   document.getElementById("r-radar").innerHTML = drawRadar(radarValues(scores));
   document.getElementById("r-strengths").innerHTML = t.strengths.map(x => "<li>" + x + "</li>").join("");
   document.getElementById("r-keyword").textContent = "「" + t.keyword + "」";
