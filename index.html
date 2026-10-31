@@ -1,923 +1,406 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>婚活診断テスト</title>
-    <!-- Meta Pixel -->
-    <script>
-    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-    document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init','800557740590259');
-    fbq('track','PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=800557740590259&ev=PageView&noscript=1"/></noscript>
-    <!-- End Meta Pixel -->
-    <style>
-        :root {
-            --primary-pink: #ff45b1;
-            --primary-hover: #e03299;
-            --secondary-color: #fff0f6;
-            --text-color: #333333;
-            --bg-color: #FFFFFF;
-            --pink:#ef62a7; --pink-deep:#df3c8d; --pink-pale:#fff2fa; --ink:#252126; --muted:#746d73;
-        }
-
-        * { box-sizing: border-box; }
-
-        body {
-            font-family: 'Helvetica Neue', Arial, "Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 16px 16px 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        /* ===== 診断アプリ ===== */
-        .container {
-            background-color: var(--bg-color);
-            width: 100%;
-            max-width: 500px;
-            border-radius: 20px;
-            box-shadow: 0 8px 24px rgba(255, 69, 177, 0.15);
-            padding: 32px 24px;
-            text-align: center;
-        }
-
-        .screen { display: none; }
-        .screen.active { display: block; }
-
-        h1 { color: var(--primary-pink); font-size: clamp(20px, 5vw, 26px); margin-top: 0; }
-        h2 { color: var(--primary-pink); font-size: clamp(18px, 4.5vw, 22px); }
-
-        .input-group { margin: 16px 0; text-align: left; }
-        .input-group label { display: block; font-weight: bold; margin-bottom: 6px; font-size: 14px; }
-        input {
-            width: 100%; padding: 12px 14px; border: 2px solid #eee;
-            border-radius: 10px; font-size: 16px; transition: border-color 0.2s;
-        }
-        input:focus { outline: none; border-color: var(--primary-pink); }
-
-        .btn {
-            background-color: var(--primary-pink); color: white; border: none;
-            padding: 14px 24px; font-size: 16px; border-radius: 10px; cursor: pointer;
-            width: 100%; font-weight: bold; margin-top: 10px;
-            transition: background-color 0.2s, transform 0.1s;
-        }
-        .btn:hover { background-color: var(--primary-hover); }
-        .btn:active { transform: scale(0.98); }
-
-        .choice-btn {
-            background-color: white; color: var(--text-color);
-            border: 2px solid var(--primary-pink); padding: 14px 16px;
-            margin-bottom: 12px; border-radius: 10px; cursor: pointer;
-            width: 100%; text-align: left; font-size: 15px;
-            transition: background-color 0.2s, color 0.2s;
-        }
-        .choice-btn:hover { background-color: var(--primary-pink); color: white; }
-        .choice-btn:active { transform: scale(0.98); }
-
-        .progress-wrap { background: #eee; border-radius: 10px; height: 8px; margin-bottom: 20px; overflow: hidden; }
-        .progress-bar { background: var(--primary-pink); height: 100%; border-radius: 10px; transition: width 0.4s ease; }
-
-        #question-badge { font-size: 13px; color: var(--primary-pink); font-weight: bold; margin-bottom: 8px; }
-        #question-text { font-size: clamp(16px, 4vw, 18px); font-weight: bold; margin-bottom: 20px; }
-
-        .result-type-label {
-            display: inline-block; background: var(--primary-pink); color: white;
-            border-radius: 20px; padding: 4px 16px; font-size: 13px; font-weight: bold; margin-bottom: 8px;
-        }
-        .advice-box {
-            background-color: var(--secondary-color); padding: 18px 20px; border-radius: 12px;
-            text-align: left; margin-top: 16px; line-height: 1.7; font-size: 15px;
-        }
-        .advice-box ul { margin: 10px 0 0; padding-left: 20px; }
-        .advice-box ul li { margin-bottom: 6px; }
-        .divider { border: none; border-top: 1px solid #f0c0dc; margin: 20px 0 0; }
-        .emoji-large { font-size: 48px; margin: 8px 0 12px; display: block; }
-
-        /* スクロール誘導 */
-        .scroll-hint {
-            margin-top: 20px;
-            color: var(--pink-deep);
-            font-size: 13px;
-            font-weight: 700;
-            animation: bounce 1.4s infinite;
-            letter-spacing: .05em;
-        }
-        @keyframes bounce {
-            0%,100% { transform: translateY(0); }
-            50%      { transform: translateY(5px); }
-        }
-
-        /* 婚活カルテプレビュー */
-        .karte-preview {
-            background: linear-gradient(135deg, #fff5fb, #fff);
-            border: 1.5px solid #f3c2db;
-            border-radius: 14px;
-            padding: 16px;
-            margin-top: 14px;
-            text-align: left;
-        }
-        .karte-head {
-            display: flex; align-items: flex-start;
-            padding-bottom: 11px; border-bottom: 1px solid #f0d0ea; margin-bottom: 11px;
-        }
-        .karte-score-label { font-size: 11px; color: #aaa; display: block; margin-bottom: 1px; }
-        .karte-score-num { font-size: 38px; font-weight: 900; color: var(--primary-pink); line-height: 1; }
-        .karte-score-unit { font-size: 14px; font-weight: 700; color: var(--primary-pink); }
-        .karte-type { margin-left: auto; text-align: right; padding-top: 2px; }
-        .karte-type small { font-size: 11px; color: #aaa; display: block; }
-        .karte-type strong { font-size: 13px; color: var(--primary-pink); }
-        .karte-sec { margin-bottom: 9px; }
-        .karte-sec-title { font-size: 11px; font-weight: 800; letter-spacing: .1em; color: var(--primary-pink); margin: 0 0 4px; }
-        .karte-items { list-style: none; padding: 0; margin: 0; }
-        .karte-items li { font-size: 13px; padding: 4px 0 4px 18px; position: relative; color: #333; line-height: 1.5; border-bottom: 1px dashed #f5e0ee; }
-        .karte-items li:last-child { border-bottom: none; }
-        .karte-items.str li::before { content: "✓"; position: absolute; left: 0; color: var(--primary-pink); font-weight: 700; font-size: 12px; }
-        .karte-items.imp li::before { content: "△"; position: absolute; left: 0; color: #f0a050; font-size: 12px; }
-        .karte-lock { margin-top: 11px; text-align: center; padding: 9px 10px; background: #fff; border: 1.5px dashed #f3c2db; border-radius: 10px; font-size: 12px; color: #999; }
-
-        /* 落とし穴リスト */
-        .lp-pitfalls { list-style:none; padding:0; margin:12px 0 0; display:grid; gap:7px; }
-        .lp-pitfalls li { padding:10px 14px; border-radius:10px; background:#fff; font-size:15px; font-weight:700; line-height:1.55; box-shadow:0 3px 10px #d94d8610; }
-        .lp-result-note { margin-top:16px; padding:14px 16px; border-radius:12px; background:rgba(239,98,167,0.10); font-size:15px; font-weight:700; line-height:1.7; text-align:center; }
-        .lp-points-list { list-style:none; padding:0; margin:12px 0 0; display:grid; gap:7px; }
-        .lp-points-list li { padding:10px 10px 10px 32px; border-radius:10px; background:#fff; font-size:15px; font-weight:700; box-shadow:0 3px 10px #d94d8610; position:relative; }
-        .lp-points-list li::before { content:"✓"; position:absolute; left:10px; color:var(--pink); font-weight:900; }
-        .lp-case { margin-top:14px; padding:18px 16px; border-radius:16px; background:#fff; box-shadow:0 6px 14px #e1589213; }
-        .lp-case-stat { text-align:center; margin:14px 0; }
-        .lp-case-num { font-size:52px; font-weight:900; color:var(--pink-deep); line-height:1; letter-spacing:-0.04em; }
-        .lp-case-label { font-size:14px; color:var(--muted); margin:4px 0 0; }
-        .lp-karte-items { list-style:none; padding:0; margin:12px 0 0; }
-        .lp-karte-items li { display:flex; gap:8px; align-items:flex-start; padding:10px 0; border-bottom:1px dashed #f5e0ee; font-size:15px; font-weight:700; line-height:1.55; }
-        .lp-karte-items li::before { content:"✓"; flex:0 0 auto; color:var(--pink); font-size:16px; font-weight:900; margin-top:1px; }
-        .lp-karte-items li:last-child { border-bottom:none; }
-
-        /* ===== 埋め込みLP ===== */
-        #lp-section {
-            width: 100%;
-            max-width: 500px;
-            margin-top: 0;
-            background: #fff;
-            border-radius: 0 0 20px 20px;
-            overflow: hidden;
-            box-shadow: 0 8px 24px rgba(255,69,177,0.12);
-        }
-
-        /* LP hero */
-        .lp-hero {
-            position: relative;
-            padding: 18px 18px 12px;
-            text-align: center;
-            background: linear-gradient(155deg,#fff 0%,#fff9fd 53%,#ffeaf5 100%);
-        }
-        .lp-hero::before,.lp-hero::after { content:""; position:absolute; border-radius:50%; background:#f9c4df; opacity:.4; }
-        .lp-hero::before { width:140px; height:140px; right:-70px; top:-60px; }
-        .lp-hero::after  { width:90px;  height:90px;  left:-44px; bottom:-40px; }
-        .lp-eyebrow {
-            position:relative; display:inline-block; margin:0 0 10px; padding:4px 12px;
-            border-radius:999px; background:#fff; color:var(--pink-deep);
-            font-size:15px; font-weight:800; letter-spacing:.06em; box-shadow:0 4px 12px #e88bbb28;
-        }
-        .lp-h1 { position:relative; font-size:27px; line-height:1.45; font-weight:900; color:var(--ink); }
-        .lp-h1 em { color:var(--pink-deep); font-style:normal; }
-        .lp-gift {
-            position:relative; margin:12px auto 0; max-width:360px;
-            padding:14px 14px 10px; border:1px solid #f7c9e0; border-radius:15px;
-            background:#fff; box-shadow:0 6px 16px #de60951a;
-        }
-        .lp-gift-label {
-            display:inline-block; padding:3px 10px; border-radius:20px;
-            background:linear-gradient(100deg,#f171b1,#e84998); color:#fff; font-size:14px; font-weight:900;
-        }
-        .lp-gift h3 { margin:7px 0 6px; font-size:20px; line-height:1.4; font-weight:900; color:var(--ink); }
-        .lp-gift p  { color:var(--muted); font-size:15px; line-height:1.75; margin:0; }
-
-        /* LP section共通 */
-        .lp-sec { padding: 16px 18px; }
-        .lp-sec--pink { background: var(--pink-pale); }
-        .lp-sec-title { text-align:center; font-size:26px; line-height:1.45; font-weight:900; color:var(--ink); }
-        .lp-sec-title em { color:var(--pink-deep); font-style:normal; }
-        .lp-sec-intro { margin:8px auto 0; color:var(--muted); text-align:center; font-size:16px; line-height:1.75; }
-
-        /* LP CTA ボタン */
-        .lp-cta-wrap { padding: 14px 18px 12px; background: #fff; border-bottom: 1px solid #f7d8eb; }
-        .lp-line-btn {
-            display:block; background:#06C755; color:#fff; font-weight:900;
-            text-align:center; padding:15px 16px 12px; border-radius:14px;
-            text-decoration:none; font-size:22px; line-height:1.35;
-            box-shadow:0 8px 20px rgba(6,199,85,.28);
-        }
-        .lp-line-btn small { display:block; font-size:14px; font-weight:400; margin-top:5px; opacity:.85; }
-        .lp-cta-note { margin-top:6px; text-align:center; font-size:15px; color:var(--muted); }
-
-        /* 悩みリスト */
-        .lp-troubles { display:grid; gap:8px; margin:12px 0 0; padding:0; list-style:none; }
-        .lp-troubles li {
-            position:relative; padding:10px 10px 10px 42px;
-            border-radius:10px; background:#fff; font-size:16px; font-weight:700;
-            line-height:1.55; box-shadow:0 3px 10px #d94d8610;
-        }
-        .lp-troubles li::before {
-            content:"?"; position:absolute; left:12px; top:50%;
-            width:20px; height:20px; transform:translateY(-50%);
-            border-radius:50%; background:#f8b5d7; color:#fff;
-            font-family:Georgia,serif; font-size:17px; font-weight:700;
-            line-height:20px; text-align:center;
-        }
-
-        /* 教科書カード */
-        .lp-data-card {
-            margin-top:12px; padding:16px 14px 8px;
-            border:1px solid #f3c2db; border-radius:16px; background:#fff;
-            box-shadow:0 6px 14px #e1589213;
-        }
-        .lp-book-icon { font-size:27px; text-align:center; }
-        .lp-data-card h3 { margin:5px 0 0; text-align:center; font-size:20px; line-height:1.45; font-weight:900; color:var(--ink); }
-        .lp-data-card .lp-mini { margin:4px 0 10px; color:var(--pink-deep); text-align:center; font-size:14px; font-weight:800; }
-        .lp-contents { margin:0; padding:0; list-style:none; }
-        .lp-contents li {
-            display:flex; gap:8px; padding:10px 2px;
-            border-top:1px solid #f1d7e4; font-size:16px; font-weight:700; line-height:1.6;
-            color: var(--ink);
-        }
-        .lp-contents li::before { content:"✓"; flex:0 0 auto; color:var(--pink); font-size:22px; font-weight:900; line-height:1; }
-
-        /* 3つの視点 */
-        .lp-benefits { display:grid; gap:8px; margin-top:12px; }
-        .lp-benefit { padding:12px 14px; border-radius:12px; background:#fff; border:1px solid #f8d8e8; }
-        .lp-benefit-num { color:var(--pink); font-size:14px; font-weight:900; letter-spacing:.08em; }
-        .lp-benefit h3 { margin:3px 0 4px; font-size:18px; font-weight:900; color:var(--ink); }
-        .lp-benefit p { color:var(--muted); font-size:16px; line-height:1.75; margin:0; }
-        .lp-quote {
-            margin:12px 0 0; padding:14px 14px; border-radius:14px;
-            background:linear-gradient(135deg,#fff 0%,#fff5fb 100%); border:1px solid #f5d5e5; text-align:center;
-        }
-        .lp-quote p { font-size:18px; line-height:1.7; font-weight:900; margin:0; color:var(--ink); }
-        .lp-quote p strong { color:var(--pink-deep); }
-
-        /* 下部CTA */
-        .lp-cta-bottom { padding: 16px 18px 36px; }
-
-        /* ===== 新しいLP ===== */
-        .type-highlight { padding:22px 20px 16px; text-align:center; background:linear-gradient(160deg,#fff7f5,#fff); }
-        .type-highlight-label { font-size:12px; font-weight:900; color:#aaa; letter-spacing:.08em; margin-bottom:8px; }
-        .type-highlight-name { font-size:22px; font-weight:900; color:var(--pink-deep); margin-bottom:12px; }
-        .type-highlight-problem { font-size:14px; font-weight:700; line-height:1.85; color:#555; }
-        .new-gift { padding:20px 20px 0; background:#fff; }
-        .gift-send-lead { font-size:15px; font-weight:900; text-align:center; margin-bottom:14px; line-height:1.7; }
-        .gift-send-lead .kw { font-size:22px; color:var(--pink-deep); background:linear-gradient(transparent 60%,#ffe590 0); padding:0 2px; }
-        .new-gift-list { list-style:none; padding:0; margin:0; display:grid; gap:9px; }
-        .new-gift-list li { display:flex; align-items:flex-start; gap:10px; padding:12px 14px; border-radius:14px; background:#f8f8f8; font-size:14px; font-weight:800; line-height:1.55; }
-        .new-gift-list li .ck { flex:0 0 20px; width:20px; height:20px; border-radius:6px; background:#98ddd2; display:grid; place-items:center; color:#fff; font-size:11px; font-weight:900; margin-top:1px; }
-        .new-cta { padding:20px 20px 40px; }
-        .btn-line-keyword { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:64px; padding:14px 16px; border-radius:999px; background:#06C755; color:#fff; box-shadow:0 8px 0 #039f41,0 13px 20px rgba(6,199,85,.25); text-decoration:none; }
-        .btn-line-keyword .kw-main { font-size:18px; font-weight:900; }
-        .btn-line-keyword .kw-sub { font-size:11px; font-weight:400; margin-top:3px; opacity:.85; }
-        .cta-note-new { margin-top:10px; text-align:center; font-size:11px; color:#aaa; }
-
-        /* ===== 夏デザイン上書き ===== */
-        #screen-result { background: linear-gradient(170deg,#e8f7ff 0%,#fff 60%); }
-        .result-type-label { background: linear-gradient(135deg,#3bb8e8,#4ecdc4); border-radius:20px; }
-        .wave-sep { width:100%; display:block; margin-top:-1px; }
-        #lp-section { box-shadow:0 8px 24px rgba(59,184,232,.12); }
-        .type-highlight { padding:20px 20px 16px; text-align:center; background:#fff; }
-        .problem-box-s { padding:18px 16px; border-radius:18px; background:linear-gradient(160deg,#fff8f0,#fff); border:1.5px solid #fde8c8; }
-        .problem-label-s { font-size:11px; font-weight:900; color:#f27e83; letter-spacing:.08em; margin-bottom:8px; }
-        .type-highlight-name { font-size:21px; font-weight:900; color:#1a2e3b; margin-bottom:8px; }
-        .type-highlight-problem { font-size:14px; font-weight:700; line-height:1.85; color:#555; }
-        .gift-head-s { font-size:13px; font-weight:900; color:#3bb8e8; margin-bottom:12px; text-align:center; letter-spacing:.05em; }
-        .new-gift { padding:16px 20px 0; background:#fff; }
-        .new-gift-list li { background:#e8f7ff; }
-        .new-gift-list li .ck { background:linear-gradient(135deg,#4ecdc4,#3bb8e8); }
-        .kw-note-s { text-align:center; font-size:12px; font-weight:700; color:#6b8fa3; margin-bottom:8px; }
-        .btn-line-keyword { border-radius:999px; }
-        .btn-line-keyword .kw-main { font-size:16px; }
-        .type-intro-text { font-size:15px; font-weight:800; color:#1a2e3b; text-align:center; padding:16px 16px 0; line-height:1.7; }
-        .type-pitfall-text { font-size:14px; font-weight:900; color:#1a2e3b; margin-bottom:10px; line-height:1.7; }
-        .gift-star { background:linear-gradient(135deg,#d6f1fb,#e8f7ff) !important; border:1.5px solid #3bb8e8 !important; font-weight:900 !important; }
-        .ck-star, .ck-gift { background:transparent !important; font-size:16px !important; }
-        .cta-lead-text { text-align:center; font-size:14px; font-weight:800; color:#1a2e3b; margin-bottom:8px; }
-
-        /* 薬玉演出（レーダーチャート登場） */
-        .kusudama-half {
-            position: absolute; top: 50%; left: 50%; width: 220px; height: 220px;
-            margin: -110px 0 0 -110px; pointer-events: none;
-        }
-        .kusudama-left {
-            clip-path: polygon(50% 4%, 6% 22%, 14% 50%, 4% 78%, 50% 96%, 38% 50%);
-            background: linear-gradient(135deg,#ff9de2,#ff45b1 60%,#df3c8d);
-            transform-origin: 65% 50%;
-            animation: kusudama-open-left .85s cubic-bezier(.34,1.56,.64,1) forwards;
-        }
-        .kusudama-right {
-            clip-path: polygon(50% 4%, 94% 22%, 86% 50%, 96% 78%, 50% 96%, 62% 50%);
-            background: linear-gradient(225deg,#ffe08a,#ffb347 60%,#ff8a3d);
-            transform-origin: 35% 50%;
-            animation: kusudama-open-right .85s cubic-bezier(.34,1.56,.64,1) forwards;
-        }
-        @keyframes kusudama-open-left {
-            0%   { transform: rotate(0deg) translate(0,0) scale(1); opacity: 1; }
-            100% { transform: rotate(-110deg) translate(-90px,-60px) scale(.8); opacity: 0; }
-        }
-        @keyframes kusudama-open-right {
-            0%   { transform: rotate(0deg) translate(0,0) scale(1); opacity: 1; }
-            100% { transform: rotate(110deg) translate(90px,-60px) scale(.8); opacity: 0; }
-        }
-        #radar-chart svg {
-            animation: radar-pop .55s .45s cubic-bezier(.34,1.56,.64,1) both;
-        }
-        @keyframes radar-pop {
-            0%   { transform: scale(.3); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* スティッキーボタン */
-        #lp-sticky {
-            display: none;
-            position: fixed; bottom:0; left:50%; transform:translateX(-50%);
-            width:100%; max-width:500px; padding:10px 18px 16px;
-            background:#fff; box-shadow:0 -3px 18px rgba(0,0,0,.10); z-index:998;
-        }
-        #lp-sticky a {
-            display:block; background:#06C755; color:#fff; font-weight:900;
-            text-align:center; padding:14px; border-radius:12px;
-            text-decoration:none; font-size:16px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>婚活タイプ診断｜mariage.isis</title>
+<meta name="description" content="5つの質問で分かる、あなたの婚活タイプ。タイプ別の「婚活カルテ」をLINEで無料お渡ししています。">
+<!-- Meta Pixel（旧診断と同じピクセルID） -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','800557740590259');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=800557740590259&ev=PageView&noscript=1"/></noscript>
+<style>
+:root{
+  --pink:#ef62a7; --pink-deep:#df3c8d; --pink-pale:#fff2fa;
+  --ink:#252126; --muted:#746d73; --line:#f0d0ea; --green:#55bd68; --green-dark:#3a9b4e;
+}
+*{box-sizing:border-box}
+body{font-family:'Helvetica Neue',Arial,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;background:#fff0f6;color:#333;margin:0;padding:16px 12px 90px;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+.card{background:#fff;width:100%;max-width:500px;border-radius:20px;box-shadow:0 8px 24px rgba(255,69,177,.15);padding:28px 22px;text-align:center}
+.screen{display:none}
+.screen.active{display:block}
+h1{color:var(--pink-deep);font-size:clamp(22px,6vw,28px);line-height:1.4;margin:.2em 0 .4em}
+h2{color:var(--pink-deep);font-size:clamp(19px,5vw,23px);line-height:1.45;margin:.2em 0 .5em}
+.lead{font-size:15px;line-height:1.8;color:#444}
+.small{font-size:12px;color:var(--muted);line-height:1.7}
+.btn{display:block;width:100%;background:var(--pink);color:#fff;border:none;padding:15px 20px;font-size:17px;border-radius:12px;cursor:pointer;font-weight:800;margin-top:14px}
+.btn:active{transform:scale(.98)}
+.choice-btn{display:block;width:100%;background:#fff;color:#333;border:2px solid var(--pink);padding:14px 16px;margin-bottom:12px;border-radius:12px;cursor:pointer;text-align:left;font-size:15px;line-height:1.5}
+.choice-btn:active{background:var(--pink);color:#fff}
+.progress-wrap{background:#eee;border-radius:10px;height:8px;margin-bottom:18px;overflow:hidden}
+.progress-bar{background:var(--pink);height:100%;width:0;transition:width .4s ease}
+.badge{font-size:13px;color:var(--pink-deep);font-weight:800;margin-bottom:8px}
+.qtext{font-size:clamp(16px,4.5vw,18px);font-weight:800;margin-bottom:20px;line-height:1.6}
+.type-label{display:inline-block;background:var(--pink);color:#fff;border-radius:20px;padding:5px 18px;font-size:14px;font-weight:800;margin-bottom:6px}
+.type-name{font-size:clamp(24px,6.5vw,30px);font-weight:900;color:var(--ink);margin:4px 0}
+.emoji{font-size:46px;display:block;margin:6px 0 2px}
+.insight{background:var(--pink-pale);border-radius:12px;padding:14px 16px;text-align:left;font-size:14px;line-height:1.8;margin-top:14px}
+.sec{margin-top:26px;text-align:left}
+.sec-title{text-align:center;font-size:20px;font-weight:900;color:var(--ink);line-height:1.5;margin-bottom:10px}
+.check-list{list-style:none;padding:0;margin:10px 0}
+.check-list li{font-size:15px;font-weight:700;line-height:1.6;padding:9px 10px 9px 34px;position:relative;background:#fff;border-bottom:1px dashed #f5e0ee}
+.check-list li::before{content:"✓";position:absolute;left:10px;color:var(--pink-deep);font-weight:900}
+.steps{background:var(--pink-pale);border-radius:14px;padding:16px}
+.steps ol{margin:0;padding-left:20px;font-size:15px;line-height:2;font-weight:700}
+.keyword-box{margin:14px 0;text-align:center;background:#fff;border:2px dashed var(--pink);border-radius:14px;padding:14px}
+.keyword-box .kw{font-size:30px;font-weight:900;color:var(--pink-deep);letter-spacing:.15em}
+.keyword-box .kw-label{font-size:12px;color:var(--muted)}
+.safe-list{list-style:none;padding:0;margin:12px 0;font-size:13.5px;line-height:1.6;color:#444;text-align:left}
+.safe-list li{padding:5px 0 5px 24px;position:relative}
+.safe-list li::before{content:"✓";position:absolute;left:2px;color:var(--green-dark);font-weight:900}
+.line-btn{display:block;background:var(--green);color:#fff;font-size:19px;font-weight:900;padding:17px;border-radius:999px;text-decoration:none;text-align:center;box-shadow:0 5px 0 var(--green-dark);margin-top:8px}
+.line-btn:active{transform:translateY(2px);box-shadow:0 3px 0 var(--green-dark)}
+.strengths{list-style:none;padding:0;margin:8px 0}
+.strengths li{font-size:14.5px;line-height:1.6;padding:7px 0 7px 24px;position:relative;border-bottom:1px dashed #f5e0ee}
+.strengths li::before{content:"✓";position:absolute;left:2px;color:var(--pink-deep);font-weight:900}
+details.faq{border-bottom:1px solid var(--line);padding:10px 2px;text-align:left}
+details.faq summary{font-weight:800;font-size:14.5px;cursor:pointer;line-height:1.6}
+details.faq p{font-size:14px;line-height:1.8;color:#444;margin:8px 0 4px}
+.operator{background:var(--pink-pale);border-radius:14px;padding:18px 16px;text-align:left;font-size:14.5px;line-height:1.9}
+.operator .name{font-weight:900;font-size:16px;color:var(--ink)}
+#sticky{position:fixed;left:0;right:0;bottom:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);box-shadow:0 -4px 16px rgba(0,0,0,.10);display:none;z-index:50}
+#sticky .inner{max-width:500px;margin:0 auto;display:flex;align-items:center;gap:10px}
+#sticky .kw-note{font-size:12px;color:var(--muted);line-height:1.5;flex:1}
+#sticky .kw-note strong{color:var(--pink-deep);font-size:14px}
+#sticky a{flex:0 0 auto;background:var(--green);color:#fff;font-weight:900;font-size:15px;padding:12px 18px;border-radius:999px;text-decoration:none;box-shadow:0 3px 0 var(--green-dark)}
+footer{max-width:500px;width:100%;text-align:center;margin-top:22px}
+</style>
 </head>
 <body>
 
-<!-- ===== 診断アプリ ===== -->
-<div class="container">
-
-    <!-- ① 質問画面 -->
-    <div id="screen-quiz" class="screen active">
-        <img id="q1-hero-img" src="assets/q1-couple.png" alt="婚活診断" style="width:50%;margin:0 auto 16px;display:block;border-radius:14px;">
-        <video id="q2-hero-video" src="assets/q2-video.mp4" autoplay loop muted playsinline style="width:50%;margin:0 auto 16px;display:none;border-radius:14px;"></video>
-        <img id="q3-hero-img" src="assets/q3-woman.png" alt="婚活診断" style="width:50%;margin:0 auto 16px;display:none;border-radius:14px;">
-        <video id="q4-hero-video" src="assets/q4-woman.mp4" autoplay loop muted playsinline style="width:50%;margin:0 auto 16px;display:none;border-radius:14px;"></video>
-        <img id="q5-hero-img" src="assets/q5.png" alt="婚活診断" style="width:50%;margin:0 auto 16px;display:none;border-radius:14px;">
-        <div class="progress-wrap">
-            <div class="progress-bar" id="progress-bar" style="width:0%"></div>
-        </div>
-        <div id="question-badge"></div>
-        <p id="question-text"></p>
-        <div id="choices-container"></div>
-    </div>
-
-    <!-- ② 結果画面 -->
-    <div id="screen-result" class="screen">
-        <span class="emoji-large" id="result-emoji"></span>
-        <div class="result-type-label" id="result-type-label"></div>
-        <h2 id="result-title"></h2>
-        <p style="font-size:13px;color:#aaa;margin:4px 0 8px;">あなたの婚活スコア</p>
-        <div id="radar-chart-wrap" style="position:relative;min-height:60px;">
-            <div id="radar-chart"></div>
-            <div class="kusudama-half kusudama-left"></div>
-            <div class="kusudama-half kusudama-right"></div>
-        </div>
-        <hr class="divider">
-
-        <div style="padding:0 20px;margin:14px 0 18px;text-align:center;">
-            <p id="cta-praise" style="font-size:15px;font-weight:900;color:#1a2e3b;margin-bottom:10px;line-height:1.7;"></p>
-            <div id="cta-anxiety" style="background:#fff4f4;border-left:3px solid #eb776e;border-radius:0 10px 10px 0;padding:10px 14px;margin-bottom:12px;text-align:left;">
-                <p style="font-size:11px;font-weight:900;color:#eb776e;margin-bottom:4px;">でも、こんな不安を感じていませんか？</p>
-                <p id="cta-anxiety-text" style="font-size:13px;font-weight:800;color:#333;line-height:1.6;margin:0;"></p>
-            </div>
-            <p style="font-size:16px;font-weight:900;color:#1a2e3b;margin-bottom:6px;line-height:1.6;">その不安、実は思い込みかもしれません。</p>
-            <p style="font-size:13px;color:#625d5b;margin-bottom:6px;line-height:1.6;">15分の動画でその正体をお見せします。</p>
-            <p style="font-size:11px;color:#9a9a9a;margin-bottom:10px;">LINEに友達追加するだけ。営業電話・DMは一切しません。</p>
-            <a href="https://lin.ee/qYCi0W9" onclick="fbq('track','Lead'); fbq('trackCustom','LINE_Click_Result');" target="_blank"
-               style="display:block;background:#55bd68;color:#fff;font-size:17px;font-weight:900;padding:15px;border-radius:999px;text-decoration:none;box-shadow:0 5px 0 #3a9b4e,0 8px 20px rgba(85,189,104,.3);">
-                15分の動画を今すぐ受け取る
-            </a>
-            <p style="margin-top:8px;font-size:12px;color:#aaa;">※ 登録後、1・2・3の数字を送るだけで受け取れます</p>
-        </div>
-
-        <p class="scroll-hint">↓ もっと詳しく見る</p>
-    </div>
-
+<!-- ===== イントロ ===== -->
+<div class="card screen active" id="screen-intro">
+  <div class="emoji">🌸</div>
+  <h1>婚活タイプ診断</h1>
+  <p class="lead">5つの質問に答えるだけで、あなたの婚活タイプと、つまずきやすいポイントが分かります。</p>
+  <p class="lead">結果に合わせて、タイプ別の詳しい解説「婚活カルテ」を用意しています。</p>
+  <p class="small">所要時間 約1分／無料／結果は登録なしで見られます<br>運営：mariage.isis（IBJ正式加盟店）</p>
+  <button class="btn" id="start-btn">診断をはじめる</button>
 </div>
 
-<!-- ===== 埋め込みLP ===== -->
-<div id="lp-section" style="display:none;">
-
-    <!-- JS用（非表示）-->
-    <span id="type-pitfall-text" style="display:none;"></span>
-
-    <!-- 橋 -->
-    <div style="background:#fff;padding:20px 24px;text-align:center;border-bottom:1px solid #f5e0ee;">
-        <p style="font-size:14px;color:#625d5b;line-height:1.85;margin:0;">なぜ「思い込み」と言えるのか。<br>IBJに集まった<strong style="color:#1a2e3b;">1万人のデータ</strong>が、その答えを持っています。<br>年齢も、今まで上手くいかなかった経験も、関係ありません。</p>
-    </div>
-
-    <!-- HERO -->
-    <div style="background:linear-gradient(170deg,#faafa4 0%,#eb776e 100%);padding:28px 22px 24px;text-align:center;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:-50px;right:-50px;width:185px;height:185px;border-radius:50%;background:rgba(255,255,255,.14);pointer-events:none;"></div>
-        <div style="position:absolute;bottom:-30px;left:-44px;width:137px;height:137px;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none;"></div>
-        <div style="font-size:28px;font-weight:900;color:#fff;line-height:1.3;margin-bottom:10px;">年齢は関係なし！<br>今は最短半年で<br>３人に１人が成婚できる</div>
-        <div id="lp-hero-title" style="font-size:24px;font-weight:900;color:#17344f;line-height:1.3;"><span style="font-size:30px;color:#fff;">2026年</span>IBJの最新データを<br>プレゼント</div>
-    </div>
-
-    <!-- 実績スタッツ -->
-    <div style="background:linear-gradient(135deg,#fff5f0,#fffaf6);padding:18px 16px 16px;border-top:2px solid #f3c2a8;border-bottom:2px solid #f3c2a8;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <div style="background:#fff;border-radius:14px;padding:18px 8px;text-align:center;box-shadow:0 6px 14px rgba(154,81,77,.12);">
-                <div style="font-size:38px;font-weight:900;color:#eb5f8a;line-height:1;">1万人<span style="font-size:16px;">+</span></div>
-                <div style="font-size:10.5px;color:#8a7a75;margin-top:8px;line-height:1.5;">IBJの1万人のデータがあるから、あなたに合う戦略がわかる</div>
-            </div>
-            <div style="background:#fff;border-radius:14px;padding:18px 8px;text-align:center;box-shadow:0 6px 14px rgba(154,81,77,.12);">
-                <div style="font-size:38px;font-weight:900;color:#d9954a;line-height:1;">500組<span style="font-size:16px;">+</span></div>
-                <div style="font-size:10.5px;color:#8a7a75;margin-top:8px;line-height:1.5;">新婚夫婦を500組以上見てきたから、本音で話せる相談ができる</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CARDS -->
-    <div style="background:#fffaf6;padding:16px 16px 8px;">
-
-        <!-- Card 1 -->
-        <div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 9px 20px rgba(154,81,77,.16);margin-bottom:14px;display:flex;">
-            <div style="width:10px;background:#f18a80;flex-shrink:0;border-radius:0;"></div>
-            <div style="padding:14px 14px 14px 12px;flex:1;">
-                <div style="color:#ee776e;font-size:13px;font-weight:900;margin-bottom:8px;">🎁 15分のプレゼント動画の内容</div>
-                <div style="color:#625d5b;font-size:12px;line-height:1.85;">✓「いい人止まり」から「この人だ」と選ばれる理由<br>✓ 年齢を武器にする婚活の戦略<br>✓ 41歳が8ヶ月で成婚できた3つのこと<br>✓ 女性が優位な時代の動き方<br>✓ 自分と相性のいい相手の見つけ方</div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- 体験談 -->
-    <div style="background:#fffaf6;padding:8px 16px 20px;">
-        <div style="text-align:center;font-size:15px;font-weight:900;color:#17344f;margin-bottom:12px;">最新データできっかけを掴んだ体験談</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px rgba(154,81,77,.12);">
-                <img src="assets/testimonial2.png" alt="東京都在住40代" style="width:100%;display:block;">
-                <div style="padding:10px 10px 12px;">
-                    <div style="font-size:11px;font-weight:900;color:#17344f;text-align:center;margin-bottom:6px;">東京都在住40代</div>
-                    <div style="font-size:11px;color:#7a6a5a;line-height:1.7;text-align:center;">年齢的に難しいと思っていましたが、<br>データを知ることで安心でき、<br>更に犬が好きな方との<br>ご縁が見つかり自然と<br>成婚に結びつきました</div>
-                </div>
-            </div>
-            <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px rgba(154,81,77,.12);">
-                <img src="assets/testimonial1.png" alt="埼玉県在住30代" style="width:100%;display:block;">
-                <div style="padding:10px 10px 12px;">
-                    <div style="font-size:11px;font-weight:900;color:#17344f;text-align:center;margin-bottom:6px;">埼玉県在住30代</div>
-                    <div style="font-size:11px;color:#7a6a5a;line-height:1.7;text-align:center;">どの世代も三人に一人は<br>結婚できることを知り、<br>デートに戦略が必要なことを<br>理解してからは<br>スムーズに進むことができ、<br>理想のプロポーズも<br>お願いできました</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- こんな方に -->
-    <div style="background:#fbe3db;padding:22px 16px;">
-        <div style="text-align:center;margin-bottom:14px;">
-            <div style="font-size:11px;color:#999;margin-bottom:4px;">まずは現状を知ることが、遠回りしない婚活の第一歩です</div>
-            <div style="font-size:18px;font-weight:900;color:#17344f;">こんな方におすすめです</div>
-            <div style="width:60px;height:3px;background:#ef8d82;margin:8px auto 0;border-radius:2px;"></div>
-        </div>
-        <div style="display:grid;gap:9px;">
-            <div style="background:#fff8f4;border-radius:12px;padding:12px 14px;font-size:13px;font-weight:700;color:#343c47;">✓　婚活を頑張っているのに結果が出ない</div>
-            <div style="background:#fff8f4;border-radius:12px;padding:12px 14px;font-size:13px;font-weight:700;color:#343c47;">✓　何を変えればいいか分からない</div>
-            <div style="background:#fff8f4;border-radius:12px;padding:12px 14px;font-size:13px;font-weight:700;color:#343c47;">✓　自分の婚活方法が合っているか知りたい</div>
-            <div style="background:#fff8f4;border-radius:12px;padding:12px 14px;font-size:13px;font-weight:700;color:#343c47;">✓　できれば半年〜1年以内に結婚したい</div>
-        </div>
-    </div>
-
-    <!-- CTA -->
-    <div style="background:linear-gradient(90deg,#17344f,#264f70);padding:24px 20px 28px;text-align:center;">
-        <div style="color:#ffe598;font-size:13px;font-weight:800;margin-bottom:14px;">不安を思い込みだと知った今が、スタートです。</div>
-        <a href="https://lin.ee/qYCi0W9" onclick="fbq('track','Lead'); fbq('trackCustom','LINE_Click_LP');" target="_blank"
-           style="display:block;background:#55bd68;color:#fff;font-size:20px;font-weight:900;padding:18px;border-radius:999px;text-decoration:none;margin-bottom:10px;box-shadow:0 5px 0 #3a9b4e,0 8px 20px rgba(85,189,104,.3);">
-            15分の動画を今すぐ受け取る
-        </a>
-        <div style="color:#d6e0e6;font-size:11px;">登録後、1・2・3の数字を送るだけで受け取れます</div>
-        <video src="assets/wedding.mp4" autoplay loop muted playsinline style="width:17.5%;margin:14px auto 0;display:block;border-radius:14px;"></video>
-    </div>
-
+<!-- ===== 質問 ===== -->
+<div class="card screen" id="screen-quiz">
+  <div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+  <div class="badge" id="question-badge"></div>
+  <div class="qtext" id="question-text"></div>
+  <div id="choices"></div>
 </div>
 
-<!-- スティッキーボタン（結果画面表示後のみ） -->
-<div id="lp-sticky">
-    <a href="https://lin.ee/qYCi0W9" onclick="fbq('trackCustom','LINE_Click_Sticky');">15分の動画を今すぐ受け取る</a>
+<!-- ===== 結果＋LP ===== -->
+<div class="card screen" id="screen-result">
+  <div class="small">診断ができました</div>
+  <span class="emoji" id="r-emoji"></span>
+  <div class="type-label" id="r-type"></div>
+  <p class="lead" id="r-praise" style="font-weight:700"></p>
+  <div id="r-radar"></div>
+
+  <div class="insight">
+    <strong style="color:var(--pink-deep)">まず1つだけ、無料でお伝えします</strong>
+    <p id="r-insight" style="margin:6px 0 0"></p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">あなたの強みは、この3つです</div>
+    <ul class="strengths" id="r-strengths"></ul>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">あなた専用の「婚活カルテ」が<br>できています</div>
+    <p class="lead">スコアだけでは分からない、あなたのタイプの詳しい解説です。カルテの中身はこちらです。</p>
+    <ul class="check-list">
+      <li>あなたの婚活での強み（3つ）</li>
+      <li>つまずきやすいポイント（3つ）</li>
+      <li>今すぐできる3つの改善</li>
+      <li>タイプに関係なく共通する「土台」チェック（写真・プロフィール・進め方）</li>
+    </ul>
+    <p class="small">カルテはLINEでお渡しします。受け取りは1分で終わります。</p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">受け取り方</div>
+    <div class="steps">
+      <ol>
+        <li>下のボタンからLINEを追加する</li>
+        <li>LINEで、あなたのキーワードをそのまま送る</li>
+        <li>あなたのタイプのカルテがすぐ届きます</li>
+      </ol>
+    </div>
+    <div class="keyword-box">
+      <div class="kw-label">あなたのキーワード</div>
+      <div class="kw" id="r-keyword"></div>
+    </div>
+    <ul class="safe-list">
+      <li>追加しても、相談や入会の申込にはなりません</li>
+      <li>営業の電話や個別メッセージは送りません</li>
+      <li>あなたのLINE友だちに、追加したことは知られません</li>
+      <li>本名や住所などの入力は不要です</li>
+      <li>合わなければ、ブロックすれば全て終わります</li>
+    </ul>
+    <a class="line-btn" id="line-btn-1" href="https://lin.ee/qYCi0W9" target="_blank" rel="noopener">LINEでカルテを受け取る</a>
+    <p class="small" style="text-align:center">※ボタンを押すとLINEが開きます。開いたら、あなたのキーワードを送ってください。</p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">カルテを受け取った方への<br>追加プレゼント</div>
+    <p class="lead"><strong>41歳の女性が8ヶ月で成婚できた理由（動画・約15分）</strong></p>
+    <p class="lead">タイプに関係なく共通する「土台」の話です。写真・プロフィール・婚活の進め方。この土台が整っていないと、タイプの強みも活きません。彼女が変えたのは、その土台でした。</p>
+    <ul class="check-list">
+      <li>「いい人止まり」から選ばれるようになる理由</li>
+      <li>年齢を武器にする婚活の進め方</li>
+      <li>自分と相性のいい相手の見つけ方</li>
+    </ul>
+    <p class="small">カルテが届いた後に、LINEの中でご案内します。</p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">このカルテを作った人</div>
+    <div class="operator">
+      <!-- 顔写真を入れる場合はここに img を置く -->
+      <div class="name">HANA（mariage.isis）</div>
+      婚活伴走プランナー／IBJ正式加盟店<br>
+      国際結婚18年目。四柱推命の気質診断と、上海で美容室を経営し新婚夫婦500組以上を見てきた経験から、見た目や年齢ではなく「その人だけの空気感」を整える婚活を伝えています。<br>
+      私自身、母子家庭で育ち「私には無理」と思っていた側の人間です。だから、うまくいかない理由を性格のせいにしたくないと思っています。
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">よくある不安</div>
+    <details class="faq"><summary>本当に無料ですか？ 後から料金はかかりますか？</summary>
+      <p>カルテと動画は無料です。受け取ったことで相談や入会の申込になることもありません。</p></details>
+    <details class="faq"><summary>LINEを追加したら、しつこく営業されませんか？</summary>
+      <p>営業の電話や個別の勧誘メッセージは送りません。配信が合わなければ、ブロックすれば全て終了します。</p></details>
+    <details class="faq"><summary>知り合いにバレませんか？</summary>
+      <p>公式アカウントを追加しても、あなたのLINE友だちに通知されることはありません。本名を入力する必要もありません。</p></details>
+    <details class="faq"><summary>カルテはすぐ届きますか？</summary>
+      <p>キーワードを送っていただければ、自動ですぐ届きます。</p></details>
+  </div>
+
+  <div class="sec" style="text-align:center">
+    <p class="lead" style="font-weight:800">あなたのタイプのカルテは、もうできています。<br>あとは受け取るだけです。</p>
+    <a class="line-btn" id="line-btn-2" href="https://lin.ee/qYCi0W9" target="_blank" rel="noopener">LINEでカルテを受け取る</a>
+    <p class="small">キーワードは、結果の上のほうに表示した言葉です。</p>
+  </div>
 </div>
+
+<footer>
+  <p class="small">運営：mariage.isis（IBJ正式加盟店）<br>
+  <!-- ここに正式な事業者名・所在地・連絡先と、プライバシーポリシーへのリンクを入れる --></p>
+</footer>
+
+<!-- スティッキーボタン（結果表示後） -->
+<div id="sticky">
+  <div class="inner">
+    <div class="kw-note">キーワードは <strong id="sticky-keyword"></strong><br>LINEで送るとカルテが届きます</div>
+    <a href="https://lin.ee/qYCi0W9" target="_blank" rel="noopener" id="line-btn-3">カルテを受け取る</a>
+  </div>
+</div>
+
+<script id="quiz-logic">
+/* ===== 診断ロジック（配点とタイプ判定） =====
+   軸: E=共感 / S=社交 / A=行動
+   各選択肢は 主軸+2・副軸+1 で配点する。
+   判定: 最も高い軸がタイプ。ただし1位が同点のときは「バランス調整」。
+   → 全243通りの回答で4タイプすべてが出ることをテスト済み（分布は下記のテスト結果参照）。 */
+const AGE_GROUPS = ["20代後半〜30代", "40代", "50代"];
+
+const QUESTIONS = [
+  { text: "マッチングアプリで気になる人が既読スルーしてきたら？", choices: [
+    { text: "相手にも事情があるはず。少し待ってみる", score: { E: 2, S: 1 } },
+    { text: "自分から別の話題で送ってみる", score: { A: 2, S: 1 } },
+    { text: "友達に画面を見せて、どうするか相談する", score: { S: 2, E: 1 } }
+  ]},
+  { text: "初デートのお店、どう決める？", choices: [
+    { text: "相手の好みを聞いてから決める", score: { E: 2, A: 1 } },
+    { text: "自分で調べて、予約まで済ませておく", score: { A: 2, E: 1 } },
+    { text: "話題になっている人気のお店を選ぶ", score: { S: 2, A: 1 } }
+  ]},
+  { text: "デート中、相手と好みが合わないと分かったら？", choices: [
+    { text: "相手の好きなものを、もっと知ろうとする", score: { E: 2, S: 1 } },
+    { text: "自分の好きなものも、正直に伝える", score: { A: 2, E: 1 } },
+    { text: "その場が盛り上がる話題に変える", score: { S: 2, E: 1 } }
+  ]},
+  { text: "気になる人からのLINE、返信ペースは？", choices: [
+    { text: "相手のペースに合わせる", score: { E: 2, S: 1 } },
+    { text: "すぐ返して、自分からも話を続ける", score: { A: 2, S: 1 } },
+    { text: "相手の反応を見ながら、楽しくやりとりする", score: { S: 2, A: 1 } }
+  ]},
+  { text: "婚活で一番モヤモヤしてることは？", choices: [
+    { text: "「いい人」で止まって、選ばれないこと", score: { E: 2, A: 1 } },
+    { text: "頑張っているのに空回りすること", score: { A: 2, S: 1 } },
+    { text: "出会いはあるのに深まらないこと", score: { S: 2, E: 1 } }
+  ]}
+];
+
+const TYPES = {
+  kyokan: {
+    name: "共感の達人タイプ", emoji: "🌸", keyword: "共感",
+    praise: "相手に安心感を与えられる、とても魅力的なタイプです。",
+    insight: "優しさのあまり自分の気持ちを後回しにして、好きではない相手も断れずに続けてしまうことがあります。",
+    strengths: ["相手が安心できる空気感を作れる", "深い信頼関係を築ける誠実さ", "「また会いたい」と思わせる温かさ"]
+  },
+  kodo: {
+    name: "行動力リーダータイプ", emoji: "⚡", keyword: "行動",
+    praise: "積極的に婚活を進められる、行動力が最大の武器のタイプです。",
+    insight: "頑張るほど前のめりになって、相手のペースを置いてきてしまうことがあります。",
+    strengths: ["出会いをどんどん作れる積極性", "デートのプランを仕切れる頼もしさ", "婚活を前向きに続けられるメンタル"]
+  },
+  commu: {
+    name: "コミュニケータータイプ", emoji: "💬", keyword: "コミュ",
+    praise: "初対面でもすぐ打ち解けられる、社交性が最大の魅力のタイプです。",
+    insight: "誰にでも感じがいい分、「あなただけが特別」が相手に伝わりにくいことがあります。",
+    strengths: ["初対面でもすぐに打ち解けられる", "場の雰囲気を明るくできる", "幅広い出会いを自然に作れる"]
+  },
+  balance: {
+    name: "バランス調整タイプ", emoji: "🌿", keyword: "バランス",
+    praise: "どんな相手とも関係を築ける、柔軟性が強みのタイプです。",
+    insight: "慎重に様子を見るうちに、いいタイミングを逃してしまうことがあります。",
+    strengths: ["幅広いタイプの相手と関係を築ける", "冷静な判断力で相手を見極められる", "安定感があり一緒にいて安心できる"]
+  }
+};
+
+function computeScores(answerIndexes) {
+  const s = { E: 0, S: 0, A: 0 };
+  answerIndexes.forEach((ci, qi) => {
+    const sc = QUESTIONS[qi].choices[ci].score;
+    for (const k in sc) s[k] += sc[k];
+  });
+  return s;
+}
+
+function judgeType(s) {
+  const sorted = [
+    { key: "kyokan", v: s.E },
+    { key: "kodo", v: s.A },
+    { key: "commu", v: s.S }
+  ].sort((a, b) => b.v - a.v);
+  if (sorted[0].v === sorted[1].v) return "balance";
+  return sorted[0].key;
+}
+
+/* レーダー表示用（5指標）。各軸の理論最大値で割って百分率にする */
+function axisMax() {
+  const m = { E: 0, S: 0, A: 0 };
+  QUESTIONS.forEach(q => {
+    ["E", "S", "A"].forEach(k => {
+      m[k] += Math.max(...q.choices.map(c => c.score[k] || 0));
+    });
+  });
+  return m;
+}
+function radarValues(s) {
+  const m = axisMax();
+  const pct = (num, den) => Math.max(6, Math.min(100, Math.round((num / den) * 100)));
+  return [
+    { label: "社交性", v: pct(s.S, m.S) },
+    { label: "積極性", v: pct(s.A + s.S, m.A + m.S) },
+    { label: "行動力", v: pct(s.A, m.A) },
+    { label: "共感力", v: pct(s.E, m.E) },
+    { label: "コミュ力", v: pct(s.S + s.E, m.S + m.E) }
+  ];
+}
+</script>
 
 <script>
-    let currentIdx = 0;
-    let scores = { social: 0, empathy: 0, action: 0 };
+/* ===== 画面の進行 ===== */
+const LINE_URL = "https://lin.ee/qYCi0W9";
+let step = -1; /* -1=年代, 0..4=質問 */
+let ageGroup = null;
+let answers = [];
 
-    const questions = [
-        {
-            text: "マッチングアプリで気になる人が既読スルーしてきたら？",
-            choices: [
-                { text: "気長に返信を待つ",                     score: { social: 1, empathy: 2, action: 0 } },
-                { text: "他の人とのやり取りに気持ちを切り替える", score: { social: 2, empathy: 1, action: 1 } },
-                { text: "自分から改めてメッセージを送ってみる",   score: { social: 1, empathy: 1, action: 2 } }
-            ]
-        },
-        {
-            text: "初デートのお店、どう決める？",
-            choices: [
-                { text: "相手の好みを聞いて合わせる",   score: { social: 2, empathy: 2, action: 0 } },
-                { text: "自分のおすすめを提案する",     score: { social: 1, empathy: 0, action: 2 } },
-                { text: "お店探しは相手に任せる",       score: { social: 1, empathy: 1, action: 0 } }
-            ]
-        },
-        {
-            text: "デート中、相手と好みが合わないと分かったら？",
-            choices: [
-                { text: "相手に合わせておく",                 score: { social: 1, empathy: 2, action: 0 } },
-                { text: "はっきり自分の意見を伝える",         score: { social: 0, empathy: 0, action: 2 } },
-                { text: "お互い納得できる着地点を探す",       score: { social: 2, empathy: 1, action: 1 } }
-            ]
-        },
-        {
-            text: "気になる人からのLINE、返信ペースは？",
-            choices: [
-                { text: "見たらすぐ返す",               score: { social: 2, empathy: 1, action: 2 } },
-                { text: "内容をよく考えてから返す",     score: { social: 1, empathy: 1, action: 0 } },
-                { text: "気が向いた時に自分のペースで返す", score: { social: 0, empathy: 0, action: 1 } }
-            ]
-        },
-        {
-            text: "婚活で一番モヤモヤしてることは？",
-            choices: [
-                { text: "なかなか気持ちが伝わらないこと",         score: { social: 2, empathy: 2, action: 0 } },
-                { text: "自分をどう見せればいいか分からないこと", score: { social: 1, empathy: 0, action: 1 } },
-                { text: "会話が続かないこと",                     score: { social: 2, empathy: 1, action: 1 } }
-            ]
-        }
-    ];
+function show(id) {
+  document.querySelectorAll(".screen").forEach(el => el.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo({ top: 0 });
+}
 
-    const resultTypes = [
-        {
-            condition: s => s.empathy >= 4 && s.social >= 4,
-            emoji: "🌸",
-            type: "共感の達人タイプ",
-            intro: "相手に安心感を与えられる、とても魅力的なタイプです。\n\n\n共感の達人であるあなたへ\n社交性や行動力などの５つのポイントを\n最新データの中で詳しく語っています",
-            praise: "相手に安心感を与えられる、とても魅力的なタイプです。",
-            anxietyQ: "「いい人止まりになっているかも…」",
-            pitfall: "このタイプには、婚活で「いい人止まり」になりやすい傾向があります。",
-            title: "あなたは「心をつなぐ人」",
-            pitfalls: [
-                "相手に合わせすぎてしまう",
-                "「嫌われたくない」が先に立ってしまう",
-                "自分の気持ちを後回しにしてしまう",
-                "相手選びより「選ばれること」を優先してしまう"
-            ],
-            advice: `相手の気持ちを自然に察せる、婚活で最も大切な力を持っています。<br><br>
-                <strong>あなたの強み</strong>
-                <ul>
-                    <li>相手が安心できる空気感を作れる</li>
-                    <li>深い信頼関係を築ける誠実さ</li>
-                    <li>「また会いたい」と思わせる温かさ</li>
-                </ul>
-                <strong>婚活でのポイント</strong><br>
-                「いい人止まり」になりやすいのは、共感しすぎて自分を出せていないから。相手を大切にしながら、あなたの想いも少しずつ伝えることが成婚への近道です。`
-        },
-        {
-            condition: s => s.action >= 4,
-            emoji: "⚡",
-            type: "行動力リーダータイプ",
-            intro: "積極的に婚活を進められる、行動力が最大の武器のタイプです。\n\n\n行動力リーダーであるあなたへ\n共感力やコミュニケーションなどの５つのポイントを\n最新データの中で詳しく語っています",
-            praise: "積極的に婚活を進められる、行動力が最大の武器のタイプです。",
-            anxietyQ: "「前のめりすぎて、相手が引いているかも…」",
-            pitfall: "このタイプには、前のめりになりすぎて相手が引いてしまいやすい傾向があります。",
-            title: "あなたは「道を切り開く人」",
-            pitfalls: [
-                "関係が進む前に相手を急かしてしまうことがある",
-                "弱みを見せられず距離が縮まりにくい",
-                "「選ぶ側」の意識が強くなりすぎてしまう",
-                "自分のペースを相手に押し付けてしまうことがある"
-            ],
-            advice: `婚活を積極的に動ける、行動力は最大の強みです。<br><br>
-                <strong>あなたの強み</strong>
-                <ul>
-                    <li>出会いをどんどん作れる積極性</li>
-                    <li>デートのプランを仕切れる頼もしさ</li>
-                    <li>婚活を前向きに続けられるメンタル</li>
-                </ul>
-                <strong>婚活でのポイント</strong><br>
-                前のめりになりすぎると相手が引いてしまうことも。「相手のペースに合わせる余裕」が、実は最速で距離を縮めるコツです。`
-        },
-        {
-            condition: s => s.social >= 4,
-            emoji: "💬",
-            type: "コミュニケーター タイプ",
-            intro: "初対面でもすぐ打ち解けられる、社交性が最大の魅力のタイプです。\n\n\nコミュニケーターであるあなたへ\n共感力や行動力などの５つのポイントを\n最新データの中で詳しく語っています",
-            praise: "初対面でもすぐ打ち解けられる、社交性が最大の魅力のタイプです。",
-            anxietyQ: "「出会いはあるのに、特別な存在として選ばれていないかも…」",
-            pitfall: "このタイプには、出会いはあるのに「特別な存在」として選ばれにくい傾向があります。",
-            title: "あなたは「みんなをつなぐ人」",
-            pitfalls: [
-                "フレンドリーすぎて恋愛対象として見られにくい",
-                "表面的なつながりで止まってしまうことがある",
-                "話しすぎて相手の話を聞けていないことがある",
-                "広く浅くなりがちで、特定の相手と深まりにくい"
-            ],
-            advice: `初対面でも話が弾む、出会いを作る力は群を抜いています。<br><br>
-                <strong>あなたの強み</strong>
-                <ul>
-                    <li>初対面でもすぐに打ち解けられる</li>
-                    <li>場の雰囲気を明るくできる</li>
-                    <li>幅広い出会いを自然に作れる</li>
-                </ul>
-                <strong>婚活でのポイント</strong><br>
-                出会いは多いのに「この人だけ」と思われにくい傾向があります。特定の1人への「特別感」を意識した関わり方が、成婚への鍵です。`
-        },
-        {
-            condition: () => true,
-            emoji: "🌿",
-            type: "バランス調整タイプ",
-            intro: "どんな相手とも関係を築ける、柔軟性が強みのタイプです。\n\n\nバランス調整タイプのあなたへ\n社交性や行動力などの５つのポイントを\n最新データの中で詳しく語っています",
-            praise: "どんな相手とも関係を築ける、柔軟性が強みのタイプです。",
-            anxietyQ: "「合わせすぎて、自分がどんな人か伝わっていないかも…」",
-            pitfall: "このタイプには、合わせすぎて「どんな人か分からない」と思われやすい傾向があります。",
-            title: "あなたは「柔軟に対応できる人」",
-            pitfalls: [
-                "自分の意思が伝わらず「どんな人?」と思われがち",
-                "何にでも合わせるため「特別感」が薄くなりやすい",
-                "自分の条件や希望を後回しにしてしまう",
-                "消去法で相手を選びがちになる"
-            ],
-            advice: `どんなタイプの相手とも関係を築ける、婚活向きの柔軟さがあります。<br><br>
-                <strong>あなたの強み</strong>
-                <ul>
-                    <li>幅広いタイプの相手と関係を築ける</li>
-                    <li>冷静な判断力で相手を見極められる</li>
-                    <li>安定感があり一緒にいて安心できる</li>
-                </ul>
-                <strong>婚活でのポイント</strong><br>
-                合わせすぎると「どんな人か分からない」と思われてしまいます。自分の「好き」「こうしたい」を少しずつ表現することが、特別な存在になる近道です。`
-        }
-    ];
+document.getElementById("start-btn").addEventListener("click", () => {
+  if (window.fbq) fbq("trackCustom", "Shindan_Start");
+  show("screen-quiz");
+  renderStep();
+});
 
-    function showScreen(id) {
-        document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-    }
-
-    window.addEventListener('DOMContentLoaded', function() {
-        fbq('trackCustom', 'Shindan_Start');
-        showQuestion();
+function renderStep() {
+  const total = QUESTIONS.length + 1;
+  const badge = document.getElementById("question-badge");
+  const qtext = document.getElementById("question-text");
+  const cont = document.getElementById("choices");
+  document.getElementById("progress-bar").style.width = Math.round(((step + 1) / total) * 100) + "%";
+  cont.innerHTML = "";
+  if (step === -1) {
+    badge.textContent = "最初に教えてください";
+    qtext.textContent = "あなたの年代は？";
+    AGE_GROUPS.forEach(a => {
+      const b = document.createElement("button");
+      b.className = "choice-btn"; b.textContent = a;
+      b.addEventListener("click", () => { ageGroup = a; step = 0; renderStep(); });
+      cont.appendChild(b);
     });
-
-    function showQuestion() {
-        const q = questions[currentIdx];
-        const progress = Math.round((currentIdx / questions.length) * 100);
-        document.getElementById('progress-bar').style.width = progress + '%';
-        document.getElementById('question-badge').innerText = `質問 ${currentIdx + 1} / ${questions.length}`;
-        document.getElementById('question-text').innerText = q.text;
-        document.getElementById('q1-hero-img').style.display = currentIdx === 0 ? 'block' : 'none';
-        const q2Video = document.getElementById('q2-hero-video');
-        q2Video.style.display = currentIdx === 1 ? 'block' : 'none';
-        if (currentIdx === 1) { q2Video.currentTime = 0; q2Video.play(); } else { q2Video.pause(); }
-        document.getElementById('q3-hero-img').style.display = currentIdx === 2 ? 'block' : 'none';
-        const q4Video = document.getElementById('q4-hero-video');
-        q4Video.style.display = currentIdx === 3 ? 'block' : 'none';
-        if (currentIdx === 3) { q4Video.currentTime = 0; q4Video.play(); } else { q4Video.pause(); }
-        document.getElementById('q5-hero-img').style.display = currentIdx === 4 ? 'block' : 'none';
-
-        const cont = document.getElementById('choices-container');
-        cont.innerHTML = '';
-        q.choices.forEach(c => {
-            const btn = document.createElement('button');
-            btn.className = 'choice-btn';
-            btn.innerText = c.text;
-            btn.onclick = () => {
-                for (const key in c.score) scores[key] += c.score[key];
-                currentIdx++;
-                if (currentIdx < questions.length) {
-                    showQuestion();
-                } else {
-                    showResult();
-                }
-            };
-            cont.appendChild(btn);
-        });
-    }
-
-    function showResult() {
-        document.getElementById('progress-bar').style.width = '100%';
-        const result = resultTypes.find(r => r.condition(scores));
-        document.getElementById('result-emoji').innerText = result.emoji;
-        document.getElementById('result-type-label').innerText = result.type + 'でした';
-        document.getElementById('result-title').innerText = 'あなたの診断結果';
-        document.getElementById('radar-chart').innerHTML = drawRadarChart(scores);
-
-        showScreen('screen-result');
-        launchConfetti();
-        fbq('track', 'ViewContent', { content_name: '診断結果ページ' });
-
-        // タイプ別LINEキーワードを設定
-        const keywordMap = {
-            '共感の達人タイプ':     '共感',
-            '行動力リーダータイプ':  '行動',
-            'コミュニケーター タイプ': 'コミュ',
-            'バランス調整タイプ':    'バランス'
-        };
-        const keyword = keywordMap[result.type] || '診断';
-        const shortType = result.type.replace('タイプ', '').replace(' ', '');
-
-        const lineKw = document.getElementById('line-keyword');
-        const stickyKw = document.getElementById('sticky-keyword');
-        if (lineKw) lineKw.textContent = keyword;
-        if (stickyKw) stickyKw.textContent = keyword;
-        document.getElementById('cta-praise').textContent = result.praise;
-        document.getElementById('cta-anxiety-text').textContent = result.anxietyQ;
-        document.getElementById('type-pitfall-text').textContent = result.pitfall;
-        document.getElementById('lp-hero-title').innerHTML = `<span style="font-size:30px;color:#fff;">2026年</span>IBJの最新データを<br>プレゼント`;
-
-        // LPセクションを表示
-        document.getElementById('lp-section').style.display = 'block';
-    }
-
-    // スティッキーボタン（結果表示後のみ）
-    let lpVisible = false;
-    window.addEventListener('scroll', function () {
-        if (!lpVisible && document.getElementById('screen-result').classList.contains('active')) {
-            lpVisible = true;
-        }
-        if (lpVisible) {
-            document.getElementById('lp-sticky').style.display = window.scrollY > 400 ? 'block' : 'none';
-        }
+    return;
+  }
+  const q = QUESTIONS[step];
+  badge.textContent = "質問 " + (step + 1) + " / " + QUESTIONS.length;
+  qtext.textContent = q.text;
+  q.choices.forEach((c, i) => {
+    const b = document.createElement("button");
+    b.className = "choice-btn"; b.textContent = c.text;
+    b.addEventListener("click", () => {
+      answers[step] = i;
+      if (step < QUESTIONS.length - 1) { step++; renderStep(); }
+      else showResult();
     });
+    cont.appendChild(b);
+  });
+}
 
-    function launchConfetti() {
-        const existing = document.getElementById('confetti-canvas');
-        if (existing) existing.remove();
+function drawRadar(values) {
+  const CX = 180, CY = 175, R = 92, N = values.length;
+  const pt = (i, r) => {
+    const a = (i * 2 * Math.PI / N) - Math.PI / 2;
+    return [CX + R * r * Math.cos(a), CY + R * r * Math.sin(a)];
+  };
+  let s = '<svg viewBox="0 0 360 330" width="100%" style="max-width:340px;display:block;margin:6px auto">';
+  [0.25, 0.5, 0.75, 1].forEach(r => {
+    s += '<polygon points="' + values.map((_, i) => pt(i, r).join(",")).join(" ") + '" fill="' + (r === 1 ? "none" : "rgba(59,184,232,0.04)") + '" stroke="#deeef8"/>';
+  });
+  for (let i = 0; i < N; i++) { const [x, y] = pt(i, 1); s += '<line x1="' + CX + '" y1="' + CY + '" x2="' + x + '" y2="' + y + '" stroke="#deeef8"/>'; }
+  s += '<polygon points="' + values.map((d, i) => pt(i, Math.max(d.v, 6) / 100).join(",")).join(" ") + '" fill="rgba(59,184,232,0.25)" stroke="#3bb8e8" stroke-width="2"/>';
+  const anchors = ["middle", "start", "start", "end", "end"];
+  values.forEach((d, i) => {
+    const [x, y] = pt(i, 1.32);
+    s += '<text x="' + x + '" y="' + (y - 6) + '" text-anchor="' + anchors[i] + '" font-size="11" fill="#6b8fa3">' + d.label + "</text>";
+    s += '<text x="' + x + '" y="' + (y + 9) + '" text-anchor="' + anchors[i] + '" font-size="13" font-weight="bold" fill="#3bb8e8">' + d.v + "%</text>";
+  });
+  return s + "</svg>";
+}
 
-        const canvas = document.createElement('canvas');
-        canvas.id = 'confetti-canvas';
-        Object.assign(canvas.style, {
-            position: 'fixed', top: '0', left: '0',
-            width: '100%', height: '100%',
-            pointerEvents: 'none', zIndex: '9999'
-        });
-        document.body.appendChild(canvas);
+function showResult() {
+  const scores = computeScores(answers);
+  const typeKey = judgeType(scores);
+  const t = TYPES[typeKey];
+  document.getElementById("r-emoji").textContent = t.emoji;
+  document.getElementById("r-type").textContent = "あなたは「" + t.name + "」でした";
+  document.getElementById("r-praise").textContent = t.praise;
+  document.getElementById("r-insight").textContent = t.insight;
+  document.getElementById("r-radar").innerHTML = drawRadar(radarValues(scores));
+  document.getElementById("r-strengths").innerHTML = t.strengths.map(x => "<li>" + x + "</li>").join("");
+  document.getElementById("r-keyword").textContent = "「" + t.keyword + "」";
+  document.getElementById("sticky-keyword").textContent = "「" + t.keyword + "」";
+  show("screen-result");
+  document.getElementById("sticky").style.display = "block";
+  if (window.fbq) fbq("track", "ViewContent", { content_name: "診断結果：" + t.name });
+}
 
-        const W = canvas.width = window.innerWidth;
-        const H = canvas.height = window.innerHeight;
-        const ctx = canvas.getContext('2d');
-
-        const colors = ['#F067A6','#ff9de2','#ffde59','#ff6b9d','#a8ff78',
-                        '#59d9ff','#ffd700','#ff9500','#ff4e9f','#c084fc','#34d399'];
-
-        const origins = [
-            { x: W * 0.5,  y: H + 10 },
-            { x: W * 0.25, y: H + 10 },
-            { x: W * 0.75, y: H + 10 },
-        ];
-
-        const particles = Array.from({ length: 220 }, (_, idx) => {
-            const o = origins[idx % origins.length];
-            const angle = (Math.random() * 140 + 20) * Math.PI / 180;
-            const speed = Math.random() * 26 + 10;
-            return {
-                x:    o.x + (Math.random() - 0.5) * 60,
-                y:    o.y,
-                vx:   Math.cos(Math.PI - angle) * speed,
-                vy:  -Math.sin(angle) * speed,
-                gravity: 0.45 + Math.random() * 0.25,
-                size:  Math.random() * 14 + 8,
-                color: colors[Math.floor(Math.random() * colors.length)],
-                rot:   Math.random() * Math.PI * 2,
-                rotV:  (Math.random() - 0.5) * 0.18,
-                type:  Math.floor(Math.random() * 3),
-                wave:  Math.random() * Math.PI * 2,
-                waveA: Math.random() * 1.8 + 0.6,
-                waveS: Math.random() * 0.06 + 0.02,
-                alpha: 1,
-            };
-        });
-
-        let frame = 0;
-        let animId;
-
-        function drawParticle(p) {
-            ctx.save();
-            ctx.translate(p.x, p.y);
-            ctx.rotate(p.rot);
-            ctx.globalAlpha = Math.max(0, p.alpha);
-            ctx.fillStyle = p.color;
-            if (p.type === 0) {
-                ctx.beginPath();
-                ctx.ellipse(0, -p.size * 0.35, p.size * 0.28, p.size * 0.55, 0, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.ellipse(0, p.size * 0.35, p.size * 0.28, p.size * 0.55, 0, 0, Math.PI * 2);
-                ctx.fill();
-            } else if (p.type === 1) {
-                ctx.beginPath();
-                ctx.arc(0, 0, p.size * 0.42, 0, Math.PI * 2);
-                ctx.fill();
-            } else {
-                ctx.fillRect(-p.size * 0.18, -p.size * 0.55, p.size * 0.36, p.size * 1.1);
-            }
-            ctx.restore();
-        }
-
-        function tick() {
-            ctx.clearRect(0, 0, W, H);
-            let active = 0;
-            particles.forEach(p => {
-                p.wave += p.waveS;
-                p.vx   += Math.sin(p.wave) * p.waveA * 0.08;
-                p.vy   += p.gravity;
-                p.x    += p.vx;
-                p.y    += p.vy;
-                p.rot  += p.rotV;
-                if (p.y > H * 0.8) p.alpha -= 0.018;
-                if (p.y < H + 40 && p.alpha > 0) {
-                    active++;
-                    drawParticle(p);
-                }
-            });
-            frame++;
-            if (active > 0 && frame < 420) {
-                animId = requestAnimationFrame(tick);
-            } else {
-                canvas.remove();
-            }
-        }
-
-        tick();
-    }
-
-    function drawRadarChart(sc) {
-        const CX = 180, CY = 190, R = 95, N = 5;
-        const MAX = 9;
-        const axes = [
-            { label: '社交性',   val: Math.min(sc.social / MAX, 1) },
-            { label: '積極性',   val: Math.min((sc.action + sc.social) / 2 / MAX, 1) },
-            { label: '行動力',   val: Math.min(sc.action / MAX, 1) },
-            { label: '共感力',   val: Math.min(sc.empathy / MAX, 1) },
-            { label: 'コミュ力', val: Math.min((sc.social + sc.empathy) / 2 / MAX, 1) },
-        ];
-
-        function pt(i, ratio) {
-            const a = (i * 2 * Math.PI / N) - Math.PI / 2;
-            return [CX + R * ratio * Math.cos(a), CY + R * ratio * Math.sin(a)];
-        }
-
-        let s = `<svg viewBox="0 0 360 340" width="100%" style="max-width:360px;display:block;margin:0 auto">`;
-
-        s += `<defs>
-            <radialGradient id="rg" cx="50%" cy="50%" r="50%">
-                <stop offset="0%"   stop-color="#3bb8e8" stop-opacity="0.75"/>
-                <stop offset="100%" stop-color="#4ecdc4" stop-opacity="0.22"/>
-            </radialGradient>
-            <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-                <feGaussianBlur stdDeviation="6" result="blur"/>
-                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <filter id="dot-glow" x="-150%" y="-150%" width="400%" height="400%">
-                <feGaussianBlur stdDeviation="3" result="blur"/>
-                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-        </defs>`;
-
-        [0.25, 0.5, 0.75, 1].forEach(r => {
-            const pts = Array.from({length: N}, (_, i) => pt(i, r).join(',')).join(' ');
-            s += `<polygon points="${pts}" fill="${r===1?'none':'rgba(59,184,232,0.04)'}" stroke="#deeef8" stroke-width="${r===1?1.2:0.6}"/>`;
-        });
-
-        for (let i = 0; i < N; i++) {
-            const [x, y] = pt(i, 1);
-            s += `<line x1="${CX}" y1="${CY}" x2="${x}" y2="${y}" stroke="#deeef8" stroke-width="0.6"/>`;
-        }
-
-        const dataPts = axes.map((a, i) => pt(i, Math.max(a.val, 0.06)).join(',')).join(' ');
-        // グロー層（下）
-        s += `<polygon points="${dataPts}" fill="url(#rg)" stroke="#3bb8e8" stroke-width="3.5" filter="url(#glow)"/>`;
-        // クリーン層（上）
-        s += `<polygon points="${dataPts}" fill="url(#rg)" stroke="#3bb8e8" stroke-width="2"/>`;
-
-        axes.forEach((a, i) => {
-            const [x, y] = pt(i, Math.max(a.val, 0.06));
-            s += `<circle cx="${x}" cy="${y}" r="6" fill="#3bb8e8" filter="url(#dot-glow)"/>`;
-            s += `<circle cx="${x}" cy="${y}" r="4" fill="white" stroke="#3bb8e8" stroke-width="2"/>`;
-        });
-
-        const anchors = ['middle', 'start', 'start', 'end', 'end'];
-        axes.forEach((a, i) => {
-            const [x, y] = pt(i, 1.38);
-            const pct = Math.round(a.val * 100);
-            s += `<text x="${x}" y="${y - 7}" text-anchor="${anchors[i]}" font-size="11" fill="#6b8fa3">${a.label}</text>`;
-            s += `<text x="${x}" y="${y + 8}" text-anchor="${anchors[i]}" font-size="13" font-weight="bold" fill="#3bb8e8">${pct}%</text>`;
-        });
-
-        s += `</svg>`;
-        return s;
-    }
+["line-btn-1", "line-btn-2", "line-btn-3"].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener("click", () => { if (window.fbq) { fbq("track", "Lead"); fbq("trackCustom", "LINE_Click"); } });
+});
 </script>
 </body>
 </html>
