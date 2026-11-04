@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>婚活タイプ診断｜mariage.isis</title>
-<meta name="description" content="5つの質問で分かる、あなたの婚活タイプ。タイプ別の「婚活カルテ」をLINEで無料お渡ししています。">
+<meta name="description" content="5つの質問で分かる、あなたの婚活タイプ。タイプ別の「婚活カルテ」をLINEで無料お渡ししています">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
 <!-- Meta Pixel（旧診断と同じピクセルID） -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -22,57 +25,79 @@ fbq('track','PageView');
   --ink:#252126; --muted:#746d73; --line:#f0d0ea; --green:#55bd68; --green-dark:#3a9b4e;
 }
 *{box-sizing:border-box}
-body{font-family:'Helvetica Neue',Arial,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;background:#fff0f6;color:#333;margin:0;padding:16px 12px 90px;display:flex;flex-direction:column;align-items:center;min-height:100vh}
-.card{background:#fff;width:100%;max-width:500px;border-radius:20px;box-shadow:0 8px 24px rgba(255,69,177,.15);padding:28px 22px;text-align:center}
+body{font-family:'Helvetica Neue',Arial,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;background:linear-gradient(180deg,#fff7fb 0%,#ffeef6 100%);color:#333;margin:0;padding:16px 12px 90px;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+.card{background:#fff;width:100%;max-width:500px;border-radius:24px;box-shadow:0 12px 32px rgba(223,60,141,.14);padding:32px 22px;text-align:center}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.screen.active>*:not(.sec):not(.insight){animation:fadeUp .5s ease both}
+.sec,.insight{opacity:0;transform:translateY(16px);transition:opacity .9s ease,transform .9s ease}
+.sec.inview,.insight.inview{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){.sec,.insight{opacity:1;transform:none;transition:none}.screen.active>*{animation:none}}
+.screen.active>*:nth-child(2){animation-delay:.04s}
+.screen.active>*:nth-child(3){animation-delay:.08s}
+.screen.active>*:nth-child(4){animation-delay:.12s}
+.screen.active>*:nth-child(5){animation-delay:.16s}
+.screen.active>*:nth-child(6){animation-delay:.20s}
+.screen.active>*:nth-child(7){animation-delay:.24s}
+.screen.active>*:nth-child(8){animation-delay:.28s}
 .screen{display:none}
 .screen.active{display:block}
 h1{color:var(--pink-deep);font-size:clamp(22px,6vw,28px);line-height:1.4;margin:.2em 0 .4em}
 h2{color:var(--pink-deep);font-size:clamp(19px,5vw,23px);line-height:1.45;margin:.2em 0 .5em}
-.lead{font-size:15px;line-height:1.8;color:#444}
-#r-praise{white-space:pre-line;text-align:left;line-height:1.9}
+h1,h2,.sec-title,.type-name,.qtext,.badge,.insight strong,.keyword-box .kw,.btn,.line-btn,.choice-btn{font-family:'Zen Maru Gothic','Hiragino Maru Gothic ProN','Hiragino Sans',sans-serif}
+.lead{font-size:15.5px;line-height:1.95;color:#444}
+#r-praise{white-space:pre-line;text-align:left;line-height:1.85;font-size:15px}
 #r-insight{white-space:pre-line}
 .small{font-size:12px;color:var(--muted);line-height:1.7}
-.btn{display:block;width:100%;background:var(--pink);color:#fff;border:none;padding:15px 20px;font-size:17px;border-radius:12px;cursor:pointer;font-weight:800;margin-top:14px}
+.btn{display:block;width:100%;background:linear-gradient(135deg,#f276b6,#ef62a7);color:#fff;border:none;padding:16px 20px;font-size:17px;border-radius:14px;cursor:pointer;font-weight:800;margin-top:14px;box-shadow:0 6px 16px rgba(239,98,167,.35);letter-spacing:.03em}
 .btn:active{transform:scale(.98)}
-.choice-btn{display:block;width:100%;background:#fff;color:#333;border:2px solid var(--pink);padding:14px 16px;margin-bottom:12px;border-radius:12px;cursor:pointer;text-align:left;font-size:15px;line-height:1.5}
+.choice-btn{display:block;width:100%;white-space:pre-line;background:#fff;color:#333;border:2px solid var(--pink);padding:14px 16px;margin-bottom:12px;border-radius:12px;cursor:pointer;text-align:left;font-size:15px;line-height:1.5}
 .choice-btn:active{background:var(--pink);color:#fff}
 .progress-wrap{background:#eee;border-radius:10px;height:8px;margin-bottom:18px;overflow:hidden}
 .progress-bar{background:var(--pink);height:100%;width:0;transition:width .4s ease}
 .badge{font-size:13px;color:var(--pink-deep);font-weight:800;margin-bottom:8px}
-.qtext{font-size:clamp(16px,4.5vw,18px);font-weight:800;margin-bottom:20px;line-height:1.6}
+.qtext{font-size:clamp(16px,4.5vw,18px);font-weight:800;margin-bottom:20px;line-height:1.6;white-space:pre-line}
 .type-label{display:inline-block;background:var(--pink);color:#fff;border-radius:20px;padding:5px 18px;font-size:14px;font-weight:800;margin-bottom:6px}
-.type-name{font-size:clamp(24px,6.5vw,30px);font-weight:900;color:var(--ink);margin:4px 0}
-.emoji{font-size:46px;display:block;margin:6px 0 2px}
-.insight{background:var(--pink-pale);border-radius:12px;padding:16px 18px;text-align:left;font-size:15px;line-height:1.9;margin-top:16px}
-.sec{margin-top:38px;text-align:left}
-.sec-title{text-align:center;font-size:20px;font-weight:900;color:var(--ink);line-height:1.5;margin-bottom:10px}
+.type-name{font-size:clamp(19px,5.4vw,25px);white-space:nowrap;font-weight:900;color:var(--ink);margin:4px 0;letter-spacing:.02em}
+.emoji{font-size:52px;display:block;margin:6px 0 2px}
+.insight{background:linear-gradient(180deg,#fff5fa,#ffeef7);border:1.5px solid #f8cfe6;border-radius:16px;padding:20px 18px;text-align:left;font-size:15px;line-height:1.95;margin-top:18px;box-shadow:0 4px 14px rgba(223,60,141,.08)}
+.sec{margin-top:46px;text-align:left}
+.sec-title{text-align:center;font-size:20px;font-weight:900;color:var(--ink);line-height:1.5;margin-bottom:14px;position:relative;padding-bottom:12px}
+.sec-title::after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:46px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--pink),#f9b8d9)}
 .check-list{list-style:none;padding:0;margin:10px 0}
-.check-list li{font-size:15px;font-weight:700;line-height:1.6;padding:9px 10px 9px 34px;position:relative;background:#fff;border-bottom:1px dashed #f5e0ee}
-.check-list li::before{content:"✓";position:absolute;left:10px;color:var(--pink-deep);font-weight:900}
-.steps{background:var(--pink-pale);border-radius:14px;padding:16px}
-.steps ol{margin:0;padding-left:20px;font-size:15px;line-height:2;font-weight:700}
-.keyword-box{margin:14px 0;text-align:center;background:#fff;border:2px dashed var(--pink);border-radius:14px;padding:14px}
+.check-list li{font-size:15px;font-weight:700;line-height:1.6;padding:11px 10px 11px 34px;position:relative;background:#fff;border:1.5px solid #f6d9ec;border-radius:12px;margin-bottom:9px;box-shadow:0 2px 8px rgba(223,60,141,.06)}
+.check-list li::before{content:"✓";position:absolute;left:11px;color:var(--pink-deep);font-weight:900}
+.steps{background:linear-gradient(180deg,#fff5fa,#ffeef7);border:1.5px solid #f8cfe6;border-radius:16px;padding:18px}
+.steps ol{margin:0;padding:0;list-style:none;counter-reset:step}
+.steps li{counter-increment:step;position:relative;padding:5px 0 5px 46px;margin:9px 0;font-size:15px;line-height:1.7;font-weight:700}
+.steps li::before{content:counter(step);position:absolute;left:0;top:3px;width:32px;height:32px;border-radius:50%;background:var(--pink);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 3px 8px rgba(239,98,167,.35)}
+.keyword-box{margin:14px 0;text-align:center;background:linear-gradient(180deg,#fff,#fff7fb);border:2.5px dashed var(--pink);border-radius:16px;padding:18px 14px;box-shadow:0 4px 14px rgba(223,60,141,.10)}
 .keyword-box .kw{font-size:30px;font-weight:900;color:var(--pink-deep);letter-spacing:.15em}
 .keyword-box .kw-label{font-size:12px;color:var(--muted)}
+.copy-btn{display:inline-block;margin-top:10px;background:#fff;color:var(--pink-deep);border:2px solid var(--pink);font-size:14px;font-weight:800;padding:9px 18px;border-radius:999px;cursor:pointer}
+.copy-btn:active{transform:scale(.97)}
+.copy-done{font-size:12px;color:var(--green-dark);font-weight:800;margin-top:6px;min-height:16px}
 .safe-list{list-style:none;padding:0;margin:14px 0;font-size:14.5px;line-height:1.7;color:#444;text-align:left}
 .safe-list li{padding:6px 0 6px 24px;position:relative}
 .safe-list li::before{content:"✓";position:absolute;left:2px;color:var(--green-dark);font-weight:900}
-.line-btn{display:block;background:var(--green);color:#fff;font-size:19px;font-weight:900;padding:17px;border-radius:999px;text-decoration:none;text-align:center;box-shadow:0 5px 0 var(--green-dark);margin-top:8px}
+.line-btn{display:block;background:linear-gradient(180deg,#5fc873,#4cb45e);color:#fff;font-size:19px;font-weight:900;padding:17px;border-radius:999px;text-decoration:none;text-align:center;box-shadow:0 5px 0 var(--green-dark),0 10px 22px rgba(76,180,94,.30);margin-top:8px;letter-spacing:.02em}
+.line-btn::after{content:"→";margin-left:8px}
 .line-btn:active{transform:translateY(2px);box-shadow:0 3px 0 var(--green-dark)}
 .strengths{list-style:none;padding:0;margin:8px 0}
-.strengths li{font-size:15.5px;line-height:1.7;padding:12px 14px 12px 36px;position:relative;background:var(--pink-pale);border-radius:10px;margin-bottom:10px}
+.strengths li{font-size:15.5px;line-height:1.75;white-space:pre-line;padding:13px 14px 13px 36px;position:relative;background:var(--pink-pale);border-radius:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(223,60,141,.07)}
 .strengths li::before{content:"✓";position:absolute;left:12px;color:var(--pink-deep);font-weight:900}
-details.faq{border-bottom:1px solid var(--line);padding:10px 2px;text-align:left}
+details.faq{background:#fffafc;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;text-align:left}
 details.faq summary{font-weight:800;font-size:14.5px;cursor:pointer;line-height:1.6}
-details.faq p{font-size:14px;line-height:1.8;color:#444;margin:8px 0 4px}
-.operator{background:var(--pink-pale);border-radius:14px;padding:18px 16px;text-align:left;font-size:14.5px;line-height:1.9}
+details.faq p{font-size:14px;line-height:1.85;color:#444;margin:8px 0 4px}
+.operator{background:var(--pink-pale);border:1.5px solid #f8cfe6;border-radius:16px;padding:20px 18px;text-align:left;font-size:14.5px;line-height:1.95}
 .operator .name{font-weight:900;font-size:16px;color:var(--ink)}
-#sticky{position:fixed;left:0;right:0;bottom:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);box-shadow:0 -4px 16px rgba(0,0,0,.10);display:none;z-index:50}
+#sticky{position:fixed;left:0;right:0;bottom:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 -4px 16px rgba(0,0,0,.10);display:none;z-index:50}
 #sticky .inner{max-width:500px;margin:0 auto;display:flex;align-items:center;gap:10px}
 #sticky .kw-note{font-size:12px;color:var(--muted);line-height:1.5;flex:1}
 #sticky .kw-note strong{color:var(--pink-deep);font-size:14px}
 #sticky a{flex:0 0 auto;background:var(--green);color:#fff;font-weight:900;font-size:15px;padding:12px 18px;border-radius:999px;text-decoration:none;box-shadow:0 3px 0 var(--green-dark)}
 footer{max-width:500px;width:100%;text-align:center;margin-top:22px}
+p,li,.sec-title,.lead,.qtext,.type-name,h1,.kw-note,.operator{word-break:keep-all;overflow-wrap:anywhere}
+#screen-result .lead:not(#r-praise){text-align:center}
 </style>
 </head>
 <body>
@@ -81,9 +106,9 @@ footer{max-width:500px;width:100%;text-align:center;margin-top:22px}
 <div class="card screen active" id="screen-intro">
   <div class="emoji">🌸</div>
   <h1>婚活タイプ診断</h1>
-  <p class="lead">5つの質問に答えるだけで、<br>あなたの婚活タイプと、<br>つまずきやすいポイントが分かります。</p>
-  <p class="lead">結果に合わせて、<br>タイプ別の詳しい解説「婚活カルテ」を<br>用意しています。</p>
-  <p class="small">所要時間 約1分／無料／結果は登録なしで見られます</p>
+  <p class="lead">5つの質問に答えるだけで<br>あなたの婚活タイプと<br>つまずきやすい<br>ポイントが分かります</p>
+  <p class="lead">結果に合わせて<br>タイプ別の詳しい解説<br>「婚活カルテ」を<br>用意しています</p>
+  <p class="small">所要時間 約1分／無料<br>結果は登録なしで見られます</p>
   <button class="btn" id="start-btn">診断をはじめる</button>
 </div>
 
@@ -104,94 +129,73 @@ footer{max-width:500px;width:100%;text-align:center;margin-top:22px}
   <div id="r-radar"></div>
 
   <div class="insight">
-    <strong style="color:var(--pink-deep)">まず1つだけ、無料でお伝えします</strong>
+    <strong style="color:var(--pink-deep);font-size:clamp(13px,4.4vw,17px);white-space:nowrap">こんなことありませんか？</strong>
+    <div class="small" style="margin-top:2px;text-align:center">まず1つだけ無料でお伝えします</div>
     <p id="r-insight" style="margin:6px 0 0"></p>
   </div>
 
   <div class="sec">
-    <div class="sec-title">あなたの強みは、この3つです</div>
+    <div class="sec-title">あなたの強みは<br>この3つです</div>
     <ul class="strengths" id="r-strengths"></ul>
   </div>
 
   <div class="sec">
+    <div class="sec-title">そこであなた専用の<br>婚活カルテを<br>用意しました</div>
+    <p class="lead">スコアだけでは分からない<br>あなたのタイプの<br>詳しい解説です</p>
+    <p class="lead">カルテの中身は<br>この4つです</p>
+    <ul class="check-list">
+      <li>選ばれるようになる<br>強みの活かし方</li>
+      <li>「痛い女性」に<br>ならないための<br>3つのポイント</li>
+      <li>理想の相手を<br>引き寄せる<br>プロフィールの書き方</li>
+      <li>第一印象で損をしない<br>写真の見せ方</li>
+    </ul>
+  </div>
+
+  <div class="sec">
     <div class="sec-title">カルテの受け取り方</div>
-    <p class="lead" style="text-align:center;font-weight:700">LINEを追加 → キーワードを送る → カルテが届きます</p>
+    <div class="steps">
+      <ol>
+        <li>下のボタンから<br>LINEを追加する</li>
+        <li>あなたのキーワード <strong id="r-keyword-step" style="color:var(--pink-deep)"></strong> を送る</li>
+        <li>カルテがすぐ届きます</li>
+      </ol>
+    </div>
     <div class="keyword-box">
-      <div class="kw-label">あなたのキーワード</div>
+      <div class="kw-label">あなたのキーワード（タップでコピーできます）</div>
       <div class="kw" id="r-keyword"></div>
+      <button class="copy-btn" id="copy-kw-1" type="button">キーワードをコピーする</button>
+      <div class="copy-done" id="copy-done-1"></div>
     </div>
     <ul class="safe-list">
-      <li>追加しても、相談や入会の申込にはなりません</li>
-      <li>営業の電話や個別メッセージは送りません</li>
-      <li>あなたのLINE友だちに、<br>追加したことは知られません</li>
+      <li>追加しても<br>相談や入会の申込にはなりません</li>
+      <li>営業の電話や<br>個別メッセージは送りません</li>
+      <li>あなたのLINE友だちに<br>追加したことは知られません</li>
       <li>本名や住所などの入力は不要です</li>
-      <li>合わなければ、ブロックすれば全て終わります</li>
+      <li>合わなければ<br>ブロックすれば全て終わります</li>
     </ul>
-    <a class="line-btn" id="line-btn-1" href="https://lin.ee/qYCi0W9" target="_blank" rel="noopener">LINEでカルテを受け取る</a>
-    <p class="small" style="text-align:center">※ボタンを押すとLINEが開きます。開いたら、あなたのキーワードを送ってください。</p>
+    <a class="line-btn" id="line-btn-1" href="https://lin.ee/qYCi0W9" target="_blank" rel="noopener">LINEでカルテを受け取る（無料）</a>
+    <p class="small" style="text-align:center">※ボタンを押すとLINEが開きます<br>開いたらコピーしたキーワードを<br>貼り付けて送ってください</p>
   </div>
 
   <div class="sec">
-    <div class="sec-title">あなた専用の「婚活カルテ」が<br>できています</div>
-    <p class="lead">スコアだけでは分からない、<br>あなたのタイプの詳しい解説です。</p>
-    <p class="lead">カルテの中身はこちらです。</p>
+    <div class="sec-title">特別プレゼント</div>
+    <p class="lead"><strong>カルテを使って<br>実践した<br>41歳女性の例</strong></p>
+    <p class="lead">1週間で11人から<br>お見合いの申込みが来て<br>8ヶ月で成婚しました<br>出会いからご成婚までの<br>流れを動画で<br>解説しています<br>（動画・約15分）</p>
     <ul class="check-list">
-      <li>あなたの婚活での強み（3つ）</li>
-      <li>つまずきやすいポイント（3つ）</li>
-      <li>今すぐできる3つの改善</li>
-      <li>タイプに関係なく共通する<br>「土台」チェック（写真・プロフィール・進め方）</li>
+      <li>8ヶ月で成婚できた<br>3つのポイント</li>
+      <li>写真・プロフィール<br>進め方<br>何をどう変えたのか</li>
+      <li>アラフォーでも<br>1週間で11人から<br>申込みが来るコツ</li>
     </ul>
+    <p class="small">カルテが届いた後に<br>LINEの中でご案内します</p>
   </div>
 
-  <div class="sec">
-    <div class="sec-title">カルテを受け取った方への<br>追加プレゼント</div>
-    <p class="lead"><strong>41歳の女性が8ヶ月で成婚できた理由（動画・約15分）</strong></p>
-    <p class="lead">タイプに関係なく共通する<br>「土台」の話です。<br>写真・プロフィール・婚活の進め方。<br>この土台が整っていないと、<br>タイプの強みも活きません。<br>彼女が変えたのは、その土台でした。</p>
-    <ul class="check-list">
-      <li>「いい人止まり」から選ばれるようになる理由</li>
-      <li>年齢を武器にする婚活の進め方</li>
-      <li>自分と相性のいい相手の見つけ方</li>
-    </ul>
-    <p class="small">カルテが届いた後に、LINEの中でご案内します。</p>
+  <div class="sec end-banner">
+    <img src="assets/ibj-banner.jpg" alt="結婚はIBJ 至れり尽くせりの結婚相談所" style="width:100%;height:auto;display:block;border-radius:16px;box-shadow:0 8px 22px rgba(223,60,141,.16)">
   </div>
 
-  <div class="sec">
-    <div class="sec-title">このカルテを作った人</div>
-    <div class="operator">
-      <!-- 顔写真を入れる場合はここに img を置く -->
-      <div class="name">HANA（mariage.isis）</div>
-      婚活伴走プランナー／IBJ正式加盟店<br>
-      国際結婚18年目。<br>
-      四柱推命の気質診断と、<br>
-      上海で美容室を経営し、<br>
-      新婚夫婦500組以上を見てきた経験から、<br>
-      見た目や年齢ではなく<br>
-      「その人だけの空気感」を整える婚活を<br>
-      伝えています。<br>
-      私自身、母子家庭で育ち、<br>
-      「私には無理」と思っていた側の人間です。<br>
-      だから、うまくいかない理由を<br>
-      性格のせいにしたくないと思っています。
-    </div>
-  </div>
 
-  <div class="sec">
-    <div class="sec-title">よくある不安</div>
-    <details class="faq"><summary>本当に無料ですか？ 後から料金はかかりますか？</summary>
-      <p>カルテと動画は無料です。<br>受け取ったことで、<br>相談や入会の申込になることもありません。</p></details>
-    <details class="faq"><summary>LINEを追加したら、しつこく営業されませんか？</summary>
-      <p>営業の電話や<br>個別の勧誘メッセージは送りません。<br>配信が合わなければ、<br>ブロックすれば全て終了します。</p></details>
-    <details class="faq"><summary>知り合いにバレませんか？</summary>
-      <p>公式アカウントを追加しても、<br>あなたのLINE友だちに<br>通知されることはありません。<br>本名を入力する必要もありません。</p></details>
-    <details class="faq"><summary>カルテはすぐ届きますか？</summary>
-      <p>キーワードを送っていただければ、<br>自動ですぐ届きます。</p></details>
-  </div>
 
-  <div class="sec" style="text-align:center">
-    <p class="lead" style="font-weight:800">あなたのタイプのカルテは、もうできています。<br>あとは受け取るだけです。</p>
-    <a class="line-btn" id="line-btn-2" href="https://lin.ee/qYCi0W9" target="_blank" rel="noopener">LINEでカルテを受け取る</a>
-    <p class="small">キーワードは、結果の上のほうに表示した言葉です。</p>
-  </div>
+
 </div>
 
 <footer>
@@ -203,7 +207,7 @@ footer{max-width:500px;width:100%;text-align:center;margin-top:22px}
 <div id="sticky">
   <div class="inner">
     <div class="kw-note">キーワードは <strong id="sticky-keyword"></strong><br>LINEで送るとカルテが届きます</div>
-    <a href="https://lin.ee/qYCi0W9" target="_blank" rel="noopener" id="line-btn-3">カルテを受け取る</a>
+    <a href="https://lin.ee/qYCi0W9" target="_blank" rel="noopener" id="line-btn-3">無料で受け取る</a>
   </div>
 </div>
 
@@ -217,27 +221,27 @@ const AGE_GROUPS = ["20代後半〜30代", "40代", "50代"];
 
 const QUESTIONS = [
   { text: "マッチングアプリで気になる人が既読スルーしてきたら？", choices: [
-    { text: "相手にも事情があるはず。少し待ってみる", score: { E: 2, S: 1 } },
+    { text: "相手にも事情があるはず\n少し待ってみる", score: { E: 2, S: 1 } },
     { text: "自分から別の話題で送ってみる", score: { A: 2, S: 1 } },
-    { text: "友達に画面を見せて、どうするか相談する", score: { S: 2, E: 1 } }
+    { text: "友達に画面を見せて\nどうするか相談する", score: { S: 2, E: 1 } }
   ]},
-  { text: "初デートのお店、どう決める？", choices: [
+  { text: "初デートのお店\nどう決める？", choices: [
     { text: "相手の好みを聞いてから決める", score: { E: 2, A: 1 } },
-    { text: "自分で調べて、予約まで済ませておく", score: { A: 2, E: 1 } },
+    { text: "自分で調べて\n予約まで済ませておく", score: { A: 2, E: 1 } },
     { text: "話題になっている人気のお店を選ぶ", score: { S: 2, A: 1 } }
   ]},
-  { text: "デート中、相手と好みが合わないと分かったら？", choices: [
-    { text: "相手の好きなものを、もっと知ろうとする", score: { E: 2, S: 1 } },
-    { text: "自分の好きなものも、正直に伝える", score: { A: 2, E: 1 } },
+  { text: "デート中\n相手と好みが合わないと分かったら？", choices: [
+    { text: "相手の好きなものを\nもっと知ろうとする", score: { E: 2, S: 1 } },
+    { text: "自分の好きなものも\n正直に伝える", score: { A: 2, E: 1 } },
     { text: "その場が盛り上がる話題に変える", score: { S: 2, E: 1 } }
   ]},
-  { text: "気になる人からのLINE、返信ペースは？", choices: [
+  { text: "気になる人からのLINE\n返信ペースは？", choices: [
     { text: "相手のペースに合わせる", score: { E: 2, S: 1 } },
-    { text: "すぐ返して、自分からも話を続ける", score: { A: 2, S: 1 } },
-    { text: "相手の反応を見ながら、楽しくやりとりする", score: { S: 2, A: 1 } }
+    { text: "すぐ返して\n自分からも話を続ける", score: { A: 2, S: 1 } },
+    { text: "相手の反応を見ながら\n楽しくやりとりする", score: { S: 2, A: 1 } }
   ]},
   { text: "婚活で一番モヤモヤしてることは？", choices: [
-    { text: "「いい人」で止まって、選ばれないこと", score: { E: 2, A: 1 } },
+    { text: "「いい人」で止まって\n選ばれないこと", score: { E: 2, A: 1 } },
     { text: "頑張っているのに空回りすること", score: { A: 2, S: 1 } },
     { text: "出会いはあるのに深まらないこと", score: { S: 2, E: 1 } }
   ]}
@@ -246,27 +250,27 @@ const QUESTIONS = [
 const TYPES = {
   kyokan: {
     name: "共感の達人タイプ", emoji: "🌸", keyword: "共感",
-    praise: "相手の気持ちに自然と寄り添える、\n優しさと共感力が際立つタイプです。\n話をじっくり聞き、\n相手の感情を理解する力が高いため、\n一緒にいるだけで安心感を与えられます。\nお見合いやデートの場でも\n「また会いたい」と思われやすい、\n婚活においてとても魅力的な資質です。",
-    insight: "優しさのあまり\n自分の気持ちを後回しにして、\n好きではない相手も断れずに\n続けてしまうことがあります。",
-    strengths: ["相手が安心できる空気感を作れる", "深い信頼関係を築ける誠実さ", "「また会いたい」と思わせる温かさ"]
+    praise: "相手の気持ちに\n自然と寄り添える\n優しさと共感力が\n際立つタイプです\n\n話をじっくり聞き\n相手の感情を\n理解する力が高いため\n一緒にいるだけで\n安心感を与えられます\n\nお見合いやデートの場でも\n「また会いたい」と\n思われやすい\n\n婚活において\nとても魅力的な資質です",
+    insight: "優しさのあまり\n自分の気持ちを\n後回しにして\n好きではない相手も\n断れずに\n続けてしまうことが\nあります",
+    strengths: ["相手が安心できる\n空気感を作れる", "深い信頼関係を\n築ける誠実さ", "「また会いたい」と\n思わせる温かさ"]
   },
   kodo: {
     name: "行動力リーダータイプ", emoji: "⚡", keyword: "行動",
-    praise: "決断力と行動力が際立つタイプです。\n気になる相手がいればすぐに動き、\n婚活そのものにも前向きに取り組めるため、\n出会いの数そのものを増やせます。\n迷いや足踏みで機会を逃しにくい、\n婚活において非常に強い武器になる資質です。",
-    insight: "頑張るほど前のめりになって、\n相手のペースを置いてきてしまうことがあります。",
-    strengths: ["出会いをどんどん作れる積極性", "デートのプランを仕切れる頼もしさ", "婚活を前向きに続けられるメンタル"]
+    praise: "決断力と行動力が\n際立つタイプです\n\n気になる相手がいれば\nすぐに動き\n婚活そのものにも\n前向きに取り組めるため\n\n出会いの数そのものを\n増やせます\n\n迷いや足踏みで\n機会を逃しにくい\n婚活において\n非常に強い武器になる\n資質です",
+    insight: "頑張るほど\n前のめりになって\n相手のペースを\n置いてきてしまうことが\nあります",
+    strengths: ["出会いをどんどん\n作れる積極性", "デートのプランを\n仕切れる頼もしさ", "婚活を前向きに\n続けられるメンタル"]
   },
   commu: {
     name: "コミュニケータータイプ", emoji: "💬", keyword: "コミュ",
-    praise: "誰とでも自然に打ち解けられる、\n高い社交性が持ち味のタイプです。\n初対面でも場を明るくし、\n会話を途切れさせない力があるため、\nお見合いの第一印象で\n好印象を持たれやすい傾向があります。\n出会いの母数を自然に増やせる、\n婚活で大きなアドバンテージになる資質です。",
-    insight: "誰にでも感じがいい分、\n「あなただけが特別」が\n相手に伝わりにくいことがあります。",
-    strengths: ["初対面でもすぐに打ち解けられる", "場の雰囲気を明るくできる", "幅広い出会いを自然に作れる"]
+    praise: "誰とでも自然に\n打ち解けられる\n高い社交性が\n持ち味のタイプです\n\n初対面でも\n場を明るくし\n会話を途切れさせない\n力があるため\n\nお見合いの第一印象で\n好印象を持たれやすい\n傾向があります\n\n出会いの母数を\n自然に増やせる\n婚活で大きな\nアドバンテージになる\n資質です",
+    insight: "誰にでも\n感じがいい分\n「あなただけが特別」が\n相手に伝わりにくいことが\nあります",
+    strengths: ["初対面でもすぐに\n打ち解けられる", "場の雰囲気を\n明るくできる", "幅広い出会いを\n自然に作れる"]
   },
   balance: {
     name: "バランス調整タイプ", emoji: "🌿", keyword: "バランス",
-    praise: "物事を冷静に見極めながら、\nどんな相手とも関係を築ける\n柔軟性が強みのタイプです。\n感情に流されず\n相手をしっかり見られるため、\n安定感があり、\n一緒にいて安心できると思われやすい傾向があります。\n極端に偏らないからこそ、\n幅広いタイプの相手と相性を合わせやすい資質です。",
-    insight: "慎重に様子を見るうちに、\nいいタイミングを逃してしまうことがあります。",
-    strengths: ["幅広いタイプの相手と関係を築ける", "冷静な判断力で相手を見極められる", "安定感があり一緒にいて安心できる"]
+    praise: "物事を冷静に\n見極めながら\nどんな相手とも\n関係を築ける\n柔軟性が強みの\nタイプです\n\n感情に流されず\n相手をしっかり\n見られるため\n\n安定感があり\n一緒にいて安心できると\n思われやすい\n傾向があります\n\n極端に偏らないからこそ\n幅広いタイプの相手と\n相性を合わせやすい\n資質です",
+    insight: "慎重に様子を\n見るうちに\nいいタイミングを\n逃してしまうことが\nあります",
+    strengths: ["幅広いタイプの相手と\n関係を築ける", "冷静な判断力で\n相手を見極められる", "安定感があり\n一緒にいて安心できる"]
   }
 };
 
@@ -390,22 +394,71 @@ function showResult() {
   const typeKey = judgeType(scores);
   const t = TYPES[typeKey];
   document.getElementById("r-emoji").textContent = t.emoji;
-  document.getElementById("r-type").textContent = "あなたは「" + t.name + "」でした";
-  document.getElementById("r-praise").textContent = t.praise.replace(/。/g, "。\n").trim();
-  document.getElementById("r-insight").textContent = t.insight.replace(/。/g, "。\n").trim();
+  document.getElementById("r-type").textContent = "「" + t.name + "」";
+  document.getElementById("r-praise").textContent = t.praise.replace(/。/g, "\n").trim();
+  document.getElementById("r-insight").textContent = t.insight.replace(/。/g, "\n").trim();
   document.getElementById("r-radar").innerHTML = drawRadar(radarValues(scores));
   document.getElementById("r-strengths").innerHTML = t.strengths.map(x => "<li>" + x + "</li>").join("");
   document.getElementById("r-keyword").textContent = "「" + t.keyword + "」";
+  document.getElementById("r-keyword-step").textContent = "「" + t.keyword + "」";
   document.getElementById("sticky-keyword").textContent = "「" + t.keyword + "」";
+  currentKeyword = t.keyword;
   show("screen-result");
   document.getElementById("sticky").style.display = "block";
+  setupReveal();
   if (window.fbq) fbq("track", "ViewContent", { content_name: "診断結果：" + t.name });
 }
 
-["line-btn-1", "line-btn-2", "line-btn-3"].forEach(id => {
+["line-btn-1", "line-btn-3"].forEach(id => {
   const el = document.getElementById(id);
   if (el) el.addEventListener("click", () => { if (window.fbq) { fbq("track", "Lead"); fbq("trackCustom", "LINE_Click"); } });
 });
+
+/* キーワードのコピー */
+let currentKeyword = "";
+function copyKeyword(doneId) {
+  if (!currentKeyword) return;
+  const done = document.getElementById(doneId);
+  const showDone = () => { if (done) { done.textContent = "コピーしました！LINEに貼り付けて送ってください"; setTimeout(() => { done.textContent = ""; }, 4000); } };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(currentKeyword).then(showDone).catch(() => fallbackCopy(showDone));
+  } else { fallbackCopy(showDone); }
+}
+function fallbackCopy(showDone) {
+  const ta = document.createElement("textarea");
+  ta.value = currentKeyword;
+  ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand("copy"); showDone(); } catch (e) {}
+  document.body.removeChild(ta);
+}
+[["copy-kw-1", "copy-done-1"]].forEach(([btnId, doneId]) => {
+  const b = document.getElementById(btnId);
+  if (b) b.addEventListener("click", () => copyKeyword(doneId));
+});
+
+/* セクションのフェードイン（ディゾルブ） */
+function setupReveal() {
+  const targets = document.querySelectorAll("#screen-result .sec, #screen-result .insight");
+  if (!("IntersectionObserver" in window)) {
+    targets.forEach(el => el.classList.add("inview"));
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add("inview"); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  targets.forEach(el => io.observe(el));
+  /* 保険：1.5秒後に残りも表示する */
+  setTimeout(() => {
+    document.querySelectorAll("#screen-result .sec:not(.inview), #screen-result .insight:not(.inview)").forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight) el.classList.add("inview");
+    });
+  }, 1500);
+}
 </script>
 </body>
 </html>
