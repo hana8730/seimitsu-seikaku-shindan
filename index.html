@@ -80,7 +80,6 @@ h1,h2,.sec-title,.type-name,.qtext,.badge,.insight strong,.keyword-box .kw,.btn,
 .safe-list li{padding:6px 0 6px 24px;position:relative}
 .safe-list li::before{content:"✓";position:absolute;left:2px;color:var(--green-dark);font-weight:900}
 .line-btn{display:block;background:linear-gradient(180deg,#5fc873,#4cb45e);color:#fff;font-size:19px;font-weight:900;padding:17px;border-radius:999px;text-decoration:none;text-align:center;box-shadow:0 5px 0 var(--green-dark),0 10px 22px rgba(76,180,94,.30);margin-top:8px;letter-spacing:.02em}
-.line-btn::after{content:"→";margin-left:8px}
 .line-btn:active{transform:translateY(2px);box-shadow:0 3px 0 var(--green-dark)}
 .strengths{list-style:none;padding:0;margin:8px 0}
 .strengths li{font-size:15.5px;line-height:1.75;white-space:pre-line;padding:13px 14px 13px 36px;position:relative;background:var(--pink-pale);border-radius:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(223,60,141,.07)}
@@ -156,15 +155,9 @@ p,li,.sec-title,.lead,.qtext,.type-name,h1,.kw-note,.operator{word-break:keep-al
     <div class="steps">
       <ol>
         <li>下のボタンから<br>LINEを追加する</li>
-        <li>あなたのキーワード <strong id="r-keyword-step" style="color:var(--pink-deep)"></strong> を送る</li>
-        <li>カルテがすぐ届きます</li>
+        <li>あいさつメッセージで<br>あなたのタイプをタップする</li>
+        <li>カルテがすぐ開きます</li>
       </ol>
-    </div>
-    <div class="keyword-box">
-      <div class="kw-label">あなたのキーワード（タップでコピーできます）</div>
-      <div class="kw" id="r-keyword"></div>
-      <button class="copy-btn" id="copy-kw-1" type="button">キーワードをコピーする</button>
-      <div class="copy-done" id="copy-done-1"></div>
     </div>
     <ul class="safe-list">
       <li>追加しても<br>相談や入会の申込にはなりません</li>
@@ -174,7 +167,7 @@ p,li,.sec-title,.lead,.qtext,.type-name,h1,.kw-note,.operator{word-break:keep-al
       <li>合わなければ<br>ブロックすれば全て終わります</li>
     </ul>
     <a class="line-btn" id="line-btn-1" href="https://lin.ee/qYCi0W9" target="_blank" rel="noopener">LINEでカルテを受け取る（無料）</a>
-    <p class="small" style="text-align:center">※ボタンを押すとLINEが開きます<br>開いたらコピーしたキーワードを<br>貼り付けて送ってください</p>
+    <p class="small" style="text-align:center">※ボタンを押すとLINEが開きます<br>追加したら<br>あいさつメッセージで<br>あなたのタイプをタップしてください</p>
   </div>
 
   <div class="sec">
@@ -189,13 +182,6 @@ p,li,.sec-title,.lead,.qtext,.type-name,h1,.kw-note,.operator{word-break:keep-al
     <p class="small">カルテが届いた後に<br>LINEの中でご案内します</p>
   </div>
 
-  <div class="sec end-banner">
-    <img src="assets/ibj-banner.jpg" alt="結婚はIBJ 至れり尽くせりの結婚相談所" style="width:100%;height:auto;display:block;border-radius:16px;box-shadow:0 8px 22px rgba(223,60,141,.16)">
-  </div>
-
-
-
-
 </div>
 
 <footer>
@@ -206,7 +192,7 @@ p,li,.sec-title,.lead,.qtext,.type-name,h1,.kw-note,.operator{word-break:keep-al
 <!-- スティッキーボタン（結果表示後） -->
 <div id="sticky">
   <div class="inner">
-    <div class="kw-note">キーワードは <strong id="sticky-keyword"></strong><br>LINEで送るとカルテが届きます</div>
+    <div class="kw-note">追加したら<br>タイプをタップで<br>カルテが開きます</div>
     <a href="https://lin.ee/qYCi0W9" target="_blank" rel="noopener" id="line-btn-3">無料で受け取る</a>
   </div>
 </div>
@@ -399,10 +385,6 @@ function showResult() {
   document.getElementById("r-insight").textContent = t.insight.replace(/。/g, "\n").trim();
   document.getElementById("r-radar").innerHTML = drawRadar(radarValues(scores));
   document.getElementById("r-strengths").innerHTML = t.strengths.map(x => "<li>" + x + "</li>").join("");
-  document.getElementById("r-keyword").textContent = "「" + t.keyword + "」";
-  document.getElementById("r-keyword-step").textContent = "「" + t.keyword + "」";
-  document.getElementById("sticky-keyword").textContent = "「" + t.keyword + "」";
-  currentKeyword = t.keyword;
   show("screen-result");
   document.getElementById("sticky").style.display = "block";
   setupReveal();
@@ -412,30 +394,6 @@ function showResult() {
 ["line-btn-1", "line-btn-3"].forEach(id => {
   const el = document.getElementById(id);
   if (el) el.addEventListener("click", () => { if (window.fbq) { fbq("track", "Lead"); fbq("trackCustom", "LINE_Click"); } });
-});
-
-/* キーワードのコピー */
-let currentKeyword = "";
-function copyKeyword(doneId) {
-  if (!currentKeyword) return;
-  const done = document.getElementById(doneId);
-  const showDone = () => { if (done) { done.textContent = "コピーしました！LINEに貼り付けて送ってください"; setTimeout(() => { done.textContent = ""; }, 4000); } };
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(currentKeyword).then(showDone).catch(() => fallbackCopy(showDone));
-  } else { fallbackCopy(showDone); }
-}
-function fallbackCopy(showDone) {
-  const ta = document.createElement("textarea");
-  ta.value = currentKeyword;
-  ta.style.position = "fixed"; ta.style.opacity = "0";
-  document.body.appendChild(ta);
-  ta.select();
-  try { document.execCommand("copy"); showDone(); } catch (e) {}
-  document.body.removeChild(ta);
-}
-[["copy-kw-1", "copy-done-1"]].forEach(([btnId, doneId]) => {
-  const b = document.getElementById(btnId);
-  if (b) b.addEventListener("click", () => copyKeyword(doneId));
 });
 
 /* セクションのフェードイン（ディゾルブ） */
