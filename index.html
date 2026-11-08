@@ -185,7 +185,7 @@ p,li,.sec-title,.lead,.qtext,.type-name,h1,.kw-note,.operator{word-break:keep-al
   </div>
 
   <div class="sec end-banner">
-    <video src="assets/ibj-banner-sugoi.mp4" autoplay loop muted playsinline style="width:100%;height:auto;display:block;border-radius:16px;box-shadow:0 8px 22px rgba(223,60,141,.16)"></video>
+    <video src="assets/ibj-banner-sugoi.mp4" loop muted playsinline style="width:100%;height:auto;display:block;border-radius:16px;box-shadow:0 8px 22px rgba(223,60,141,.16)"></video>
   </div>
 
 </div>
@@ -422,6 +422,21 @@ function setupReveal() {
       if (r.top < window.innerHeight) el.classList.add("inview");
     });
   }, 1500);
+
+  /* 末尾バナー動画：スクロールで画面に入ったら再生開始 */
+  const bannerVideo = document.querySelector(".end-banner video");
+  if (bannerVideo) {
+    if ("IntersectionObserver" in window) {
+      const vio = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { bannerVideo.play(); vio.unobserve(bannerVideo); }
+        });
+      }, { threshold: 0.4 });
+      vio.observe(bannerVideo);
+    } else {
+      bannerVideo.play();
+    }
+  }
 }
 </script>
 </body>
